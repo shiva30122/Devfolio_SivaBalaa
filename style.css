@@ -503,9 +503,9 @@ footer p {
 
 
 .word-container {
-  font-size: 1.5em;
+  font-size: 1.8em;
   font-weight: bold;
-  text-align: left;
+  text-align: center;
   align-items: center;
   font-family: monospace; /* Monospace font for fixed space */
   white-space: pre; /* Preserve white spaces */
