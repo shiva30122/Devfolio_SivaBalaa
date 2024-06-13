@@ -465,6 +465,8 @@ article .icon {
 }
 
 .contact-icon {
+  gap: 0.5px;
+  margin-right: 1px;
   cursor: default;
 }
 
