@@ -283,7 +283,7 @@ section {
 .about-containers,
 .about-details-container {
   display: flex;
-
+  
 }
 
 .about-pic {
@@ -297,8 +297,8 @@ section {
 }
 
 .details-container {
-  padding: 1.5rem;
-  flex: 1;
+  padding: 2.5rem;
+  flex: 2;
   background: white;
   border-radius: 2rem;
   border: rgb(53, 53, 53) 0.1rem solid;
