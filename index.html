@@ -319,7 +319,29 @@
         onclick="location.href='./#projects'"
       />
     </section>
-    
+    <!-- New Overlay Structure -->
+    <div id="new-overlay" class="overlay" style="display: none;" onclick="closeNewOverlay(event)">
+      <div class="overlay-content" onclick="event.stopPropagation();">
+          <span class="close" onclick="closeNewOverlay()">X</span>
+          <div class="overlay-inner">
+            <div class="video-container">
+              <h2 id="new-overlay-title">Project Title</h2>
+              <video id="new-overlay-video" controls loop style="display: none;">
+                  <source id="new-video-source" data-src="path/to/your/video.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+              </video>                
+            </div>
+          
+              <div id="new-overlay-description" class="scrollable-description">
+                  This is where the project description will appear.
+                  <!-- Add more paragraphs if needed -->
+              </div>
+          </div>
+      </div>
+  </div>
+  
+  </div>
+
     <section id="projects">
       <p class="section__text__p1">Browse My Recent</p>
       <h1 class="title">Projects</h1>
@@ -341,6 +363,28 @@
               >
                 Github
               </button>
+
+              <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('FPS PUBG Clone', 
+              '<h3>This project is a 3D First-Person Shooter (FPS) developed in Unity, offering an immersive gameplay experience with a focus on modular coding practices.</h3>' + 
+              '<h4>Features:</h4>' +
+              '<ul>' +
+              '<li><strong>Modular System Design:</strong> Customizable components for pickups, inventory, and weapons.</li>' +
+              '<li><strong>Pickups Management:</strong> Separate handling for weapons and items with organized slots.</li>' +
+              '<li><strong>Inventory Manager:</strong> Manages picked items with support for stacks and one-time pickups.</li>' +
+              '<li><strong>Gun Functionality:</strong> Centralized script for weapon features including automatic shooting, burst fire, and shotgun mechanics.</li>' +
+              '<li><strong>Attachments System:</strong> Easily attach modules to weapons for dynamic gameplay.</li>' +
+              '</ul> \n' +
+              '<h4>/n \n Technologies Used:</h4><p>Unity, C#</p>' +
+              '<h4>Challenges Faced:</h4><p>Encountered debugging issues that strengthened my understanding of coroutines and loops.</p>' +
+              '<h4>Future Improvements:</h4>' +
+              '<ul>' +
+              '<li>Implementing multiplayer features for engaging gameplay.</li>' +
+              '<li>Enhancing gun attachment systems for more customization.</li>' +
+              '<li>Expanding to Android and PC for cross-platform experiences.</li>' +
+              '</ul>', 
+              'assets/Videos/FPSVideo.mp4')"> Project Info</button>
+          
+
               <button
                 class="btn btn-color-2 project-btn"
                 onclick="location.href='https://drive.google.com/drive/folders/1O2wOl5IZpEIec7ePfV3tEmoxANGv1tJi?usp=drive_link'"

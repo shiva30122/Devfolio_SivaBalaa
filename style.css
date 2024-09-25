@@ -283,6 +283,7 @@ section {
 .about-containers,
 .about-details-container {
   display: flex;
+
 }
 
 .about-pic {
@@ -495,12 +496,12 @@ font-size: 18px;
 }
 
 
-
+/* 
 .section__pic-container{
 
   
 
-}
+} */
 
 
 .content {
@@ -537,3 +538,152 @@ font-size: 18px;
 }
 
 
+
+/* Fullscreen overlay */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background: rgba(0, 0, 0, 0.7);
+  display: none; /* Hidden by default */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Overlay above all content */
+}
+
+/* Overlay content box */
+.overlay-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  width: 80%; /* Occupy 80% width of the screen */
+  height: 80%; /* Occupy 80% height of the screen */
+  max-width: 1300px; /* Max width */
+  max-height: 500px; /* Max height */
+  text-align: left;
+}
+
+/* Close (X) button */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Inner layout for video and text */
+.overlay-inner {
+  display: flex; /* Flex layout */
+  flex-direction: column; /* Column layout for mobile */
+  height: 100%; /* Full height for inner content */
+}
+
+/* Video container styles */
+.video-container {
+  width: 100%; /* Full width */
+  height: 35%; /* Video height for mobile */
+  text-align: center; /* Center video and title */
+  margin-bottom: 10px; /* Space below video */
+}
+
+/* Title styles */
+#new-overlay-title {
+  text-align: center; /* Center title */
+  margin-bottom: 10px; /* Space below title */
+}
+
+/* Video styles */
+#new-overlay-video {
+  width: 100%; /* Full width for video */
+  max-height: 100%; /* Max height for mobile video */
+}
+
+/* Scrollable description text styles */
+.scrollable-description {
+  margin-top: 55px;
+  max-height: 90%; /* Description height for mobile */
+  overflow-y: auto; /* Enable scrolling */
+  width: 100%; /* Description full width */
+}
+
+/* =================== DESKTOP STYLES =================== */
+@media (min-width: 600px) {
+  .overlay-inner {
+      flex-direction: row; /* Row layout for desktop */
+      justify-content: center; /* Center content */
+      align-items: center; /* Center vertically */
+  }
+
+  .video-container {
+      width: 35%; /* Video width for desktop */
+      height: 100%; /* Full height for video container */
+      display: flex; /* Flexbox for centering */
+      flex-direction: column; /* Column layout for video and title */
+      justify-content: center; /* Center vertically */
+      align-items: center; /* Center horizontally */
+      margin-right: 20px; /* Gap to the right of video */
+  }
+
+  /* Increase width of overlay content by 22% on desktop */
+  .overlay-content {
+      width: 78%; /* 100% - 22% */
+      height: 88%; /* 100% - 12% */
+  }
+
+  /* Increase height of video */
+  #new-overlay-video {
+      max-height: 100%; /* Keep the video height to occupy full height */
+  }
+
+  /* Description full height for desktop */
+  .scrollable-description {
+      height: 100%; /* Full height for description */
+      width: 65%; /* Description width for desktop */
+  }
+}
+
+/* =================== MOBILE STYLES =================== */
+@media (max-width: 599px) {
+  .overlay {
+      height: 100%; /* Full height for mobile overlay */
+  }
+
+  .overlay-content {
+      height: 80%; /* Ensure overlay content height is 80% */
+  }
+
+  .video-container {
+      height: 45%; /* Reduced video container height */
+      width: 100%;
+      display: flex; /* Flexbox for centering */
+      flex-direction: column; /* Column layout for mobile */
+      justify-content: center; /* Center video vertically */
+      align-items: center; /* Center video horizontally */
+      margin-bottom: 15px; /* Space below video */
+      /* margin-left: 40px; */
+  }
+
+  #new-overlay-title {
+    margin-top: 25px;
+      text-align: center; /* Center title */
+      margin-bottom: 10px; /* Space below title */
+  }
+
+  #new-overlay-video {
+      width: 90%; /* Reduced width for video on mobile */
+      max-height: 100%; /* Video height for mobile */
+      height: auto; /* Auto height for better responsiveness */
+      
+  }
+
+  .scrollable-description {
+      height: 65%; /* Description height for mobile */
+      overflow-y: auto; /* Enable scrolling */
+      width: 100%; /* Full width for description */
+      margin-top: 25px; /* Space above description for mobile */
+  }
+}
