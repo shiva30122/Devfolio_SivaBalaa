@@ -562,7 +562,7 @@ font-size: 18px;
   width: 80%; /* Occupy 80% width of the screen */
   height: 80%; /* Occupy 80% height of the screen */
   max-width: 1300px; /* Max width */
-  max-height: 500px; /* Max height */
+  max-height: 600px; /* Max height */
   text-align: left;
 }
 
@@ -653,11 +653,11 @@ font-size: 18px;
   }
 
   .overlay-content {
-      height: 80%; /* Ensure overlay content height is 80% */
+      height: 90%; /* Ensure overlay content height is 80% */
   }
 
   .video-container {
-      height: 45%; /* Reduced video container height */
+      height: 55%; /* Reduced video container height */
       width: 100%;
       display: flex; /* Flexbox for centering */
       flex-direction: column; /* Column layout for mobile */
@@ -668,13 +668,13 @@ font-size: 18px;
   }
 
   #new-overlay-title {
-    margin-top: 25px;
+      margin-top: 25px;
       text-align: center; /* Center title */
       margin-bottom: 10px; /* Space below title */
   }
 
   #new-overlay-video {
-      width: 90%; /* Reduced width for video on mobile */
+      width: 95%; /* Reduced width for video on mobile */
       max-height: 100%; /* Video height for mobile */
       height: auto; /* Auto height for better responsiveness */
       
