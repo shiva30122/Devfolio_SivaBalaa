@@ -36,7 +36,7 @@ function openNewOverlay(title, description, videoSrc) {
       sourceElement.src = videoSrc; // Set the video source
       videoElement.style.display = 'block'; // Make the video visible
       videoElement.load(); // Load the video
-      videoElement.muted = true; // Mute the video to allow autoplay
+      videoElement.muted = false; // Play Audio !... the video to allow autoplay
       videoElement.play(); // Play the video
   } else {
       videoElement.style.display = 'none'; // Hide video if no source is provided
