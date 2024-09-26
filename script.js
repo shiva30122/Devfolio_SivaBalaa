@@ -5,7 +5,10 @@ function toggleMenu() {
   icon.classList.toggle("open");
 }
 
-const words = ["  GAME DEVELOPER  ","SOFTWARE DEVELOPER"];
+const words = [  
+  "GAME PROGRAMMER",
+  
+  "LEVEL DESIGNER"];
 let currentIndex = 0;
 
 function changeWord() {
