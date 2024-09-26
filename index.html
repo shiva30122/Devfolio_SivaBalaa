@@ -312,8 +312,12 @@
     <!-- New Overlay Structure -->
     <div id="new-overlay" class="overlay" style="display: none;" onclick="closeNewOverlay(event)">
       <div class="overlay-content" onclick="event.stopPropagation();">
-          <span class="close" onclick="closeNewOverlay()">X</span>
-          <div class="overlay-inner">
+        <div class="btn-container">
+          <button class="btn btn-color-2 project-btn close-btn" onclick="closeNewOverlay()">
+            X
+          </button>
+        </div>
+                  <div class="overlay-inner">
             <div class="video-container">
               <h2 id="new-overlay-title">Project Title</h2>
               <video id="new-overlay-video" controls loop style="display: none;">
