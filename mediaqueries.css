@@ -10,6 +10,12 @@
   #projects {
     height: fit-content;
   }
+
+  /* New changes */
+  article {
+    font-size: 1.2rem; /* Adjust font size for article content */
+    line-height: 1.5; /* Improve readability */
+  }
 }
 
 @media screen and (max-width: 1200px) {
@@ -21,7 +27,7 @@
   }
   #experience,
   .experience-details-container {
-    margin-top: r233em;
+    margin-top: 2rem;
   }
   #profile,
   .section-container {
@@ -44,6 +50,11 @@
   }
   .about-containers {
     margin-top: 0;
+  }
+
+  /* New changes for articles */
+  article {
+    font-size: 1.15rem;
   }
 }
 
@@ -99,5 +110,35 @@
   }
   .text-container {
     text-align: justify;
+  }
+}
+
+/* Add 600px to other breakpoints but keep alignment and spacing */
+@media screen and (min-width: 601px) and (max-width: 1400px) {
+  #profile {
+    height: auto;
+    margin-bottom: 4rem; /* Add more space if needed */
+  }
+
+  .section-container {
+    margin: 2rem 0;
+    height: fit-content;
+  }
+
+  article {
+    font-size: 1.1rem; /* Slightly larger for better readability */
+  }
+
+  .about-containers {
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .contact-info-container {
+    margin: 1rem 0;
+  }
+  
+  .btn-container {
+    margin: 2rem 0;
   }
 }
