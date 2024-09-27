@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endless Runner Game</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background-color: #87CEEB;
+        }
+
+        #gameContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #scoreBoard {
+            display: flex;
+            justify-content: center; /* Centering score and timer */
+            background-color: #444;
+            color: white;
+            font-size: 24px;
+            padding: 10px 0;
+            box-sizing: border-box;
+            width: 100%; /* Full width */
+            position: relative;
+            margin-bottom: 20px; /* Add gap */
+        }
+
+        #gameCanvas {
+            background-color: #FFF;
+            display: block; /* Make sure canvas displays as block element */
+            margin: 0 auto; /* Center the canvas */
+            position: relative; /* For positioning elements within */
+            height: 80vh; /* Adjusted height */
+            width: 70vw; /* Width for desktop */
+        }
+
+        /* Desktop Styling */
+        @media (min-width: 769px) {
+            #gameCanvas {
+                height: 80vh; /* 80% of viewport height for desktop */
+            }
+
+            .row {
+                height: 18%; /* Each row takes 18% of game height */
+                display: flex;
+                justify-content: center; /* Center row content */
+                align-items: flex-end; /* Align items to bottom of row */
+            }
+
+            #player {
+                width: 15%; /* Player width as 15% of row */
+                height: auto; /* Maintain aspect ratio */
+                position: relative;
+                bottom: 8%; /* 8% from the bottom */
+            }
+
+            .obstacle {
+                width: 10%; /* Obstacle width as 10% of row */
+                height: auto; /* Maintain aspect ratio */
+            }
+        }
+
+        /* Mobile Styling */
+        @media (max-width: 768px) {
+            #gameCanvas {
+                height: 80vh; /* 80% of viewport height for mobile */
+            }
+
+            .row {
+                height: 18%; /* Each row takes 18% of game height */
+                display: flex;
+                justify-content: center; /* Center row content */
+                align-items: flex-end; /* Align items to bottom of row */
+            }
+
+            #player {
+                width: 8%; /* Player width as 8% of row */
+                height: auto; /* Maintain aspect ratio */
+                position: relative;
+                bottom: 3%; /* 3% from the bottom */
+            }
+
+            .obstacle {
+                width: 6%; /* Obstacle width as 6% of row */
+                height: auto; /* Maintain aspect ratio */
+            }
+        }
+
+        #countdown {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 72px;
+            color: red; /* Fixed color for countdown */
+            display: none;
+            animation: fadeIn 0.5s; /* Add animation */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        #messageBox {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #playAgainBtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        #deathImage {
+            display: none; /* Initially hidden */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30%; /* Adjust as necessary */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="gameContainer">
+        <div id="scoreBoard">
+            <div id="timer">Time: 10</div>
+            <div id="score">Score: 0</div>
+        </div>
+        <div id="gameCanvas">
+            <div class="row" id="row0"></div>
+            <div class="row" id="row1"></div>
+            <div class="row" id="row2"></div>
+            <img id="deathImage" src="https://via.placeholder.com/150?text=Dead" alt="Player Dead" />
+        </div>
+        <div id="countdown">3</div>
+    </div>
+
+    <div id="messageBox">
+        <h1 id="messageText">Game Over</h1>
+        <p id="redirectCountdown">Redirecting in 3...</p>
+        <button id="playAgainBtn">Re_Try</button>
+    </div>
+
+    <audio id="countdownSound" src="countdown-sound.mp3"></audio> <!-- Add your countdown sound file -->
+    <audio id="gameOverSound" src="game-over-sound.mp3"></audio> <!-- Add your game over sound file -->
+    <audio id="timerSound" src="timer-sound.mp3"></audio> <!-- Add your timer sound file -->
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const messageBox = document.getElementById('messageBox');
+        const messageText = document.getElementById('messageText');
+        const playAgainBtn = document.getElementById('playAgainBtn');
+        const timerEl = document.getElementById('timer');
+        const scoreEl = document.getElementById('score');
+        const countdownEl = document.getElementById('countdown');
+        const deathImage = document.getElementById('deathImage');
+
+        // Sounds
+        const countdownSound = document.getElementById('countdownSound');
+        const gameOverSound = document.getElementById('gameOverSound');
+        const timerSound = document.getElementById('timerSound');
+
+        // Player object
+        let player = {
+            width: 0, // Set in setup
+            height: 0, // Set in setup
+            img: new Image(),
+            lane: 1, // 0 = left, 1 = center, 2 = right
+            speed: 5
+        };
+
+        player.img.src = 'https://via.placeholder.com/64'; // Replace with your player image
+        let obstacles = [];
+        let gameTime = 10;
+        let isGameOver = false;
+        let score = 0;
+        let obstacleSpeed = 5;
+        let countdownValue = 3;
+        let redirectCountdownValue = 3;
+
+        function setupCanvas() {
+            const gameRows = [document.getElementById('row0'), document.getElementById('row1'), document.getElementById('row2')];
+
+            // Set player dimensions based on viewport width
+            if (window.innerWidth > 768) {
+                player.width = canvas.clientWidth * 0.15; // 15% of row width for desktop
+                player.height = player.width; // Keep player square
+            } else {
+                player.width = canvas.clientWidth * 0.08; // 8% of row width for mobile
+                player.height = player.width; // Keep player square
+            }
+
+            // Set player's y position to the bottom of the canvas
+            player.y = canvas.clientHeight - player.height - (window.innerWidth > 768 ? player.height * 0.08 : player.height * 0.03); // Adjusted position
+
+            player.x = (canvas.clientWidth / 2) - (player.width / 2); // Center player
+            drawPlayer();
+        }
+
+        function drawPlayer() {
+            const row = document.getElementById(`row${player.lane}`);
+            const playerElement = document.createElement('img');
+            playerElement.src = player.img.src;
+            playerElement.style.width = player.width + 'px';
+            playerElement.style.height = player.height + 'px';
+            playerElement.style.position = 'absolute';
+            playerElement.style.left = player.x + 'px';
+            playerElement.style.top = player.y + 'px'; // Position player at the calculated y
+            row.appendChild(playerElement);
+        }
+
+        function createObstacle(type) {
+            const obstacle = {
+                width: 0,
+                height: 0,
+                x: 0,
+                y: 0,
+                lane: Math.floor(Math.random() * 3), // Random lane
+                type: type,
+                img: new Image()
+            };
+
+            if (window.innerWidth > 768) {
+                obstacle.width = canvas.clientWidth * 0.1; // 10% of row width for desktop
+                obstacle.height = obstacle.width; // Keep square
+            } else {
+                obstacle.width = canvas.clientWidth * 0.06; // 6% of row width for mobile
+                obstacle.height = obstacle.width; // Keep square
+            }
+
+            obstacle.x = Math.random() * (canvas.clientWidth - obstacle.width);
+            obstacle.y = 0; // Start at the top
+
+            obstacle.img.src = 'https://via.placeholder.com/64?text=Obstacle'; // Replace with your obstacle image
+            obstacles.push(obstacle);
+            drawObstacle(obstacle);
+        }
+
+        function drawObstacle(obstacle) {
+            const row = document.getElementById(`row${obstacle.lane}`);
+            const obstacleElement = document.createElement('img');
+            obstacleElement.src = obstacle.img.src;
+            obstacleElement.style.width = obstacle.width + 'px';
+            obstacleElement.style.height = obstacle.height + 'px';
+            obstacleElement.style.position = 'absolute';
+            obstacleElement.style.left = obstacle.x + 'px';
+            obstacleElement.style.top = obstacle.y + 'px';
+            row.appendChild(obstacleElement);
+        }
+
+        function updateObstacles() {
+            for (let i = 0; i < obstacles.length; i++) {
+                obstacles[i].y += obstacleSpeed;
+
+                if (obstacles[i].y > canvas.clientHeight) {
+                    obstacles.splice(i, 1); // Remove obstacle if it goes off screen
+                    score += 10; // Increment score
+                    scoreEl.textContent = 'Score: ' + score; // Update score display
+                    i--; // Adjust index after removing
+                } else {
+                    const obstacleElements = document.querySelectorAll(`#row${obstacles[i].lane} img`);
+                    obstacleElements[obstacleElements.length - 1].style.top = obstacles[i].y + 'px'; // Move obstacle down
+                }
+            }
+        }
+
+        function checkCollision() {
+            for (const obstacle of obstacles) {
+                if (
+                    player.x < obstacle.x + obstacle.width &&
+                    player.x + player.width > obstacle.x &&
+                    player.y < obstacle.y + obstacle.height &&
+                    player.y + player.height > obstacle.y
+                ) {
+                    gameOver();
+                    break;
+                }
+            }
+        }
+
+        function gameOver() {
+            isGameOver = true;
+            gameOverSound.play();
+            deathImage.style.display = 'block'; // Show death image
+            messageBox.style.display = 'block'; // Show game over message
+            timerSound.pause(); // Stop timer sound
+            timerSound.currentTime = 0; // Reset time
+            startRedirectCountdown();
+        }
+
+        function startRedirectCountdown() {
+            countdownEl.style.display = 'none'; // Hide countdown
+            messageBox.style.display = 'block'; // Show message box
+            const redirectInterval = setInterval(() => {
+                if (redirectCountdownValue > 0) {
+                    document.getElementById('redirectCountdown').textContent = `Redirecting in ${redirectCountdownValue--}...`;
+                } else {
+                    clearInterval(redirectInterval);
+                    // Redirect logic here, e.g., window.location.href = 'your-url.html';
+                }
+            }, 1000);
+        }
+
+        function startGame() {
+            isGameOver = false;
+            score = 0;
+            obstacles = [];
+            countdownValue = 3; // Reset countdown value
+            redirectCountdownValue = 3; // Reset redirect countdown value
+            scoreEl.textContent = 'Score: 0';
+            timerEl.textContent = 'Time: ' + gameTime;
+            setupCanvas();
+            drawPlayer();
+            countdownEl.style.display = 'block'; // Show countdown
+            messageBox.style.display = 'none'; // Hide message box
+            deathImage.style.display = 'none'; // Hide death image
+
+            const countdownInterval = setInterval(() => {
+                countdownEl.textContent = countdownValue;
+                countdownSound.play(); // Play countdown sound
+
+                if (countdownValue > 0) {
+                    countdownValue--;
+                } else {
+                    clearInterval(countdownInterval);
+                    startGameLoop(); // Start game loop
+                }
+            }, 1000);
+        }
+
+        function startGameLoop() {
+            const gameInterval = setInterval(() => {
+                if (isGameOver) {
+                    clearInterval(gameInterval);
+                    return;
+                }
+
+                updateObstacles();
+                checkCollision();
+
+                if (gameTime > 0) {
+                    gameTime -= 1 / 30; // Decrease game time
+                    timerEl.textContent = 'Time: ' + Math.floor(gameTime);
+                } else {
+                    gameOver(); // End game when time runs out
+                }
+            }, 1000 / 30); // 30 FPS
+        }
+
+        playAgainBtn.addEventListener('click', startGame); // Restart game on button click
+
+        window.addEventListener('resize', setupCanvas); // Adjust canvas on window resize
+        window.addEventListener('load', startGame); // Start game when the window loads
+    </script>
+</body>
+</html>
