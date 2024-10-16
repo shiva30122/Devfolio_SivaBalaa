@@ -450,18 +450,7 @@ article .icon {
 }
 
 
-/* Responsive design for touch screens */
-@media (hover: none) and (pointer: coarse) {
-  .project-btn {
-    padding: 15px 25px; /* Increase padding for better touch target */
-    font-size: 1.1em; /* Increase font size for better readability */
-  }
 
-  /* Active state on touch devices */
-  .project-btn:active {
-    background-color: rgb(100, 100, 100); /* Different color when pressed on touch devices */
-  }
-}
 
 /* CONTACT */
 
