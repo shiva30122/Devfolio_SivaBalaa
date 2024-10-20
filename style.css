@@ -319,6 +319,32 @@ section {
   border-color: rgb(163, 163, 163);
   text-align: center;
 }
+/* Container for projects, no alignment changes */
+#projects .details-container {
+  background: white;
+  border-radius: 2rem;
+  border: rgb(53, 53, 53) 0.1rem solid;
+  border-color: rgb(163, 163, 163);
+  text-align: center;
+  transition: transform 0.3s, filter 0.3s;
+  z-index: 1;
+  position: relative;
+}
+
+/* Scale and increase brightness on hover */
+#projects .details-container:hover {
+  transform: scale(1.05); /* Slightly expand the container */
+  filter: brightness(1.2); /* Increase brightness */
+  z-index: 2; /* Ensure the container stays on top */
+}
+
+/* Apply hover effect to images inside the container */
+#projects .details-container img:hover {
+  transform: scale(1.1); /* Slightly scale the image */
+  filter: brightness(1.3); /* Increase brightness of the image */
+  transition: transform 0.3s, filter 0.3s;
+  z-index: 3;
+}
 
 .section-container {
   gap: 4rem;
