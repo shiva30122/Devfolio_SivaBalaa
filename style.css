@@ -324,17 +324,18 @@ section {
   background: white;
   border-radius: 2rem;
   border: rgb(53, 53, 53) 0.1rem solid;
-  border-color: rgb(163, 163, 163);
+  border-color: rgb(163, 163, 163); /* Default light border color */
   text-align: center;
-  transition: transform 0.3s, filter 0.3s;
+  transition: transform 0.3s, filter 0.3s, border-color 0.3s; /* Added transition for border-color */
   z-index: 1;
   position: relative;
 }
 
-/* Scale and increase brightness on hover */
+/* Scale, increase brightness, and change border color to dark black on hover */
 #projects .details-container:hover {
   transform: scale(1.05); /* Slightly expand the container */
   filter: brightness(1.2); /* Increase brightness */
+  border-color: black; /* Change border color to black on hover */
   z-index: 2; /* Ensure the container stays on top */
 }
 
@@ -345,6 +346,7 @@ section {
   transition: transform 0.3s, filter 0.3s;
   z-index: 3;
 }
+
 
 .section-container {
   gap: 4rem;
