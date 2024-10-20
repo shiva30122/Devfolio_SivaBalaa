@@ -346,14 +346,7 @@ section {
   z-index: 3;
 }
 
-/* Remove hover effects on mobile using media query */
-@media (max-width: 768px) {
-  #projects .details-container:hover,
-  #projects .details-container img:hover {
-    transform: none;
-    filter: none;
-  }
-}
+
 
 
 

@@ -348,10 +348,18 @@
         }
       });
   
-      // Keep the hover effect while scrolling/moving the finger (touchmove)
+      // Keep the hover effect while moving the finger (touchmove) if it's within the container
       container.addEventListener('touchmove', (event) => {
         if (isTouching) {
-          applyHoverEffect(container); // Keep applying the effect while swiping
+          const touch = event.touches[0]; // Get the first touch point
+          const rect = container.getBoundingClientRect(); // Get container's position and size
+          // Check if the touch is within the container's boundaries
+          if (touch.clientX >= rect.left && touch.clientX <= rect.right &&
+              touch.clientY >= rect.top && touch.clientY <= rect.bottom) {
+            applyHoverEffect(container); // Keep applying the effect while swiping
+          } else {
+            removeHoverEffect(container); // Remove effect if touch leaves the container
+          }
         }
       });
   
