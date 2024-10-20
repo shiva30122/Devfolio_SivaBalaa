@@ -351,7 +351,7 @@
       // Keep the hover effect while scrolling/moving the finger (touchmove)
       container.addEventListener('touchmove', (event) => {
         if (isTouching) {
-          applyHoverEffect(container);
+          applyHoverEffect(container); // Keep applying the effect while swiping
         }
       });
   
@@ -393,10 +393,12 @@
       if (window.innerWidth <= 768) { // Change this value based on your breakpoints
         containers.forEach(container => {
           container.style.pointerEvents = 'auto'; // Enable touch events
+          container.classList.remove('desktop-hover'); // Remove desktop hover class
         });
       } else {
         containers.forEach(container => {
           container.style.pointerEvents = 'none'; // Disable touch events on desktop
+          container.classList.add('desktop-hover'); // Add desktop hover class
         });
       }
     }
