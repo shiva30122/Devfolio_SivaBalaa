@@ -333,6 +333,36 @@
           </div>
       </div>
   </div>
+  <script>
+    // Add touch event listeners for all project containers
+    const containers = document.querySelectorAll('#projects .details-container');
+  
+    containers.forEach(container => {
+      // Add hover effect on touch start (when the user touches the screen)
+      container.addEventListener('touchstart', () => {
+        container.style.transform = 'scale(1.05)';
+        container.style.filter = 'brightness(1.2)';
+        container.style.borderColor = 'black';
+        container.style.zIndex = '2';
+      });
+  
+      // Remove hover effect when touch ends or user scrolls
+      container.addEventListener('touchend', () => {
+        container.style.transform = 'none';
+        container.style.filter = 'none';
+        container.style.borderColor = 'rgb(163, 163, 163)';
+        container.style.zIndex = '1';
+      });
+  
+      // Also remove the hover effect if a swipe (scroll) is detected
+      container.addEventListener('touchmove', () => {
+        container.style.transform = 'none';
+        container.style.filter = 'none';
+        container.style.borderColor = 'rgb(163, 163, 163)';
+        container.style.zIndex = '1';
+      });
+    });
+  </script>
   
   </div>
 
