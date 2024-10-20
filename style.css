@@ -319,6 +319,34 @@ section {
   border-color: rgb(163, 163, 163);
   text-align: center;
 }
+
+/* Mobile-first design approach (screen width less than 768px) */
+@media (max-width: 768px) {
+  #projects .details-container {
+    transform: none; /* Disable hover transformation for mobile */
+    filter: none; /* No brightness change on touch */
+  }
+
+  /* For touch events, you can simulate the hover effect when tapping */
+  #projects .details-container:active {
+    transform: scale(1.05); /* Simulate the hover on tap */
+    filter: brightness(1.2); /* Adjust brightness on tap */
+    border-color: black; /* Change border color on tap */
+  }
+
+  /* Disable the image hover effect for mobile as hover doesn't apply */
+  #projects .details-container img {
+    transform: none; /* Remove image scaling on mobile */
+    filter: none; /* Disable brightness change on touch */
+  }
+
+  #projects .details-container img:active {
+    transform: scale(1.1); /* Simulate the hover on tap */
+    filter: brightness(1.3); /* Brightness increase on tap */
+  }
+}
+
+
 /* Container for projects, no alignment changes */
 #projects .details-container {
   background: white;
