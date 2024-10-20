@@ -372,6 +372,7 @@
   
     // Function to apply the hover effect
     function applyHoverEffect(container) {
+      container.style.transition = 'none'; // Remove transition delay for instant effect
       container.style.transform = 'scale(1.05)';
       container.style.filter = 'brightness(1.2)';
       container.style.borderColor = 'black';
@@ -380,11 +381,29 @@
   
     // Function to remove the hover effect
     function removeHoverEffect(container) {
+      container.style.transition = 'transform 0.3s, filter 0.3s, border-color 0.3s'; // Re-add transition
       container.style.transform = 'scale(1)';
       container.style.filter = 'brightness(1)';
       container.style.borderColor = 'rgb(163, 163, 163)';
       container.style.zIndex = '1';
     }
+  
+    // Disable desktop hover effect on mobile
+    function disableDesktopHover() {
+      if (window.innerWidth <= 768) { // Change this value based on your breakpoints
+        containers.forEach(container => {
+          container.style.pointerEvents = 'auto'; // Enable touch events
+        });
+      } else {
+        containers.forEach(container => {
+          container.style.pointerEvents = 'none'; // Disable touch events on desktop
+        });
+      }
+    }
+  
+    // Run on load and on resize
+    disableDesktopHover();
+    window.addEventListener('resize', disableDesktopHover);
   </script>
   
   </div>
