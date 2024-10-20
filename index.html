@@ -337,12 +337,15 @@
     const containers = document.querySelectorAll('#projects .details-container');
   
     containers.forEach(container => {
-      let isTouching = false; // To track if touch is active
+      let isTouching = false; // Track if touch is active
   
       // Apply the hover effect when touch starts
       container.addEventListener('touchstart', (event) => {
-        isTouching = true;
-        applyHoverEffect(container);
+        event.preventDefault(); // Prevent default to avoid scrolling while touching
+        if (!isTouching) {
+          isTouching = true; // Set the touch state to true
+          applyHoverEffect(container);
+        }
       });
   
       // Keep the hover effect while scrolling/moving the finger (touchmove)
@@ -354,18 +357,20 @@
   
       // Remove the hover effect when the touch ends
       container.addEventListener('touchend', () => {
-        isTouching = false;
-        removeHoverEffect(container);
+        if (isTouching) {
+          isTouching = false; // Reset the touch state
+          removeHoverEffect(container);
+        }
       });
   
       // Remove the hover effect if the touch is canceled
       container.addEventListener('touchcancel', () => {
-        isTouching = false;
+        isTouching = false; // Reset the touch state
         removeHoverEffect(container);
       });
     });
   
-    // Function to apply the hover effect (like hover on desktop)
+    // Function to apply the hover effect
     function applyHoverEffect(container) {
       container.style.transform = 'scale(1.05)';
       container.style.filter = 'brightness(1.2)';
@@ -375,8 +380,8 @@
   
     // Function to remove the hover effect
     function removeHoverEffect(container) {
-      container.style.transform = 'none';
-      container.style.filter = 'none';
+      container.style.transform = 'scale(1)';
+      container.style.filter = 'brightness(1)';
       container.style.borderColor = 'rgb(163, 163, 163)';
       container.style.zIndex = '1';
     }
