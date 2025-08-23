@@ -9,14 +9,16 @@
     <link rel="stylesheet" href="mediaqueries.css" />
   </head>
   <body>
-    <nav id="desktop-nav">
+    <!-- Navigation -->
+    <nav id="desktop-nav" class="animate-on-load">
       <div class="logo">Devfolio</div>
-      <div>
+      <div class="nav-container">
+        <button class="nav-toggle-btn" onclick="toggleNav()">☰</button>
         <ul class="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#experience">Skills</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li><a href="#about" onclick="showSection('about')">About</a></li>
+          <li><a href="#experience" onclick="showSection('experience')">Skills</a></li>
+          <li><a href="#projects" onclick="showSection('projects')">Projects</a></li>
+          <li><a href="#contact" onclick="showSection('contact')">Contact</a></li>
         </ul>
       </div>
     </nav>
@@ -29,623 +31,428 @@
           <span></span>
         </div>
         <div class="menu-links">
-          <li><a href="#about" onclick="toggleMenu()">About</a></li>
-          <li><a href="#experience" onclick="toggleMenu()">Experience</a></li>
-          <li><a href="#projects" onclick="toggleMenu()">Projects</a></li>
-          <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
+          <li><a href="#about" onclick="toggleMenu(); showSection('about')">About</a></li>
+          <li><a href="#experience" onclick="toggleMenu(); showSection('experience')">Skills</a></li>
+          <li><a href="#projects" onclick="toggleMenu(); showSection('projects')">Projects</a></li>
+          <li><a href="#contact" onclick="toggleMenu(); showSection('contact')">Contact</a></li>
         </div>
       </div>
     </nav>
-    <section id="profile">
-      <div class="section__pic-container">
-        <img src="./assets/Profile.jpg" alt="John Doe profile picture" />
-      </div>
 
-      <div class="section__text">
-        <p class="section__text__p1">Hello, I'm </p>
-        <h1 class="title">Siva Balaa</h1>
-        <div class="word-container">
-          <h3><span id="changing-word"></span></h3>
+    <!-- Profile Section -->
+    <div class="StartingAnimationContainer">
+      <section id="profile" class="scroll-animate scroll-reveal">
+        <div class="profile-pic-container">
+          <img src="./assets/Profile.png" alt="Profile picture" />
         </div>
-      
-    
-        <p class="section__text__p2"></p>
-        <div class="btn-container">
-          <button
-            class="btn btn-color-2"
-            onclick="window.open('./assets/Siva Resume.pdf')"
-          >
-             Download Resume
-          </button>
-          <button class="btn btn-color-1" onclick="location.href='./#contact'">
-            Contact Info
-          </button>
+        <div class="section__text">
+          <p class="section__text__p1">Hello, I'm</p>
+          <h1 class="title">Siva Balaa</h1>
+
+          <div class="word-container">
+            <div class="typewriter-container">
+              <span class="typewriter" id="typewriter"></span>
+            </div>
+            <div class="aurora">
+              <div class="aurora__item"></div>
+              <div class="aurora__item"></div>
+              <div class="aurora__item"></div>
+              <div class="aurora__item"></div>
+            </div>
+          </div>
+
+
+          <div class="btn-container">
+            <button class="btn btn-color-2" onclick="window.open('./assets/Siva Resume.pdf')">
+              Download Resume
+            </button>
+            <button class="btn btn-color-1" onclick="location.href='./#contact'">
+              Contact<br>Info
+            </button>
+          </div>
+          <div id="socials-container">
+            <img
+              src="./assets/linkedin.png"
+              alt="LinkedIn profile"
+              class="icon"
+              onclick="location.href='https://www.linkedin.com/in/siva-balaa-a770b020b'"
+            />
+            <img
+              src="./assets/github.png"
+              alt="GitHub profile"
+              class="icon"
+              onclick="location.href='https://github.com/shiva30122'"
+            />
+          </div>
         </div>
-        <div id="socials-container">
-          <img
-            src="./assets/linkedin.png"
-            alt="My LinkedIn profile"
-            class="icon"
-            onclick="location.href='https://www.linkedin.com/in/siva-balaa-a770b020b'"
-          />
-          <img
-            src="./assets/github.png"
-            alt="My Github profile"
-            class="icon"
-            onclick="location.href='https://github.com/shiva30122'"
-          />
-        </div>
-      </div>
-    </section>
-    <section id="about">
+      </section>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="scroll-reveal">
       <p class="section__text__p1">Get To Know More</p>
       <h1 class="title">About Me</h1>
       <div class="section-container">
-        <div class="section__pic-container">
-          <img
-            src="./assets/More.png"
-            alt="Profile picture"
-            class="about-pic"
-          />
-        </div>
         <div class="about-details-container">
           <div class="about-containers">
             <div class="details-container">
-              <img
-                src="./assets/experience.png"
-                alt="Experience icon"
-                class="icon"
-              />
+              <img src="./assets/experience.png" alt="Experience icon" class="icon" />
               <h3>Experience</h3>
               <p>3+ years <br />Game Development</p>
             </div>
             <div class="details-container">
-              <img
-                src="./assets/education.png"
-                alt="Education icon"
-                class="icon"
-              />
+              <img src="./assets/education.png" alt="Education icon" class="icon" />
               <h3>Education</h3>
-              <p>BCA. Bachelor of Computer Applications Degree
+              <p>BCA. Bachelor of Computer Applications Degree</p>
             </div>
           </div>
           <div class="text-container">
             <p>
-
-              I am a tech enthusiast passionate about Gaming and Software technology, with 3 years of hands-on experience in Godot and 1 year of experience in Unity.  
-              Proficient in programming languages such as GDScript and C#<br> <br> 
-              I am seeking an opportunity to leverage my creativity and technical expertise to contribute to innovative Game development projects. 
-
+              I am a tech enthusiast passionate about gaming and software technology, with 4 years of hands-on experience in Godot and 1+ years in Unity, developing both games and applications. 
+              Proficient in programming languages such as GDScript, C#, and familiar with Java and Kotlin, <br><br> 
+              I am seeking an opportunity to leverage my creativity and technical expertise to contribute to innovative Game development and software projects.
             </p>
           </div>
         </div>
       </div>
-      <img
-        src="./assets/arrow.png"
-        alt="Arrow icon"
-        class="icon arrow"
-        onclick="location.href='./#experience'"
-      />
+      <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='./#experience'" />
     </section>
-    <section id="experience">
+
+    <!-- Skills Section -->
+    <section id="experience" class="scroll-reveal">
       <p class="section__text__p1">Explore My</p>
       <h1 class="title">Skills</h1>
       <div class="experience-details-container">
         <div class="about-containers">
           <div class="details-container">
-            <h2 class="experience-sub-title"> Game Development </h2>
+            <h2 class="experience-sub-title">Game Development</h2>
             <div class="article-container">
               <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
                 <div>
-                  <h3>Unity Engien</h3>
+                  <h3>Unreal Engine</h3>
+                  <p>Basic</p>
+                </div>
+              </article>
+              <article>
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
+                <div>
+                  <h3>Unity Engine</h3>
                   <p>Experienced</p>
                 </div>
               </article>
               <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
                 <div>
-                  <h3>Godot Engien</h3>
+                  <h3>Godot Engine</h3>
                   <p>Experienced</p>
                 </div>
               </article>
+
               <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
                 <div>
                   <h3>2D Development</h3>
                   <p>Experienced</p>
                 </div>
               </article>
               <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
                 <div>
-
+                  <h3>Game Design</h3>
+                  <p>Experienced</p>
+                </div>
+              </article>
+              <article>
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
+                <div>
+                  <h3>Debugging</h3>
+                  <p>Experienced</p>
+                </div>
+              </article>
+              <article>
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
+                <div>
                   <h3>3D Development</h3>
                   <p>Intermediate</p>
-
                 </div>
               </article>
               <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
                 <div>
-                  <h3>Game Designe</h3>
-                  <p>Experienced</p>
-                </div>
-              
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Debuging</h3>
-                  <p>Experienced</p>
+                  <h3>Animation</h3>
+                  <p>Intermediate</p>
                 </div>
               </article>
-
-            </article>
-            <article>
-             
-              <img
-                src="./assets/checkmark.png"
-                alt="Experience icon"
-                class="icon"
-              />
-              <div>
-                <h3>Animation</h3>
-                <p>Intermediate</p>
-              </div>
-            </article>
-
-
-            <article>
-             
-              <img
-                src="./assets/checkmark.png"
-                alt="Experience icon"
-                class="icon"
-              />
-              <div>
-                <h3>Android Integration</h3>
-                <p>Basic</p>
-              </div>
-            </article>
-              
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>SQLite DataBase</h3>
-                  <p>Basic</p>
-                </div>
-              </article>
-
-
             </div>
           </div>
           <div class="details-container">
-            <h2 class="experience-sub-title">Software & Web Development</h2>
+            <h2 class="experience-sub-title">Other Than Game Development</h2>
             <div class="article-container">
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
+                <article>
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
                 <div>
                   <h3>Android Studio</h3>
-                  <p>Basic</p>
+                  <p>Intermediate</p>
                 </div>
               </article>
               <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
+                <div>
+                  <h3>Microsoft Azure</h3>
+                  <p>Experienced</p>
+                </div>
+              </article>
+              <article>
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
+                <div>
+                  <h3>MongoDB</h3>
+                  <p>Experienced</p>
+                </div>
+              </article>
+              <article>
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
+                <div>
+                  <h3>Rest API</h3>
+                  <p>Experienced</p>
+                </div>
+              </article>
+              <article>
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
                 <div>
                   <h3>Git</h3>
                   <p>Intermediate</p>
                 </div>
               </article>
               <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
+                <div>
+                  <h3>Android Deployment</h3>
+                  <p>Intermediate</p>
+                </div>
+              </article>
+              <article>
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
                 <div>
                   <h3>HTML</h3>
                   <p>Basic</p>
                 </div>
               </article>
-
               <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
                 <div>
                   <h3>CSS</h3>
                   <p>Basic</p>
                 </div>
               </article>
-
-
+              <article>
+                <img src="./assets/checkmark.png" alt="Experience icon" class="icon" />
+                <div>
+                  <h3>SQLite Database</h3>
+                  <p>Basic</p>
+                </div>
+              </article>
             </div>
           </div>
         </div>
       </div>
-      <img
-        src="./assets/arrow.png"
-        alt="Arrow icon"
-        class="icon arrow"
-        onclick="location.href='./#projects'"
-      />
+      <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='./#projects'" />
     </section>
-    <!-- New Overlay Structure -->
+
+    <!-- Project Overlay -->
     <div id="new-overlay" class="overlay" style="display: none;" onclick="closeNewOverlay(event)">
       <div class="overlay-content" onclick="event.stopPropagation();">
         <div class="btn-container">
-          <button class="btn btn-color-2 project-btn close-btn" onclick="closeNewOverlay()">
-            X
-          </button>
+          <button class="btn btn-color-2 project-btn close-btn" onclick="closeNewOverlay()">X</button>
         </div>
-                  <div class="overlay-inner">
-            <div class="video-container">
-              <h2 id="new-overlay-title">Project Title</h2>
-              <video id="new-overlay-video" controls loop style="display: none;">
-                  <source id="new-video-source" data-src="path/to/your/video.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-              </video>                
-            </div>
-          
-              <div id="new-overlay-description" class="scrollable-description">
-                  This is where the project description will appear.
-                  <!-- Add more paragraphs if needed -->
-              </div>
+        <div class="overlay-inner">
+          <div class="overlay-title">
+            <h2 id="new-overlay-title">Project Title</h2>
           </div>
+          <div class="video-container">
+            <video id="new-overlay-video" controls loop style="display: none;">
+              <source id="new-video-source" data-src="path/to/your/video.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div id="new-overlay-description" class="scrollable-description">
+            This is where the project description will appear.
+          </div>
+        </div>
       </div>
-  </div>
-  
-  </div>
+    </div>
 
-    <section id="projects">
+    <!-- Projects Section -->
+    <section id="projects" class="scroll-reveal">
       <p class="section__text__p1">Browse My Recent</p>
       <h1 class="title">Projects</h1>
       <div class="experience-details-container">
         <div class="about-containers">
+      <div class="details-container color-container">
+        <div class="project-img-container">
+          <img src="./assets//Images/Shopcalculator.png" alt="VegCal Project" class="project-img" />
+        </div>
+        <h2 class="experience-sub-title project-title">ShopCalculator</h2>
+        <div class="btn-container">
+         
+          <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('ShopCalculator: Dynamic Vegetable Calculator Updated Version of VegCal !', 
+            '<h3>This project is a dynamic vegetable calculator specifically designed for Android shop applications, redeveloped from scratch to enhance efficiency and user experience.</h3><br>' +
+            '<h4>Problem Statement:</h4><br> Manual calculation of vegetable quantities and prices in shop applications for Android devices is inefficient and prone to errors. VegCal addresses these challenges with an optimized solution tailored for mobile devices. The app is still in development and not yet available on the Google Play Store.<br><br>' +
+            '<strong>Technologies Used:</strong> <br>  Android Studio , Kotlin , SQLite Database, AdMob , FireBase , Android SDK , Java JDK  <br><br>' +
+            '<strong>Key Features:</strong><br>' +
+            '- <strong>User-Friendly Design:</strong>   Completely revamped UI in Android Studio for improved accessibility and ease of use, tailored for shop owners and staff, with added minor adjustments for polished experience.<br>' +
+            '- <strong>Efficient Backend:</strong>   Integrates an SQLite database for robust data management with real-time updates.<br>' +
+            '- <strong>Optimized Performance:</strong>   Base APK optimized to under 5MB, ensuring lightweight and fast performance on Android devices.<br>' +
+            '- <strong>Enhanced Functionality:</strong>   Improved logic for seamless pricing and quantity calculations, enhancing accuracy and efficiency.<br>' +
+            '- <strong>Monetization and Authentication:</strong>   Implemented Google AdMob for banner ads and Google Authentication for secure user access. Interstitial ads, along with saving and retrieving functionalities, are still under development.<br><br>' +
+            'This project reflects my commitment to creating efficient and user-centric solutions for both game and application development, leveraging my skills in Godot, Unity, and Android Studio development !. <br><br> I am eager to continue learning and take on more complex challenges in future projects !!... <br><br>', 
+            'assets/Videos/Shop Calculator.mp4', './assets/Images/Shopcalculator.png')">
+            Project Info
+          </button>
+        </div>
+      </div>
           <div class="details-container color-container">
             <div class="project-img-container">
-              <img
-                src="./assets/Images/fps.png"
-                alt="Project 1"
-                class="project-img"
-              />
+              <img src="./assets/Images/fps.png" alt="Project 1" class="project-img" />
             </div>
             <h2 class="experience-sub-title project-title">FPS Shooter 3D</h2>
             <div class="btn-container">
-              <button
-                class="btn btn-color-2 project-btn"
-                onclick="window.open('https://github.com/shiva30122/FPS-PUBG-Clone', '_blank')"
-                >
+              <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/shiva30122/FPS-PUBG-Clone', '_blank')">
                 Github
               </button>
-
               <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('FPS (3D, Unity)', 
-              '<h3>This project is a 3D game development endeavor, creating a fully modular and flexible system inspired by the mechanics of PUBG.</h3>' + 
-              '<br>' +
-              '<h4>In this FPS project, I’ve designed the architecture to be adaptable and modular:</h4>' + 
-              '<br>' + 
-              '<br>' +
-              '<strong>Pickups:</strong> <br> Weapons and items are collected independently from the inventory, with each weapon type (Gun, Pistol, Melee) having its own designated slot. This individual management of pickups enhances flexibility.<br>' + 
-              '<br>' +
-              '<br>' +
-              '<strong>Inventory Manager:</strong> <br> This system efficiently handles all acquired items, allowing for the addition of identical items to existing stacks and the creation of new slots for different ones. It also accommodates one-time pickups that cannot be dropped, dynamically managing space allocation to ensure all items fit seamlessly.<br>' +
-              '<br>' +
-              '<br>' +
-              '<strong>Gun Script:</strong> <br> The functionality of all weapons is centralized, supporting features like Automatic Shooting, Burst Fire, Shotgun Mechanics, and Multi-Point Shooting. This system enables the addition of attachments to any gun; for example, attaching a MultiPad Shoot module to an AR gun allows it to fire multiple bullets simultaneously, resulting in a highly customizable experience.<br>' + 
-              '<br>' +
-              '<br>' +
-              'I have encountered numerous challenges, including Unity crashes during testing and managing while loops. However, I remained determined to build efficient and flexible code. Transitioning to 3D was particularly challenging, but with perseverance, I mastered essential concepts such as while loops and coroutines. Each obstacle has only fueled my passion for game development.<br>' +
-              '<br>' +
-              '<br>' +
-              'A heartfelt thank you to Hemanth Kumar K for inspiring me to embark on this journey in 3D Unity game development!<br><br><br><br>', 
-              'assets/Videos/FPSVideo.mp4')"> Project Info</button>
-
-          
-
-              <!-- <button
-                class="btn btn-color-2 project-btn"
-                onclick="location.href='https://drive.google.com/drive/folders/1O2wOl5IZpEIec7ePfV3tEmoxANGv1tJi?usp=drive_link'"
-              >
-                Download
-              </button> -->
+                '<h3>This project is a 3D game development endeavor, creating a fully modular and flexible system inspired by the mechanics of PUBG.</h3><br>' +
+                '<h4>In this FPS project, I’ve designed the architecture to be adaptable and modular:</h4><br><br>' +
+                '<strong>Pickups:</strong> <br> Weapons and items are collected independently from the inventory, with each weapon type (Gun, Pistol, Melee) having its own designated slot. This individual management of pickups enhances flexibility.<br><br>' +
+                '<strong>Inventory Manager:</strong> <br> This system efficiently handles all acquired items, allowing for the addition of identical items to existing stacks and the creation of new slots for different ones. It also accommodates one-time pickups that cannot be dropped, dynamically managing space allocation to ensure all items fit seamlessly.<br><br>' +
+                '<strong>Gun Script:</strong> <br> The functionality of all weapons is centralized, supporting features like Automatic Shooting, Burst Fire, Shotgun Mechanics, and Multi-Point Shooting. This system enables the addition of attachments to any gun; for example, attaching a MultiPad Shoot module to an AR gun allows it to fire multiple bullets simultaneously, resulting in a highly customizable experience.<br><br>' +
+                'I have encountered numerous challenges, including Unity crashes during testing and managing while loops. However, I remained determined to build efficient and flexible code. Transitioning to 3D was particularly challenging, but with perseverance, I mastered essential concepts such as while loops and coroutines. Each obstacle has only fueled my passion for game development.<br><br>' +
+                'A heartfelt thank you to Hemanth Kumar K for inspiring me to embark on this journey in 3D Unity game development!<br><br><br><br>', 
+                'assets/Videos/FPSVideo.mp4', './assets/Images/fps.png')">
+                Project Info
+              </button>
             </div>
           </div>
-
-              <div class="details-container color-container">
-                <div class="project-img-container">
-                  <img
-                    src="./assets/Images/ancient.png"
-                    alt="Project 2"
-                    class="project-img"
-                  />
-                </div>
-                <h2 class="experience-sub-title project-title">2D Puzzle Adventures</h2>
-                <div class="btn-container">
-                  <button
-                    class="btn btn-color-2 project-btn"
-                    onclick="window.open('https://github.com/shiva30122/Unity-2D_Puzzle', '_blank')"
-                    >
-                    Github
-                  </button>
-    
-                  <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('2D Puzzle Game (Unity)', 
-                  '<h3>This 2D puzzle game offers diverse puzzles with increasing difficulty, featuring modular swapping and intuitive drag-and-drop controls for creative problem-solving.</h3>' + 
-                  
-                  '<br><strong>Following a setback during a technical interview at HFG Entertainments Private Limited,</strong> I refined my game logic skills and gained valuable experience. Particularly during the technical round Interview, posed several questions that I couldn\'t answer !... This experience highlighted my knowledge gaps, but the constructive feedback I received inspired me to refine my game logic skills and complete this puzzle project using modular, flexible, and reusable code that can adapt to any type of Swapping.</h3>' + 
-                  
-                  '<br><br>' + '<h4>Project Highlights:</h4>' + 
-                  '<br>' + '<strong>Logical Thinking:</strong> The project emphasizes logical thinking and strategic problem-solving, encouraging players to engage deeply with each puzzle.<br>' + 
-                  
-                  '<br>' + '<strong>Engaging Experience:</strong> Developed with a focus on creating a smooth and engaging experience, each level is carefully designed to provide a balance of challenge and enjoyment, helping players improve their skills as they move forward.<br><br>' + 
-                  
-                  '<h4>Personal Growth:</h4>' + 
-                  '<br>' + 'During my development journey, I initially faced a setback when I didn\'t pass the technical interview with <strong>HFG Entertainments Private Limited</strong>. I realized there were gaps in how I understood and explained the complex logic behind the code I had written. Instead of giving up, I worked hard to improve those areas and proved to myself that I could handle the challenges of game development.<br><br>' + 
-                  
-                  'This game, in particular, became a representation of my growth. By overcoming the issues that held me back, I became more confident in my abilities and more determined to succeed.<br><br>' + 
-                  
-                  'With its engaging mechanics and polished design, this 2D puzzle game offers a rewarding experience for players, showing how far I\'ve come since that initial setback.<br><br><br><br><br><br><br>', 
-                  'assets/Videos/2D_Puzzle.mp4')"> Project Info</button>
-              
-              
-                  
-    
-                  <button
-                    class="btn btn-color-2 project-btn"
-                    onclick="window.open('https://github.com/shiva30122/Unity-2D_Puzzle/tree/main/APK', '_blank')"
-                    >
-                    Download
-                  </button>
-                </div>
-              </div>
-             
-                  <div class="details-container color-container">
-                    <div class="project-img-container">
-                      <img
-                        src="./assets/Apex.jpeg"
-                        alt="Project 2"
-                        class="project-img"
-                      />
-                    </div>
-                    <h2 class="experience-sub-title project-title">Apex Warriors</h2>
-                    <div class="btn-container">
-                      <button
-                        class="btn btn-color-2 project-btn"
-                        onclick="window.open('https://github.com/shiva30122/Apex-Wifi-Based-Game', '_blank')"
-                        >
-                        Github
-                      </button>
-        
-                      <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('Multiplayer Android Game Apex Warriors ( Godot 4 )', 
-                      '<h3>This project is a multiplayer Android game developed using the Godot Engine as part of a university project. It supports up to 12 players simultaneously over a local Wi-Fi network, delivering a smooth, lag-free experience.</h3>' + 
-                      '<br>'+
-                      '<h4>Features:</h4>' +
-                      '<br>'+
-                      '<strong>Real-Time Multiplayer:</strong> Seamless connectivity for up to 12 players on the same local network.<br>' +
-                      '<br>'+
-                      '<strong>Local Wi-Fi Integration:</strong> Custom network code for efficient player connections and real-time synchronization.<br>' +
-                      '<br>'+
-                      '<br>'+'<strong>Dynamic Gameplay:</strong> Features that promote interaction and engagement between players in an immersive environment.<br>' +
-                      '<br>'+'<strong>Optimized User Experience:</strong> Fluid multiplayer setup and intuitive gameplay for all skill levels.<br><br>' +
-                      '<br>'+
-                      '<h4>Technologies Used:</h4>' + 
-                      '<strong>Godot 4, GD Script, Android Studio, Android SDK, Java JDK</strong><br><br>' + 
-                      '<br>'+
-                      '<h4>Future Improvements:</h4>' +
-                      '<br>'+
-                      '<strong>Expanding network support:</strong> For more robust multiplayer options, including internet-based gameplay.<br>' +
-                      '<br>'+'<strong>Adding advanced in-game features:</strong> Like leaderboards and player stats tracking.<br>' +
-                      '<br>'+'<strong>Cross-platform compatibility:</strong> Expanding to PC and iOS for broader reach.<br><br><br><br><br>', 
-                      'assets/Videos/Apex.mov')"> Project Info</button>
-
-        
-                      <button
-                        class="btn btn-color-2 project-btn"
-                        onclick="window.open('https://drive.google.com/drive/folders/1-852IS-uwtfmdZVqETNRP29YTiHivzab?usp=sharing', '_blank')"
-                        >
-                        Download
-                      </button>
-                    </div>
-                  </div>
-
-
-                  <div class="details-container color-container">
-                    <div class="project-img-container">
-                      <img
-                        src="./assets/calculator.png"
-                        alt="Project 2"
-                        class="project-img"
-                      />
-                    </div>
-                    <h2 class="experience-sub-title project-title">VegCal</h2>
-                    <div class="btn-container">
-                      <button
-                        class="btn btn-color-2 project-btn"
-                        onclick="window.open('https://github.com/shiva30122/VegCal', '_blank')"
-                        >
-                        Github
-                      </button>
-                                        
-                      <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('VegCal - Dynamic Vegetable Calculator', 
-                      '<h3>This project is a dynamic vegetable calculator specifically designed for Android shop applications.</h3>' + 
-                      '<br>' +
-                      '<h4>Technologies Used:</h4>' + 
-                      '<strong>Godot 4, GD Script, SQLite Database, Android Studio, Android SDK, Java JDK, </strong><br><br>' + 
-                      '<h4>Project Duration:</h4>' + 
-                      '<strong>February 2024 - March 2024</strong><br><br>' + 
-                      '<h4>Problem Statement:</h4>' + 
-                      '<br>'+'<strong>The manual calculation of vegetable quantities and prices in shop applications for Android devices can be inefficient and prone to errors.</strong><br><br>' + 
-                      '<br>'+'<strong>VegCal features an intuitive user interface that simplifies the pricing and quantity calculation process.</strong><br><br>' +
-                      '<br>'+'<h4>Key Features:</h4>' +
-                      '<ul>' +
-                      '<br>'+'<li><strong>User-Friendly Design:</strong> Tailored for ease of use, making it accessible for shop owners and staff.</li>' +
-                      '<br>'+'<li><strong>Efficient Backend:</strong> Integration of an SQLite database for effective data management, ensuring seamless performance with real-time updates along with a CFG file as a simple text database for unsupported devices.</li>' +
-                      '</ul><br><br><br><br><br>', 
-                      'assets/Videos/Cal.mov')"> Project Info</button>
-
-
-                      
-                      <button
-                        class="btn btn-color-2 project-btn"
-                        onclick="location.href='https://github.com/shiva30122/VegCal/tree/main/APK'"
-                      >
-                        Download
-                      </button>
-                    </div>
-                  </div>
-                  
-
-          <!-- <div class="details-container color-container">
-            <div class="article-container">
-              <img
-                src="./assets/project-3.png"
-                alt="Project 3"
-                class="project-img"
-              />
+          <div class="details-container color-container">
+            <div class="project-img-container">
+              <img src="./assets/Images/ancient.png" alt="Project 2" class="project-img" />
             </div>
-            <h2 class="experience-sub-title project-title">Project Three</h2>
+            <h2 class="experience-sub-title project-title">2D Puzzle Adventures</h2>
             <div class="btn-container">
-              <button
-                class="btn btn-color-2 project-btn"
-                onclick="location.href='https://github.com/'"
-              >
+              <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/shiva30122/Unity-2D_Puzzle', '_blank')">
                 Github
               </button>
-              <button
-                class="btn btn-color-2 project-btn"
-                onclick="location.href='https://github.com/'"
-              >
-                Live Demo
-              </button> -->
+              <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('2D Puzzle Game (Unity)', 
+                '<h3>This 2D puzzle game offers diverse puzzles with increasing difficulty, featuring modular swapping and intuitive drag-and-drop controls for creative problem-solving.</h3>' + 
+                '<br><strong>Following a setback during a technical interview at HFG Entertainments Private Limited,</strong> I refined my game logic skills and gained valuable experience. Particularly during the technical round Interview, posed several questions that I couldn\'t answer !... This experience highlighted my knowledge gaps, but the constructive feedback I received inspired me to refine my game logic skills and complete this puzzle project using modular, flexible, and reusable code that can adapt to any type of Swapping.</h3>' + 
+                '<br><br><h4>Project Highlights:</h4><br><strong>Logical Thinking:</strong> The project emphasizes logical thinking and strategic problem-solving, encouraging players to engage deeply with each puzzle.<br>' + 
+                '<br><strong>Engaging Experience:</strong> Developed with a focus on creating a smooth and engaging experience, each level is carefully designed to provide a balance of challenge and enjoyment, helping players improve their skills as they move forward.<br><br>' + 
+                '<h4>Personal Growth:</h4><br>During my development journey, I initially faced a setback when I didn\'t pass the technical interview with <strong>HFG Entertainments Private Limited</strong>. I realized there were gaps in how I understood and explained the complex logic behind the code I had written. Instead of giving up, I worked hard to improve those areas and proved to myself that I could handle the challenges of game development.<br><br>' + 
+                'This game, in particular, became a representation of my growth. By overcoming the issues that held me back, I became more confident in my abilities and more determined to succeed.<br><br>' + 
+                'With its engaging mechanics and polished design, this 2D puzzle game offers a rewarding experience for players, showing how far I\'ve come since that initial setback.<br><br><br><br><br><br><br>', 
+                'assets/Videos/2D_Puzzle.mp4', './assets/Images/ancient.png')">
+                Project Info
+              </button>
+              <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/shiva30122/Unity-2D_Puzzle/tree/main/APK', '_blank')">
+                Download
+              </button>
+            </div>
+          </div>
+          <div class="details-container color-container">
+            <div class="project-img-container">
+              <img src="./assets/Apex.jpeg" alt="Project 3" class="project-img" />
+            </div>
+            <h2 class="experience-sub-title project-title">Apex Warriors</h2>
+            <div class="btn-container">
+              <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/shiva30122/Apex-Wifi-Based-Game', '_blank')">
+                Github
+              </button>
+              <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('Multiplayer Android Game Apex Warriors (Godot 4)', 
+                '<h3>This project is a multiplayer Android game developed using the Godot Engine as part of a university project. It supports up to 12 players simultaneously over a local Wi-Fi network, delivering a smooth, lag-free experience.</h3><br>' +
+                '<h4>Features:</h4><br><strong>Real-Time Multiplayer:</strong> Seamless connectivity for up to 12 players on the same local network.<br>' +
+                '<br><strong>Local Wi-Fi Integration:</strong> Custom network code for efficient player connections and real-time synchronization.<br><br>' +
+                '<strong>Dynamic Gameplay:</strong> Features that promote interaction and engagement between players in an immersive environment.<br>' +
+                '<br><strong>Optimized User Experience:</strong> Fluid multiplayer setup and intuitive gameplay for all skill levels.<br><br>' +
+                '<h4>Technologies Used:</h4><strong>Godot 4, GD Script, Android Studio, Android SDK, Java JDK</strong><br><br>' +
+                '<h4>Future Improvements:</h4><br><strong>Expanding network support:</strong> For more robust multiplayer options, including internet-based gameplay.<br>' +
+                '<br><strong>Adding advanced in-game features:</strong> Like leaderboards and player stats tracking.<br>' +
+                '<br><strong>Cross-platform compatibility:</strong> Expanding to PC and iOS for broader reach.<br><br><br><br><br>', 
+                'assets/Videos/Apex.mov', './assets/Apex.jpeg')">
+                Project Info
+              </button>
+              <button class="btn btn-color-2 project-btn" onclick="window.open('https://drive.google.com/drive/folders/1-852IS-uwtfmdZVqETNRP29YTiHivzab?usp=sharing', '_blank')">
+                Download
+              </button>
+            </div>
+          </div>
+          <div class="details-container color-container">
+            <div class="project-img-container">
+              <img src="./assets/Images/calculator.png" alt="Project 4" class="project-img" />
+            </div>
+            <h2 class="experience-sub-title project-title">VegCal</h2>
+            <div class="btn-container">
+              <button class="btn btn-color-2 project-btn" onclick="window.open('https://github.com/shiva30122/VegCal', '_blank')">
+                Github
+              </button>
+              <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('VegCal - Dynamic Vegetable Calculator', 
+                '<h3>This project is a dynamic vegetable calculator specifically designed for Android shop applications.</h3><br>' +
+                '<h4>Technologies Used:</h4><strong>Godot 4, GD Script, SQLite Database, Android Studio, Android SDK, Java JDK</strong><br><br>' +
+                '<h4>Project Duration:</h4><strong>February 2024 - March 2024</strong><br><br>' +
+                '<h4>Problem Statement:</h4><br><strong>The manual calculation of vegetable quantities and prices in shop applications for Android devices can be inefficient and prone to errors.</strong><br><br>' +
+                '<strong>VegCal features an intuitive user interface that simplifies the pricing and quantity calculation process.</strong><br><br>' +
+                '<h4>Key Features:</h4><ul><br><li><strong>User-Friendly Design:</strong> Tailored for ease of use, making it accessible for shop owners and staff.</li><br>' +
+                '<li><strong>Efficient Backend:</strong> Integration of an SQLite database for effective data management, ensuring seamless performance with real-time updates along with a CFG file as a simple text database for unsupported devices.</li></ul><br><br><br><br><br>', 
+                'assets/Videos/Cal.mov', './assets/Images/calculator.png')">
+                Project Info
+              </button>
+              <button class="btn btn-color-2 project-btn" onclick="location.href='https://github.com/shiva30122/VegCal/tree/main/APK'">
+                Download
+              </button>
             </div>
           </div>
         </div>
       </div>
-
-      <img
-        src="./assets/arrow.png"
-        alt="Arrow icon"
-        class="icon arrow"
-        onclick="location.href='./#contact'"
-      />
+      <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='./#contact'" />
     </section>
-    <section id="contact">
-      <p class="section__text__p1"> Get in Touch </p>
-      <h1 class="title"> Contact Me </h1>
-      <div class="contact-info-upper-container">
-        <div class="contact-info-container">
-          <img
-            src="./assets/email.png"
-            alt="Email icon"
-            class="icon contact-icon email-icon"
-          />
-          <p><a href="mailto:sivabalaa8@gmail.com"> sivabalaa8@gmail.com </a></p>
-        </div>
-        <div class="contact-info-container">
-          <img
-            src="./assets/call.png"
-            alt="LinkedIn icon"
-            class="icon contact-icon"
-          />
-          <p><b><a href="tel:+919444546017"> +91 9444546017 </a></b></p>
-        </div>
-        <div class="contact-info-container">
-          <img
-            src="./assets/linkedin.png"
-            alt="LinkedIn icon"
-            class="icon contact-icon"
-          />
-          <p><a href="https://www.linkedin.com/in/siva-balaa-a770b020b/" target="_blank"> LinkedIn </a></p>
-        </div>
 
+<!-- ...existing code... -->
+<section id="contact" class="scroll-reveal">
+  <p class="section__text__p1">Get in Touch</p>
+  <h1 class="title">Contact Me</h1>
+  <div class="contact-info-upper-container">
+    <div class="contact-info-wrapper">
+      <div class="contact-info-container">
+        <img src="./assets/email.png" alt="Email icon" class="icon contact-icon email-icon" />
+        <p>
+          <a href="mailto:sivabalaa8@gmail.com"><b>sivabalaa8@gmail.com</b></a>
+        </p>
       </div>
-
-    </section>
-    <footer>
-      <nav>
-        <div class="nav-links-container">
-          <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#experience">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <!-- <li><a href="#contact">Contact</a></li> -->
-          </ul>
-        </div>
-      </nav>
-      <div class="word-container">
-        <span id="changing-word"></span>
+      <div class="contact-info-container">
+        <img src="./assets/call.png" alt="Phone icon" class="icon contact-icon" />
+        <p><b><a href="tel:+919444546017">+919444546017</a></b></p>
+      </div>
+      <div class="contact-info-container">
+        <img src="./assets/linkedin.png" alt="LinkedIn icon" class="icon contact-icon" />
+        <p><a href="https://www.linkedin.com/in/siva-balaa-a770b020b/" target="_blank">LinkedIn</a></p>
+      </div>
     </div>
-      <p></p>
-    </footer>
+  </div>
+  <div class="spacer"></div> <!-- Add this for white space -->
+</section>
+
+
+<!-- Last Image Container -->
+    <div id="last-image-container" class="hidden"></div>
+    <div id="elastic-image-container"></div>
+    <div id="popup-image" class="popup-image"></div>
+
+    <!-- Scripts -->
     <script src="script.js"></script>
-
     <script>
-      const containers = document.querySelectorAll('.details-container');
-      
-      function setActiveProject() {
-        const windowHeight = window.innerHeight;
-      
-        containers.forEach(container => {
-          const rect = container.getBoundingClientRect();
-          const isVisible = rect.top >= 0 && rect.bottom <= windowHeight;
-      
-          // Remove the active class from all projects
-          container.classList.remove('active');
-      
-          // Check if the project is visible in the viewport
-          if (isVisible) {
-            container.classList.add('active');
-          }
-        });
-      }
-      
-      // Run the function on scroll and resize
-      window.addEventListener('scroll', setActiveProject);
-      window.addEventListener('resize', setActiveProject);
-      
-      // Initial call to set the active project
-      setActiveProject();
-      </script>
-      
-
-  
+      (function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9281cdb98dfabf8e',t:'MTc0MzI3Njg1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();
+    </script>
+    <script>
+      (function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9282499ccd658bb9',t:'MTc0MzI4MTkyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();
+    </script>
   </body>
 </html>
