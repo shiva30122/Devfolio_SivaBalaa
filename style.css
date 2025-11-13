@@ -167,7 +167,13 @@ a:hover {
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Center-to-Sides Split Animation on Hover and Click */
+/* ===== UNDERLINE: SPLIT + SMOOTH REVERSE (WORKS EVERYWHERE) ===== */
+.nav-links a {
+  position: relative;
+  display: inline-block;
+}
+
+/* Base: Hidden in center */
 .nav-links a::before,
 .nav-links a::after {
   content: '';
@@ -175,39 +181,28 @@ a:hover {
   height: 2px;
   bottom: -0.5rem;
   background-color: rgb(181, 181, 181);
-  transition: none;
-}
-
-.nav-links a::before {
   width: 0;
-  left: 50%;
+  transition: all 0.3s ease-out; /* ← THIS MAKES REVERSE WORK */
+  opacity: 1;
 }
 
-.nav-links a::after {
-  width: 0;
-  right: 50%;
-}
+.nav-links a::before { left: 50%; }
+.nav-links a::after  { right: 50%; }
 
+/* On Hover/Click: Split out */
 .nav-links a.hovered::before,
 .nav-links a.clicked::before {
-  animation: splitLeft 0.3s ease-in-out forwards;
+  width: 40%;
+  left: 10%;
 }
 
 .nav-links a.hovered::after,
 .nav-links a.clicked::after {
-  animation: splitRight 0.3s ease-in-out forwards;
+  width: 40%;
+  right: 10%;
 }
 
-@keyframes splitLeft {
-  0% { width: 0; left: 50%; }
-  100% { width: 40%; left: 10%; } /* Stop midway */
-}
-
-@keyframes splitRight {
-  0% { width: 0; right: 50%; }
-  100% { width: 40%; right: 10%; } /* Stop midway */
-}
-
+/* Keep your menu open animation */
 .nav-links.open a {
   animation: tracking-in-contract-bck 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
 }
@@ -911,7 +906,7 @@ article {
   text-align: left;
   width: 15.5ch;
   padding: 0.5em 1em;
-  background: #ffffff; /* White background for container */
+  /* background: #ffffff; White background for container */
   border-radius: 0.5em;
   overflow: visible;
   position: relative;
@@ -922,7 +917,7 @@ article {
   white-space: nowrap;
   padding-right: 0.5ch;
   position: relative;
-  color: #333333; /* Dark text for clarity */
+  color: #ffffff; /* Dark text for clarity */
   font-size: clamp(1.6rem, 2.4vw, 2.1rem); /* Increased and scaled to fill space */
   text-shadow: 
     0 0 0.2em rgba(204, 51, 255, 0.5), /* Purple glow */
@@ -1067,4 +1062,96 @@ article {
 .spacer {
   height: 80px; /* Adjust this value for more or less space (e.g., 20px, 100px) */
   width: 100%;
+}
+
+
+
+/* FREEZE PAGE — NO SCROLL, NO JUMP */
+html.no-scroll,
+body.no-scroll {
+  overflow: hidden !important;
+
+}
+
+/* ONLY OVERLAY DESCRIPTION SCROLLS */
+.scrollable-description {
+  overflow-y: auto !important;
+  max-height: 42vh;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* -------------------------------------------------
+   INTRO VIDEO – BACKGROUND + VISIBILITY PAUSE
+   ------------------------------------------------- */
+.StartingAnimationContainer {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: calc(100vh - 8vh);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.intro-video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* Keep profile on top */
+#profile { position: relative; z-index: 1; }
+
+
+.StartingAnimationContainer { position:relative; overflow:hidden; }
+.intro-video { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1; }
+#profile { position:relative; z-index:1; }
+
+.StartingAnimationContainer {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: calc(100vh - 8vh);
+}
+.intro-video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+#profile { position: relative; z-index: 1; }
+
+
+
+
+/* === 2-COLOR BLURRED BORDER + BLACK TEXT SHADOW FOR "Hello, I'm" & "Siva Balaa" === */
+.section__text__p1,
+.title {
+  text-shadow: 
+    0 0 8px rgba(0, 0, 0, 0.8),
+    0 0 15px rgba(255, 255, 255, 0.6);
+}
+
+/* 2-COLOR BLURRED BORDER (NEON GLOW) */
+.section__text__p1::before,
+.title::before {
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(45deg, #ff00ff, #00ffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: blur(2px);
+  z-index: -1;
+  opacity: 0.2;
+  animation: glowPulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes glowPulse {
+  from { filter: blur(2px); opacity: 0.2; }
+  to { filter: blur(52px); opacity: 1; }
 }
