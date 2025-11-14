@@ -18,6 +18,7 @@
           <li><a href="#about" onclick="showSection('about')">About</a></li>
           <li><a href="#experience" onclick="showSection('experience')">Skills</a></li>
           <li><a href="#projects" onclick="showSection('projects')">Projects</a></li>
+          <li><a href="#work-experience" onclick="showSection('work-experience')">Experience</a></li>
           <li><a href="#contact" onclick="showSection('contact')">Contact</a></li>
         </ul>
       </div>
@@ -34,6 +35,7 @@
           <li><a href="#about" onclick="toggleMenu(); showSection('about')">About</a></li>
           <li><a href="#experience" onclick="toggleMenu(); showSection('experience')">Skills</a></li>
           <li><a href="#projects" onclick="toggleMenu(); showSection('projects')">Projects</a></li>
+          <li><a href="#work-experience" onclick="showSection('work-experience')">Experience</a></li>
           <li><a href="#contact" onclick="toggleMenu(); showSection('contact')">Contact</a></li>
         </div>
       </div>
@@ -78,10 +80,10 @@
         </div>
 
         <div class="btn-container">
-          <button class="btn btn-color-2" onclick="downloadResume()">
+          <button class="btn btn-color-1" onclick="downloadResume()">
             Download Resume
           </button>
-          <button class="btn btn-color-1" onclick="location.href='./#contact'">
+          <button class="btn btn-color-1" onclick="location.href='Main.html#contact'">
             Contact<br>Info
           </button>
         </div>
@@ -126,7 +128,7 @@
           </div>
         </div>
       </div>
-      <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='./#experience'" />
+      <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='Main.html#experience'" /> 
     </section>
 
     <!-- Skills Section -->
@@ -267,7 +269,7 @@
           </div>
         </div>
       </div>
-      <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='./#projects'" />
+      <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='Main.html#projects'" />
     </section>
 
     <!-- Project Overlay -->
@@ -423,8 +425,89 @@
           </div>
         </div>
       </div>
-      <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='./#contact'" />
+      <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='Main.html#work-experience'" />
     </section>
+
+
+
+<!-- WORK EXPERIENCE – 3 JOBS WITH CLICK TO UNLOCK -->
+<section id="work-experience" class="scroll-reveal">
+  <p class="section__text__p1">Level Up</p>
+  <h1 class="title">Work Experience</h1>
+
+  <!-- JOB 1: UNITY DEVELOPER  copy paste below and chage ID for other jobs and also add that on js file that IDs ok !  -->
+  <div class="job-card-container">
+    <div class="locked-card" id="lockedCard1" data-job="1">
+      <div class="preview-content">
+        <h2 class="glow">UNITY JUNIOR GAME DEVELOPER</h2>
+        <h3 class="company">RATHERGAMES : HANUL | <span class="remote">REMOTE – CALIFORNIA</span></h3>
+        <p class="duration">NOV 2024 – PRESENT</p>
+        <ul class="preview-list">
+          <li>Develop Pokémon GO-inspired games using REST API calls for real-time data and interactive gameplay.</li>
+          <li>Contribute to game development in a dynamic startup, collaborating with a small team for innovative solutions.</li>
+          <li>Design and implement UI layouts with seamless alignment and user-friendly interfaces.</li>
+          <li>Develop and maintain C# code for gameplay, backend logic, and multiplayer using Mirror (Basic).</li>
+          <li class="blurred pulse">Implement IAP systems for Android with Azure Functions for secure server-side validation.</li>
+          <li class="blurred pulse">Integrate Azure Cosmos DB and Blob Storage for dynamic assets.</li>
+          <li class="blurred pulse">Upload AABs via Google Play Console with CI/CD.</li>
+        </ul>
+        <div class="preview-achievements">
+          <h4>Achievement:</h4>
+          <ul>
+            <li>Optimized game performance by <strong>20%</strong>, improving player experience on Android devices.</li>
+            <li class="blurred pulse">Enhanced REST API integration, enabling real-time features <strong>30%</strong> faster than initial estimates.</li>
+          </ul>
+        </div>
+        <p class="hint">Click to reveal full mission log and Explore !..</p>
+      </div>
+    </div>
+
+    <div class="full-card" id="fullCard1" style="display: none;">
+      <div class="card-header">
+        <h2>UNITY JUNIOR GAME DEVELOPER</h2>
+        <h3>RATHERGAMES : HANUL | <span class="remote">REMOTE – CALIFORNIA</span></h3>
+        <p class="duration">NOV 2024 – PRESENT</p>
+      </div>
+      <div class="card-body">
+        <ul class="responsibilities">
+          <li>Develop Pokémon GO-inspired games using REST API calls for real-time data and interactive gameplay.</li>
+          <li>Contribute to game development in a dynamic startup, collaborating with a small team for innovative solutions.</li>
+          <li>Design and implement UI layouts with seamless alignment and user-friendly interfaces.</li>
+          <li>Develop and maintain C# code for gameplay, backend logic, and multiplayer using Mirror (Basic).</li>
+          <li>Implement IAP systems for Android with Azure Functions for secure server-side validation.</li>
+          <li>Integrate serverless architecture with Azure Functions, managing Azure Cosmos DB, MongoDB, and Azure Blob Storage.</li>
+          <li>Enable texture downloading via Azure Blob Storage with temporary URLs.</li>
+          <li>Prepare and upload AABs via Google Play Console.</li>
+        </ul>
+        <div class="achievements">
+          <h4>Achievement:</h4>
+          <ul>
+            <li>Optimized game performance by <strong>20%</strong>, improving player experience on Android devices.</li>
+            <li>Enhanced REST API integration, enabling real-time features <strong>30%</strong> faster than initial estimates.</li>
+          </ul>
+        </div>
+        <div class="tech-stack">
+          <h4>Key Technologies:</h4>
+          <p>Unity, C#, UI Design, Mirror (Multiplayer), Azure Functions, Azure Cosmos DB, Azure Blob Storage, MongoDB, Cloud Scripting, REST APIs, Android In-App Purchases, Google Play Console</p>
+        </div>
+        <div class="setup">
+          <h4>Technical Setup (Remote Work)</h4>
+          <p>High-performance PC: i7-14700K, RTX 4060Ti 16GB, 32GB RAM, 2TB SSD – optimized for Unity development and testing.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <!-- Arrow -->
+  <img src="./assets/arrow.png" alt="Next" class="icon arrow" onclick="location.href='Main.html#experience'" />
+</section>
+
+<!-- GLOWING FLOATING HINT -->
+<div id="mouseHint" class="mouse-hint">Click to reveal full mission log !!</div>
 
 <!-- ...existing code... -->
 <section id="contact" class="scroll-reveal">

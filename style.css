@@ -1155,3 +1155,289 @@ body.no-scroll {
   from { filter: blur(2px); opacity: 0.2; }
   to { filter: blur(52px); opacity: 1; }
 }
+
+
+
+
+/* WORK EXPERIENCE – UNIFIED THEME, CLICK TO UNLOCK, TIGHTER SPACING, BLUE ACHIEVEMENT, GLOW ON UNLOCKED CARD */
+
+/* LOCKED CARD – CONTENT-SIZED + 3 BLURRED ITEMS */
+/* WORK EXPERIENCE – UNIFIED THEME, CLICK TO UNLOCK, TIGHTER SPACING, BLUE ACHIEVEMENT, GLOW ON UNLOCKED CARD */
+
+/* LOCKED CARD – CONTENT-SIZED + 3 BLURRED ITEMS */
+.locked-card {
+  width: 95%;
+  max-width: 1400px;
+  min-height: auto;
+  height: fit-content;
+  margin: 2rem auto;
+  background: rgba(15, 15, 35, 0.98);
+  border: 2px solid #00aaff;
+  border-radius: 28px;
+  padding: 2.5rem;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  box-shadow: 0 0 40px rgba(0, 170, 255, 0.4);
+  display: block;
+  backdrop-filter: blur(3px);
+  user-select: none;
+  color: #ffffff !important;
+}
+
+.locked-card * {
+  color: #ffffff !important;
+}
+
+.locked-card .glow {
+  color: #00ffff !important;
+  text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff !important;
+}
+
+.locked-card .company,
+.locked-card .remote,
+.locked-card .duration,
+.locked-card .preview-list li,
+.locked-card .preview-achievements li,
+.locked-card .hint {
+  color: #ffffff !important;
+}
+
+.locked-card .remote {
+  background: #00aaff !important;
+  color: rgb(255, 255, 255) !important;
+}
+
+.locked-card .duration {
+  color: #00ff88 !important;
+  text-shadow: 0 0 10px #00ff88 !important;
+}
+
+.locked-card .preview-list li,
+.locked-card .preview-achievements li {
+  color: #ffffff !important;
+  opacity: 0.9;
+}
+
+.locked-card .hint {
+  color: #00ffff !important;
+  text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff !important;
+}
+
+.locked-card:hover,
+.locked-card:active {
+  border-color: #00ffff;
+  box-shadow: 0 0 60px rgba(0, 255, 255, 0.6);
+  transform: translateY(-5px);
+}
+
+/* UNLOCKED CARD – SAME OUTER GLOW AS LOCKED CARD */
+.full-card {
+  width: 95%;
+  max-width: 1400px;
+  min-height: calc(100vh - 18vh);
+  margin: 0 auto;
+  background: rgba(15, 15, 35, 0.98);
+  border: 2px solid #00aaff;
+  border-radius: 28px;
+  padding: 2.5rem;
+  position: relative;
+  box-shadow: 0 0 40px rgba(0, 170, 255, 0.4);
+  backdrop-filter: blur(3px);
+  animation: expandCard 0.8s ease forwards;
+  display: flex;
+  flex-direction: column;
+}
+
+.full-card:hover {
+  border-color: #00ffff;
+  box-shadow: 0 0 60px rgba(0, 255, 255, 0.6);
+  transform: translateY(-5px);
+}
+
+@keyframes expandCard {
+  from { opacity: 0; transform: scale(0.97); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* UNIFIED HEADER */
+.card-header {
+  background: transparent;
+  color: #00ffff;
+  padding: 0;
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+
+.card-header h2 {
+  font-size: 2.1rem;
+  margin: 0 0 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
+}
+
+.card-header h3 {
+  font-size: 1.5rem;
+  margin: 0 0 0.4rem;
+  color: #ddd;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+.remote {
+  background: #00aaff;
+  color: white;
+  padding: 0.3rem 0.9rem;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.duration {
+  color: #00ff88;
+  font-size: 1.25rem;
+  font-style: italic;
+  margin: 0 0 1.5rem;
+  text-shadow: 0 0 10px #00ff88;
+}
+
+/* TIGHTER SPACING – 40% REDUCED */
+.card-body {
+  padding: 0;
+  color: #ccc;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.card-body ul,
+.card-body .achievements ul,
+.card-body .tech-stack,
+.card-body .setup {
+  padding-left: 2rem;
+  margin: 1rem 0;
+}
+
+.card-body li {
+  margin-bottom: 0.5rem;
+  line-height: 1.45;
+  font-size: 1.1rem;
+  color: #ccc;
+}
+
+/* ACHIEVEMENT TITLE – BLUE LIKE RESUME PDF */
+.card-body h4,
+.preview-achievements h4 {
+  color: #1976d2;
+  font-size: 1.35rem;
+  margin: 1.5rem 0 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(25, 118, 210, 0.5);
+}
+
+/* BLURRED + PULSE + WHITE GLOW */
+.blurred.pulse {
+  color: transparent !important;
+  text-shadow: 
+    0 0 14px rgba(255, 255, 255, 1),
+    0 0 24px rgba(255, 255, 255, 0.9),
+    0 0 36px rgba(255, 255, 255, 0.7);
+  filter: blur(6px);
+  opacity: 0.75;
+  animation: pulseGlow 1.6s infinite;
+  font-weight: 600;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.75; text-shadow: 0 0 14px rgba(255, 255, 255, 1); }
+  50% { opacity: 0.95; text-shadow: 0 0 22px rgba(255, 255, 255, 1), 0 0 40px rgba(255, 255, 255, 0.9); }
+}
+
+/* HINT – 2 EMPTY LINES + SPACING */
+.hint {
+  color: #00ffff;
+  font-size: 1.25rem;
+  margin: 2.5rem 0 0;
+  font-weight: 600;
+  text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
+  line-height: 1.8;
+}
+
+.hint::after {
+  content: "\A\A";
+  white-space: pre;
+}
+
+/* TECH & SETUP */
+.tech-stack p,
+.setup p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #bbb;
+  margin: 0.7rem 0 0;
+  padding-left: 0;
+}
+
+.setup p {
+  font-style: italic;
+  text-align: center;
+  color: #aaa;
+}
+
+/* GLOWING FLOATING HINT */
+.mouse-hint {
+  position: fixed;
+  bottom: 35px;
+  right: 35px;
+  background: rgba(0, 0, 0, 0.92);
+  color: #00ffff;
+  padding: 1rem 1.8rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff, 0 0 50px #00ffff;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.6), 0 0 50px rgba(0, 255, 255, 0.4);
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(0, 255, 255, 0.5);
+  animation: hintGlow 2s infinite alternate;
+}
+
+@keyframes hintGlow {
+  from { box-shadow: 0 0 30px rgba(0, 255, 255, 0.6); }
+  to { box-shadow: 0 0 40px rgba(0, 255, 255, 0.8); }
+}
+
+.mouse-hint.show {
+  opacity: 1;
+}
+
+/* REMOVE EXTRA SPACE IN LOCKED CARD */
+.preview-content {
+  padding-top: 0;
+  gap: 0;
+  display: block;
+}
+/* RESPONSIVE WIDTH */
+.job-card-container {
+  width: 95%;
+  max-width: 1400px;
+  margin: 2.5rem auto;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .job-card-container {
+    width:70%;
+  }
+}
+/* OVERRIDE FOR ACHIEVEMENT ON LOCKED CARD */
+.locked-card .preview-achievements h4 {
+  color: #19c6d2 !important;
+}
+/* Reuse your existing .locked-card and .full-card styles */
+/* ADD 3 BLURRED ITEMS IN LOCKED CARD (HTML MUST HAVE THEM) */
+/* Example in HTML: Add 2 more <li class="blurred pulse">...</li> */

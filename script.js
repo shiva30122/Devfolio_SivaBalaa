@@ -675,9 +675,70 @@ window.addEventListener("load", () => {
 
 
 
+  function downloadResume() {
+    // Path to your PDF (inside assets folder)
+    const resumeUrl = './assets/Siva%20Resume.pdf';  // %20 = space
+
+    // Create invisible <a> tag
+    const link = document.createElement('a');
+    link.href = resumeUrl;
+    link.download = 'Siva_Balaa_Resume.pdf';  // Name shown when downloaded
+    link.style.display = 'none';
+
+    // Trigger download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 
 
 
 
+
+
+
+// ===============================================
+
+// WORK EXPERIENCE – CLICK + GLOWING HINT
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const hint = document.getElementById('mouseHint');
+
+  document.querySelectorAll('.locked-card').forEach(locked => {
+    const jobId = locked.getAttribute('data-job');
+    const full = document.getElementById(`fullCard${jobId}`);
+    let unlocked = false;
+
+    // Hover hint
+    locked.addEventListener('mouseenter', () => hint.classList.add('show'));
+    locked.addEventListener('mouseleave', () => hint.classList.remove('show'));
+
+    // Click to unlock
+    const unlock = () => {
+      if (unlocked) return;
+      unlocked = true;
+      locked.style.opacity = '0';
+      setTimeout(() => {
+        locked.style.display = 'none';
+        full.style.display = 'block';
+        full.style.animation = 'fadeInUp 0.8s ease';
+      }, 400);
+    };
+
+    locked.addEventListener('click', unlock);
+    locked.addEventListener('touchstart', unlock);
+  });
+});
+
+// Animation
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+`;
+document.head.appendChild(style);
 
 

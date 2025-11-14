@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Siva Balaa – Resume</title>
+
+  <!-- Your portfolio styles (keep the same look) -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="mediaqueries.css" />
+
+  <!-- Flip-book specific CSS -->
+  <style>
+    #resumeModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    #resumeBook {
+      width: 90%;
+      max-width: 900px;
+      height: 80vh;
+      box-shadow: 0 0 50px rgba(0,255,255,0.5);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    #resumeModal .close-btn {
+      position: absolute;
+      top: 20px; right: 30px;
+      font-size: 2.5rem;
+      color: #fff;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-shadow: 0 0 10px #00ffff;
+      transition: transform .3s;
+    }
+    #resumeModal .close-btn:hover { transform: scale(1.2); }
+
+    @media (max-width: 768px) { #resumeBook { height: 70vh; } }
+
+    #resumeBook > div {
+      background-size: cover !important;
+      background-position: center !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- OPEN BUTTON -->
+  <div style="text-align:center; margin:50px;">
+    <button class="btn btn-color-1" onclick="openResumeBook()">
+      View Resume (Flip-Book)
+    </button>
+  </div>
+
+  <!-- FLIP-BOOK MODAL -->
+  <div id="resumeModal">
+    <button class="close-btn" onclick="closeResumeBook()">×</button>
+    <div id="resumeBook"></div>
+  </div>
+
+  <!-- LIBRARIES -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/turn.js@4.0.0/turn.min.js"></script>
+
+  <!-- FLIP-BOOK LOGIC -->
+  <script>
+    function openResumeBook() {
+      const modal = document.getElementById('resumeModal');
+      const book  = document.getElementById('resumeBook');
+
+      /* ---------------------------------------------------------
+         ONLINE IMAGES – replace these URLs with your own later
+         --------------------------------------------------------- */
+      book.innerHTML = `
+        <div style="background-image:url('https://i.imgur.com/7b8K9pL.jpg');"></div>
+        <div style="background-image:url('https://i.imgur.com/3f2mXvN.jpg');"></div>
+      `;
+
+      modal.style.display = 'flex';
+
+      setTimeout(() => {
+        $(book).turn({
+          width: '100%',
+          height: '100%',
+          autoCenter: true,
+          gradients: true,
+          acceleration: true,
+          display: 'double',
+          elevation: 50
+        });
+      }, 100);
+    }
+
+    function closeResumeBook() {
+      const modal = document.getElementById('resumeModal');
+      const book  = document.getElementById('resumeBook');
+      $(book).turn('destroy');
+      book.innerHTML = '';
+      modal.style.display = 'none';
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeResumeBook();
+    });
+  </script>
+
+</body>
+</html>
