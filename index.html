@@ -1,162 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Devfolio - Loading...</title>
-  <link rel="stylesheet" href="style.css" />
-  <style>
-    /* === SPLASH SCREEN – MOBILE RESPONSIVE + 100+ PARTICLES === */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html {
-      height: 100%; overflow: hidden; background: #000;
-      font-family: 'Poppins', sans-serif; color: #fff;
-      display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
-    }
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Core Meta -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    /* LOGO – RESPONSIVE + 20% FROM TOP */
-    .logo {
-      position: absolute;
-      top: 18vh;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: clamp(2rem, 8vw, 3.2rem);
-      font-weight: 800;
-      background: linear-gradient(45deg, #ff00ff, #00ffff, #00ff00);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: pulseGlow 2s ease-in-out infinite;
-      letter-spacing: 1px;
-      z-index: 20;
-      text-align: center;
-    }
+    <!-- SEO & Page Title -->
+    <title>Siva Balaa | Game Developer - Loading Portfolio...</title>
+    <meta name="description" content="Junior Unity Game Developer with 1+ yr exp at RATHERGAMES (California). Built Pokémon GO-style games with C#, Azure, REST APIs. 4+ yrs Godot. Passionate about storytelling in games." />
+    <link rel="canonical" href="https://devfolio-sivabalaa.vercel.app/Main.html" />
 
-    /* MAIN CONTENT – RESPONSIVE */
-    .splash {
-      text-align: center;
-      margin-top: clamp(30vh, 40vh, 35vh);
-      position: relative;
-      z-index: 10;
-      width: 90%;
-      max-width: 400px;
-    }
+    <!-- Open Graph / Social Sharing (WhatsApp, LinkedIn, Facebook) -->
+    <meta property="og:title" content="Siva Balaa - Game Developer Portfolio" />
+    <meta property="og:description" content="Unity | Godot | C# | Azure | REST APIs | Android | Visual Novels" />
+    <meta property="og:image" content="https://devfolio-sivabalaa.vercel.app/assets/Profile.png" />
+    <meta property="og:url" content="https://devfolio-sivabalaa.vercel.app/Main.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Siva Balaa Portfolio" />
 
-    /* PROFILE IMAGE – RESPONSIVE */
-    .profile-img {
-      width: clamp(100px, 30vw, 156px);
-      height: clamp(100px, 30vw, 156px);
-      border-radius: 50%;
-      border: clamp(4px, 1.5vw, 6px) solid #fff;
-      margin: 1.2rem auto;
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
-      animation: float 3.5s ease-in-out infinite, glowBorder 2s ease-in-out infinite alternate;
-      object-fit: cover;
-    }
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Siva Balaa - Game Developer" />
+    <meta name="twitter:description" content="Building real-time mobile games with Unity, Azure, and passion." />
+    <meta name="twitter:image" content="https://devfolio-sivabalaa.vercel.app/assets/Profile.png" />
 
-    /* LOADING BAR – RESPONSIVE */
-    .loader {
-      width: clamp(200px, 70vw, 300px);
-      height: clamp(6px, 2vw, 8px);
-      background: rgba(255,255,255,0.1);
-      margin: 1.8rem auto;
-      border-radius: 4px;
-      overflow: hidden;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
-    }
+    <!-- Favicon & Apple Touch Icon -->
+    <link rel="icon" href="./assets/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="./assets/Profile.png" />
 
-    .progress {
-      height: 100%; width: 0%;
-      background: linear-gradient(90deg, #ff00ff, #00ffff, #00ff88);
-      border-radius: 4px;
-      animation: load 3s ease-in-out forwards;
-      box-shadow: 0 0 15px #00ffff;
-    }
+    <!-- Preload Critical Assets (Faster Load on Splash) -->
+    <link rel="preload" href="./assets/Profile.png" as="image" />
+    <link rel="preload" href="./assets/Videos/Intro.mp4" as="video" type="video/mp4" />
 
-    .loading-text {
-      font-size: clamp(0.9rem, 3.5vw, 1.1rem);
-      opacity: 0.9;
-      margin-top: 0.6rem;
-      animation: fadeText 1.5s ease-in-out infinite alternate;
-    }
+    <!-- Stylesheets & Inline CSS -->
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* === SPLASH SCREEN – MOBILE RESPONSIVE + 100+ PARTICLES === */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body, html {
+        height: 100%; overflow: hidden; background: #000;
+        font-family: 'Poppins', sans-serif; color: #fff;
+        display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
+      }
 
-    /* TIP POPUP – RESPONSIVE */
-    .tip-popup {
-      position: fixed;
-      bottom: clamp(20px, 8vh, 40px);
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.9);
-      color: #fff;
-      padding: clamp(10px, 3vw, 14px) clamp(20px, 6vw, 28px);
-      border-radius: 50px;
-      font-size: clamp(0.85rem, 3vw, 1rem);
-      font-weight: 500;
-      box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
-      display: flex;
-      align-items: center;
-      gap: clamp(6px, 2vw, 10px);
-      z-index: 100;
-      animation: popupIn 0.6s ease-out, popupOut 0.6s 4.4s ease-out forwards;
-      white-space: nowrap;
-    }
+      /* LOGO – RESPONSIVE + 20% FROM TOP */
+      .logo {
+        position: absolute;
+        top: 18vh;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: clamp(2rem, 8vw, 3.2rem);
+        font-weight: 800;
+        background: linear-gradient(45deg, #ff00ff, #00ffff, #00ff00);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: pulseGlow 2s ease-in-out infinite;
+        letter-spacing: 1px;
+        z-index: 20;
+        text-align: center;
+      }
 
-    .tip-popup::before {
-      content: "Tip";
-      color: #00ff88;
-      font-weight: bold;
-    }
+      /* MAIN CONTENT – RESPONSIVE */
+      .splash {
+        text-align: center;
+        margin-top: clamp(30vh, 40vh, 35vh);
+        position: relative;
+        z-index: 10;
+        width: 90%;
+        max-width: 400px;
+      }
 
-    /* ANIMATIONS */
-    @keyframes pulseGlow {
-      0%, 100% { text-shadow: 0 0 10px #ff00ff; }
-      50% { text-shadow: 0 0 25px #00ffff, 0 0 35px #00ffff; }
-    }
+      /* PROFILE IMAGE – RESPONSIVE */
+      .profile-img {
+        width: clamp(100px, 30vw, 156px);
+        height: clamp(100px, 30vw, 156px);
+        border-radius: 50%;
+        border: clamp(4px, 1.5vw, 6px) solid #fff;
+        margin: 1.2rem auto;
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+        animation: float 3.5s ease-in-out infinite, glowBorder 2s ease-in-out infinite alternate;
+        object-fit: cover;
+      }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-12px) rotate(1deg); }
-    }
+      /* LOADING BAR – RESPONSIVE */
+      .loader {
+        width: clamp(200px, 70vw, 300px);
+        height: clamp(6px, 2vw, 8px);
+        background: rgba(255,255,255,0.1);
+        margin: 1.8rem auto;
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+      }
 
-    @keyframes glowBorder {
-      from { box-shadow: 0 0 30px rgba(0, 255, 255, 0.6); }
-      to { box-shadow: 0 0 50px rgba(255, 0, 255, 0.8); }
-    }
+      .progress {
+        height: 100%; width: 0%;
+        background: linear-gradient(90deg, #ff00ff, #00ffff, #00ff88);
+        border-radius: 4px;
+        animation: load 3s ease-in-out forwards;
+        box-shadow: 0 0 15px #00ffff;
+      }
 
-    @keyframes load { to { width: 100%; } }
+      .loading-text {
+        font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+        opacity: 0.9;
+        margin-top: 0.6rem;
+        animation: fadeText 1.5s ease-in-out infinite alternate;
+      }
 
-    @keyframes fadeText {
-      from { opacity: 0.7; } to { opacity: 1; }
-    }
+      /* TIP POPUP – RESPONSIVE */
+      .tip-popup {
+        position: fixed;
+        bottom: clamp(20px, 8vh, 40px);
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.9);
+        color: #fff;
+        padding: clamp(10px, 3vw, 14px) clamp(20px, 6vw, 28px);
+        border-radius: 50px;
+        font-size: clamp(0.85rem, 3vw, 1rem);
+        font-weight: 500;
+        box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+        display: flex;
+        align-items: center;
+        gap: clamp(6px, 2vw, 10px);
+        z-index: 100;
+        animation: popupIn 0.6s ease-out, popupOut 0.6s 4.4s ease-out forwards;
+        white-space: nowrap;
+      }
 
-    @keyframes popupIn {
-      from { opacity: 0; transform: translateX(-50%) translateY(20px); }
-      to { opacity: 1; transform: translateX(-50%) translateY(0); }
-    }
+      .tip-popup::before {
+        content: "Tip";
+        color: #00ff88;
+        font-weight: bold;
+      }
 
-    @keyframes popupOut {
-      to { opacity: 0; transform: translateX(-50%) translateY(-30px); }
-    }
+      /* ANIMATIONS */
+      @keyframes pulseGlow {
+        0%, 100% { text-shadow: 0 0 10px #ff00ff; }
+        50% { text-shadow: 0 0 25px #00ffff, 0 0 35px #00ffff; }
+      }
 
-    /* === 100+ PARTICLES – COLORFUL + TRAIL === */
-    .particles {
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: 1; overflow: hidden;
-    }
+      @keyframes float {
+        0%, 100% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-12px) rotate(1deg); }
+      }
 
-    .particle {
-      position: absolute; border-radius: 50%;
-      opacity: 0; pointer-events: none;
-      filter: blur(1px);
-      animation: rise 3s ease-out forwards;
-    }
+      @keyframes glowBorder {
+        from { box-shadow: 0 0 30px rgba(0, 255, 255, 0.6); }
+        to { box-shadow: 0 0 50px rgba(0, 255, 255, 0.8); }
+      }
 
-    @keyframes rise {
-      0% { opacity: 0; transform: translateY(0) scale(0.5); }
-      30% { opacity: 0.8; }
-      100% { opacity: 0; transform: translateY(-120vh) scale(1.2); }
-    }
-  </style>
-</head>
+      @keyframes load { to { width: 100%; } }
+
+      @keyframes fadeText {
+        from { opacity: 0.7; } to { opacity: 1; }
+      }
+
+      @keyframes popupIn {
+        from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+        to { opacity: 1; transform: translateX(-50%) translateY(0); }
+      }
+
+      @keyframes popupOut {
+        to { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+      }
+
+      /* === 100+ PARTICLES – COLORFUL + TRAIL === */
+      .particles {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        pointer-events: none; z-index: 1; overflow: hidden;
+      }
+
+      .particle {
+        position: absolute; border-radius: 50%;
+        opacity: 0; pointer-events: none;
+        filter: blur(1px);
+        animation: rise 3s ease-out forwards;
+      }
+
+      @keyframes rise {
+        0% { opacity: 0; transform: translateY(0) scale(0.5); }
+        30% { opacity: 0.8; }
+        100% { opacity: 0; transform: translateY(-120vh) scale(1.2); }
+      }
+    </style>
+  </head>
 <body>
 
   <!-- 100+ PARTICLES -->
