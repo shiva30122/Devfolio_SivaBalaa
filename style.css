@@ -410,6 +410,10 @@ section {
   gap: 1rem;
 }
 
+#socials-container .icon {
+  filter: invert(100%) drop-shadow(0 0 3px #000000);
+}
+
 .icon {
   cursor: pointer;
   width: 3rem;
@@ -423,6 +427,13 @@ img[src="./assets/education.png"] {
   height: 3.06rem;
   /* 3rem + 2% */
 }
+
+img[src="./assets/experience.png"] {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+
 
 /* ABOUT SECTION */
 #about {
@@ -689,7 +700,8 @@ article {
 /* CONTACT SECTION */
 #contact {
   justify-content: center;
-  padding-bottom: 5vh;
+  padding-bottom: 2vh;
+  /* Reduced from 5vh to minimize empty space */
 }
 
 .contact-info-upper-container {
@@ -719,6 +731,187 @@ article {
   align-items: center;
   gap: 0.5rem;
 }
+
+.contact-icon {
+  width: 3rem;
+  height: 3rem;
+  object-fit: contain;
+  /* Ensures images don't stretch */
+}
+
+/* ATTENTION MESSAGE - HR GRABBER */
+.attention-message-container {
+  width: 63%;
+  /* 30% smaller: 90% * 0.7 = 63% */
+  max-width: 560px;
+  /* 30% smaller: 800px * 0.7 = 560px */
+  margin: 3rem auto 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.attention-message {
+  position: relative;
+  background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+  border: 2px solid #ffffff;
+  border-radius: 25px;
+  padding: 1.75rem 2.1rem;
+  /* 30% smaller: 2.5rem * 0.7 = 1.75rem, 3rem * 0.7 = 2.1rem */
+  box-shadow: 0 10px 40px rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  animation: floatMessage 3s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.attention-message:hover {
+  transform: scale(1.05);
+  box-shadow: 0 15px 50px rgba(255, 255, 255, 0.3);
+}
+
+.message-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: rotateGlow 8s linear infinite;
+  pointer-events: none;
+}
+
+.attention-title {
+  font-size: 1.4rem;
+  /* 30% smaller: 2rem * 0.7 = 1.4rem */
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.7rem;
+  /* 30% smaller: 1rem * 0.7 = 0.7rem */
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  animation: pulseTitle 2s ease-in-out infinite;
+}
+
+.attention-text {
+  font-size: 0.91rem;
+  /* 30% smaller: 1.3rem * 0.7 = 0.91rem */
+  color: #ffffff;
+  margin: 0.56rem 0;
+  /* 30% smaller: 0.8rem * 0.7 = 0.56rem */
+  font-weight: 400;
+}
+
+.attention-text-big {
+  font-size: 1.26rem;
+  /* 30% smaller: 1.8rem * 0.7 = 1.26rem */
+  color: #ffffff;
+  margin: 0.84rem 0;
+  /* 30% smaller: 1.2rem * 0.7 = 0.84rem */
+  font-weight: 700;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+.attention-subtext {
+  font-size: 0.77rem;
+  /* 30% smaller: 1.1rem * 0.7 = 0.77rem */
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 0.7rem;
+  /* 30% smaller: 1rem * 0.7 = 0.7rem */
+  font-weight: 300;
+}
+
+.highlight-text {
+  background: linear-gradient(90deg, #ffffff, #e0e0e0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+  text-shadow: none;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+.love-text {
+  background: linear-gradient(90deg, #ffffff, #cccccc, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+  font-size: 1.54rem;
+  /* 30% smaller: 2.2rem * 0.7 = 1.54rem */
+  text-shadow: none;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+/* Animations for Attention Message */
+@keyframes floatMessage {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes rotateGlow {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulseTitle {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shimmer {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes heartbeat {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.1);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  75% {
+    transform: scale(1.05);
+  }
+}
+
+.spacer {
+  height: 10vh;
+}
+
 
 /* WORD-CHANGING ANIMATION */
 #contact-word-container {
@@ -918,7 +1111,8 @@ article {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 4rem;
+  gap: 2rem;
+  /* Reduced from 4rem for tighter spacing */
   width: 90%;
   max-width: 1200px;
   flex-wrap: wrap;
@@ -1163,11 +1357,15 @@ article {
   padding: 1.5rem 2.5rem;
   background: linear-gradient(135deg, #00ffff, #0088ff);
   border-radius: 50px;
+  border: 3px solid #00ffff;
+  /* Added glowing border */
   box-shadow: 0 15px 30px rgba(0, 255, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.3);
   z-index: 1001;
   transition: bottom 0.5s ease-in-out, opacity 0.5s ease-in-out, transform 0.3s ease;
   opacity: 0;
   bottom: 500px;
+  animation: pulseGlowText 2s infinite alternate;
+  /* Added animation */
 
   /* Flexbox for Pac-Man + Text */
   display: flex;
@@ -1242,14 +1440,14 @@ article {
 }
 
 @keyframes pulseGlowText {
-
-  0%,
-  100% {
-    box-shadow: 0 15px 30px rgba(0, 255, 255, 0.5), 0 0 40px rgba(0, 255, 255, 0.3);
+  0% {
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.6), 0 0 40px rgba(0, 255, 255, 0.4), inset 0 0 10px rgba(0, 255, 255, 0.2);
+    border-color: rgba(0, 255, 255, 0.6);
   }
 
-  50% {
-    box-shadow: 0 15px 30px rgba(0, 255, 255, 0.7), 0 0 60px rgba(0, 255, 255, 0.6);
+  100% {
+    box-shadow: 0 0 50px rgba(0, 255, 255, 1), 0 0 80px rgba(0, 255, 255, 0.8), inset 0 0 25px rgba(0, 255, 255, 0.6);
+    border-color: #ffffff;
   }
 }
 
@@ -1531,7 +1729,7 @@ article {
 /* Last Space  */
 
 .spacer {
-  height: 80px;
+  height: 12vh;
   /* Adjust this value for more or less space (e.g., 20px, 100px) */
   width: 100%;
 }
@@ -2145,17 +2343,5 @@ body.no-scroll {
   #future-vision .section__text__p1 {
     font-size: 1.1rem;
     color: rgb(85, 85, 85);
-  }
-}
-
-/* Fade-in */
-#future-vision {
-  opacity: 0;
-  animation: fadeInSection 1.2s ease-out forwards;
-}
-
-@keyframes fadeInSection {
-  to {
-    opacity: 1;
   }
 }

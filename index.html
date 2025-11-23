@@ -2,193 +2,342 @@
 <html lang="en">
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Core Meta -->
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- SEO & Page Title -->
-    <title>Siva Balaa | Game Developer - Loading Portfolio...</title>
-    <meta name="description" content="Junior Unity Game Developer with 1+ yr exp at RATHERGAMES (California). Built Pokémon GO-style games with C#, Azure, REST APIs. 4+ yrs Godot. Passionate about storytelling in games." />
-    <link rel="canonical" href="https://devfolio-sivabalaa.vercel.app/Main.html" />
+<head>
+  <!-- Core Meta -->
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Open Graph / Social Sharing (WhatsApp, LinkedIn, Facebook) -->
-    <meta property="og:title" content="Siva Balaa - Game Developer Portfolio" />
-    <meta property="og:description" content="Game Programmer | Unreal Engine C++ | Unity C# | Godot  | Android Studio | Microsoft Azure | REST APIs | Android APK ABB " />
-    <meta property="og:image" content="https://devfolio-sivabalaa.vercel.app/assets/Profile.png" />
-    <meta property="og:url" content="https://devfolio-sivabalaa.vercel.app/Main.html" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Siva Balaa Portfolio" />
+  <!-- SEO & Page Title -->
+  <title>Siva Balaa | Game Developer - Loading Portfolio...</title>
+  <meta name="description"
+    content="Junior Unity Game Developer with 1+ yr exp at RATHERGAMES (California). Built Pokémon GO-style games with C#, Azure, REST APIs. 4+ yrs Godot. Passionate about storytelling in games." />
+  <link rel="canonical" href="https://devfolio-sivabalaa.vercel.app/Main.html" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Siva Balaa - Game Developer" />
-    <meta name="twitter:description" content="Building real-time mobile games with Unity, Azure, and passion." />
-    <meta name="twitter:image" content="https://devfolio-sivabalaa.vercel.app/assets/Profile.png" />
+  <!-- Open Graph / Social Sharing (WhatsApp, LinkedIn, Facebook) -->
+  <meta property="og:title" content="Siva Balaa - Game Developer Portfolio" />
+  <meta property="og:description"
+    content="Game Programmer | Unreal Engine C++ | Unity C# | Godot  | Android Studio | Microsoft Azure | REST APIs | Android APK ABB " />
+  <meta property="og:image" content="https://devfolio-sivabalaa.vercel.app/assets/Profile.png" />
+  <meta property="og:url" content="https://devfolio-sivabalaa.vercel.app/Main.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Siva Balaa Portfolio" />
 
-    <!-- Favicon & Apple Touch Icon -->
-    <link rel="icon" href="./assets/favicon.png" type="image/png" />
-    <link rel="apple-touch-icon" href="./assets/Profile.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Siva Balaa - Game Developer" />
+  <meta name="twitter:description" content="Building real-time mobile games with Unity, Azure, and passion." />
+  <meta name="twitter:image" content="https://devfolio-sivabalaa.vercel.app/assets/Profile.png" />
 
-    <!-- Preload Critical Assets (Faster Load on Splash) -->
-    <link rel="preload" href="./assets/Profile.png" as="image" />
-    <link rel="preload" href="./assets/Videos/Intro.mp4" as="video" type="video/mp4" />
+  <!-- Favicon & Apple Touch Icon -->
+  <link rel="icon" href="./assets/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="./assets/Profile.png" />
 
-    <!-- Stylesheets & Inline CSS -->
-    <link rel="stylesheet" href="style.css" />
-    <style>
-      /* === SPLASH SCREEN – MOBILE RESPONSIVE + 100+ PARTICLES === */
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body, html {
-        height: 100%; overflow: hidden; background: #000;
-        font-family: 'Poppins', sans-serif; color: #fff;
-        display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
+  <!-- Preload Critical Assets (Faster Load on Splash) -->
+  <link rel="preload" href="./assets/Profile.png" as="image" />
+  <link rel="preload" href="./assets/Videos/Intro.mp4" as="video" type="video/mp4" />
+
+  <!-- Stylesheets & Inline CSS -->
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* === SPLASH SCREEN – MOBILE RESPONSIVE + 100+ PARTICLES === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body,
+    html {
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    /* LOGO – RESPONSIVE + 20% FROM TOP */
+    .logo {
+      position: absolute;
+      top: 18vh;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: clamp(2rem, 8vw, 3.2rem);
+      font-weight: 800;
+      background: linear-gradient(45deg, #ff00ff, #00ffff, #00ff00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: pulseGlow 2s ease-in-out infinite;
+      letter-spacing: 1px;
+      z-index: 20;
+      text-align: center;
+    }
+
+    /* MAIN CONTENT – RESPONSIVE */
+    .splash {
+      text-align: center;
+      margin-top: clamp(30vh, 40vh, 35vh);
+      position: relative;
+      z-index: 10;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    /* PROFILE IMAGE – RESPONSIVE */
+    .profile-img {
+      width: clamp(100px, 30vw, 156px);
+      height: clamp(100px, 30vw, 156px);
+      border-radius: 50%;
+      border: clamp(4px, 1.5vw, 6px) solid #fff;
+      margin: 1.2rem auto;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+      animation: float 3.5s ease-in-out infinite, glowBorder 2s ease-in-out infinite alternate;
+      object-fit: cover;
+    }
+
+    /* LOADING BAR – RESPONSIVE */
+    .loader {
+      width: clamp(200px, 70vw, 300px);
+      height: clamp(6px, 2vw, 8px);
+      background: rgba(255, 255, 255, 0.1);
+      margin: 1.8rem auto;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff00ff, #00ffff, #00ff88);
+      border-radius: 4px;
+      animation: load 3s ease-in-out forwards;
+      box-shadow: 0 0 15px #00ffff;
+    }
+
+    .loading-text {
+      font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+      opacity: 0.9;
+      margin-top: 0.6rem;
+      animation: fadeText 1.5s ease-in-out infinite alternate;
+    }
+
+    /* TIP POPUP – RESPONSIVE */
+    .tip-popup {
+      position: fixed;
+      bottom: clamp(20px, 8vh, 40px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: #fff;
+      padding: clamp(10px, 3vw, 14px) clamp(20px, 6vw, 28px);
+      border-radius: 50px;
+      font-size: clamp(0.85rem, 3vw, 1rem);
+      font-weight: 500;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      gap: clamp(6px, 2vw, 10px);
+      z-index: 100;
+      animation: popupIn 0.6s ease-out, popupOut 0.6s 4.4s ease-out forwards;
+      white-space: nowrap;
+    }
+
+    .tip-popup::before {
+      content: "Tip";
+      color: #00ff88;
+      font-weight: bold;
+    }
+
+    /* ANIMATIONS */
+    @keyframes pulseGlow {
+
+      0%,
+      100% {
+        text-shadow: 0 0 10px #ff00ff;
       }
 
-      /* LOGO – RESPONSIVE + 20% FROM TOP */
-      .logo {
-        position: absolute;
-        top: 18vh;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: clamp(2rem, 8vw, 3.2rem);
-        font-weight: 800;
-        background: linear-gradient(45deg, #ff00ff, #00ffff, #00ff00);
-        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        background-clip: text;
-        animation: pulseGlow 2s ease-in-out infinite;
-        letter-spacing: 1px;
-        z-index: 20;
-        text-align: center;
+      50% {
+        text-shadow: 0 0 25px #00ffff, 0 0 35px #00ffff;
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
       }
 
-      /* MAIN CONTENT – RESPONSIVE */
-      .splash {
-        text-align: center;
-        margin-top: clamp(30vh, 40vh, 35vh);
-        position: relative;
-        z-index: 10;
-        width: 90%;
-        max-width: 400px;
+      50% {
+        transform: translateY(-12px) rotate(1deg);
       }
+    }
 
-      /* PROFILE IMAGE – RESPONSIVE */
-      .profile-img {
-        width: clamp(100px, 30vw, 156px);
-        height: clamp(100px, 30vw, 156px);
-        border-radius: 50%;
-        border: clamp(4px, 1.5vw, 6px) solid #fff;
-        margin: 1.2rem auto;
+    @keyframes glowBorder {
+      from {
         box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
-        animation: float 3.5s ease-in-out infinite, glowBorder 2s ease-in-out infinite alternate;
-        object-fit: cover;
       }
 
-      /* LOADING BAR – RESPONSIVE */
-      .loader {
-        width: clamp(200px, 70vw, 300px);
-        height: clamp(6px, 2vw, 8px);
-        background: rgba(255,255,255,0.1);
-        margin: 1.8rem auto;
-        border-radius: 4px;
-        overflow: hidden;
-        box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+      to {
+        box-shadow: 0 0 50px rgba(0, 255, 255, 0.8);
+      }
+    }
+
+    @keyframes load {
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes fadeText {
+      from {
+        opacity: 0.7;
       }
 
-      .progress {
-        height: 100%; width: 0%;
-        background: linear-gradient(90deg, #ff00ff, #00ffff, #00ff88);
-        border-radius: 4px;
-        animation: load 3s ease-in-out forwards;
-        box-shadow: 0 0 15px #00ffff;
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes popupIn {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
       }
 
-      .loading-text {
-        font-size: clamp(0.9rem, 3.5vw, 1.1rem);
-        opacity: 0.9;
-        margin-top: 0.6rem;
-        animation: fadeText 1.5s ease-in-out infinite alternate;
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    @keyframes popupOut {
+      to {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-30px);
+      }
+    }
+
+    /* === 100+ PARTICLES – COLORFUL + TRAIL === */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+      filter: blur(1px);
+      animation: rise 3s ease-out forwards;
+    }
+
+    @keyframes rise {
+      0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.5);
       }
 
-      /* TIP POPUP – RESPONSIVE */
-      .tip-popup {
-        position: fixed;
-        bottom: clamp(20px, 8vh, 40px);
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0, 0, 0, 0.9);
-        color: #fff;
-        padding: clamp(10px, 3vw, 14px) clamp(20px, 6vw, 28px);
-        border-radius: 50px;
-        font-size: clamp(0.85rem, 3vw, 1rem);
-        font-weight: 500;
-        box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
-        display: flex;
-        align-items: center;
-        gap: clamp(6px, 2vw, 10px);
-        z-index: 100;
-        animation: popupIn 0.6s ease-out, popupOut 0.6s 4.4s ease-out forwards;
-        white-space: nowrap;
+      30% {
+        opacity: 0.8;
       }
 
-      .tip-popup::before {
-        content: "Tip";
-        color: #00ff88;
-        font-weight: bold;
+      100% {
+        opacity: 0;
+        transform: translateY(-120vh) scale(1.2);
+      }
+    }
+
+    /* NEW LOADER TEXT ANIMATION */
+    .loader-text {
+      width: fit-content;
+      font-size: 17px;
+      font-family: monospace;
+      line-height: 1.4;
+      font-weight: bold;
+      --c: no-repeat linear-gradient(#fff 0 0);
+      background: var(--c), var(--c), var(--c), var(--c), var(--c), var(--c), var(--c);
+      background-size: calc(1ch + 1px) 100%;
+      border-bottom: 10px solid #0000;
+      position: relative;
+      animation: l8-0 3s infinite linear;
+      clip-path: inset(-20px 0);
+      margin: 1rem auto;
+    }
+
+    .loader-text::before {
+      content: "Loading";
+    }
+
+    .loader-text::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 14px;
+      background: #25adda;
+      left: -10px;
+      bottom: 100%;
+      animation: l8-1 3s infinite linear;
+    }
+
+    @keyframes l8-0 {
+
+      0%,
+      12.5% {
+        background-position: calc(0*100%/6) 0, calc(1*100%/6) 0, calc(2*100%/6) 0, calc(3*100%/6) 0, calc(4*100%/6) 0, calc(5*100%/6) 0, calc(6*100%/6) 0
       }
 
-      /* ANIMATIONS */
-      @keyframes pulseGlow {
-        0%, 100% { text-shadow: 0 0 10px #ff00ff; }
-        50% { text-shadow: 0 0 25px #00ffff, 0 0 35px #00ffff; }
+      25% {
+        background-position: calc(0*100%/6) 40px, calc(1*100%/6) 0, calc(2*100%/6) 0, calc(3*100%/6) 0, calc(4*100%/6) 0, calc(5*100%/6) 0, calc(6*100%/6) 0
       }
 
-      @keyframes float {
-        0%, 100% { transform: translateY(0) rotate(0deg); }
-        50% { transform: translateY(-12px) rotate(1deg); }
+      37.5% {
+        background-position: calc(0*100%/6) 40px, calc(1*100%/6) 40px, calc(2*100%/6) 0, calc(3*100%/6) 0, calc(4*100%/6) 0, calc(5*100%/6) 0, calc(6*100%/6) 0
       }
 
-      @keyframes glowBorder {
-        from { box-shadow: 0 0 30px rgba(0, 255, 255, 0.6); }
-        to { box-shadow: 0 0 50px rgba(0, 255, 255, 0.8); }
+      50% {
+        background-position: calc(0*100%/6) 40px, calc(1*100%/6) 40px, calc(2*100%/6) 40px, calc(3*100%/6) 0, calc(4*100%/6) 0, calc(5*100%/6) 0, calc(6*100%/6) 0
       }
 
-      @keyframes load { to { width: 100%; } }
-
-      @keyframes fadeText {
-        from { opacity: 0.7; } to { opacity: 1; }
+      62.5% {
+        background-position: calc(0*100%/6) 40px, calc(1*100%/6) 40px, calc(2*100%/6) 40px, calc(3*100%/6) 40px, calc(4*100%/6) 0, calc(5*100%/6) 0, calc(6*100%/6) 0
       }
 
-      @keyframes popupIn {
-        from { opacity: 0; transform: translateX(-50%) translateY(20px); }
-        to { opacity: 1; transform: translateX(-50%) translateY(0); }
+      75% {
+        background-position: calc(0*100%/6) 40px, calc(1*100%/6) 40px, calc(2*100%/6) 40px, calc(3*100%/6) 40px, calc(4*100%/6) 40px, calc(5*100%/6) 0, calc(6*100%/6) 0
       }
 
-      @keyframes popupOut {
-        to { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+      87.4% {
+        background-position: calc(0*100%/6) 40px, calc(1*100%/6) 40px, calc(2*100%/6) 40px, calc(3*100%/6) 40px, calc(4*100%/6) 40px, calc(5*100%/6) 40px, calc(6*100%/6) 0
       }
 
-      /* === 100+ PARTICLES – COLORFUL + TRAIL === */
-      .particles {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        pointer-events: none; z-index: 1; overflow: hidden;
+      100% {
+        background-position: calc(0*100%/6) 40px, calc(1*100%/6) 40px, calc(2*100%/6) 40px, calc(3*100%/6) 40px, calc(4*100%/6) 40px, calc(5*100%/6) 40px, calc(6*100%/6) 40px
       }
+    }
 
-      .particle {
-        position: absolute; border-radius: 50%;
-        opacity: 0; pointer-events: none;
-        filter: blur(1px);
-        animation: rise 3s ease-out forwards;
+    @keyframes l8-1 {
+      100% {
+        left: 115%
       }
+    }
+  </style>
+</head>
 
-      @keyframes rise {
-        0% { opacity: 0; transform: translateY(0) scale(0.5); }
-        30% { opacity: 0.8; }
-        100% { opacity: 0; transform: translateY(-120vh) scale(1.2); }
-      }
-    </style>
-  </head>
 <body>
 
   <!-- 100+ PARTICLES -->
@@ -200,8 +349,11 @@
   <!-- MAIN CONTENT -->
   <div class="splash">
     <img src="./assets/Profile.png" alt="Siva Balaa" class="profile-img" />
-    <div class="loader"><div class="progress"></div></div>
+    <div class="loader">
+      <div class="progress"></div>
+    </div>
     <p class="loading-text">Initializing experience...</p>
+    <div class="loader-text"></div>
   </div>
 
   <!-- TIP POPUP -->
@@ -219,7 +371,7 @@
     for (let i = 0; i < count; i++) {
       const p = document.createElement('div');
       p.className = 'particle';
-      
+
       const size = Math.random() * 7 + 3;
       p.style.width = p.style.height = size + 'px';
       p.style.left = Math.random() * 100 + '%';
@@ -228,7 +380,7 @@
       p.style.boxShadow = `0 0 ${size * 2}px ${p.style.background}`;
       p.style.animationDelay = Math.random() * 3 + 's';
       p.style.animationDuration = (Math.random() * 2 + 2.5) + 's';
-      
+
       particlesContainer.appendChild(p);
     }
 
@@ -239,4 +391,5 @@
   </script>
 
 </body>
+
 </html>

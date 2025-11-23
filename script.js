@@ -703,21 +703,3 @@ performance.getEntriesByType("navigation")[0].type === "reload" && (location.hre
 // ===============================================
 // FUTURE VISION – SCROLL REVEAL + GLOW HINT
 // ===============================================
-document.addEventListener('DOMContentLoaded', () => {
-  const futureSection = document.getElementById('future-vision');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        futureSection.style.opacity = '1';
-        observer.unobserve(futureSection);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  observer.observe(futureSection);
-
-  // Optional: Show glowing hint on hover
-  // const hint = document.getElementById('mouseHint');
-  // futureSection.addEventListener('mouseenter', () => hint.classList.add('show'));
-  // futureSection.addEventListener('mouseleave', () => hint.classList.remove('show'));
-});
