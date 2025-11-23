@@ -297,42 +297,7 @@ function applyScrollReveal() {
 window.addEventListener("load", applyScrollReveal);
 
 // ===============================================
-// 13. LAST IMAGE SCROLL EFFECT – FIXED: Only at bottom
-// ===============================================
-function handleLastImageScroll() {
-  const lastImage = document.getElementById("last-image-container");
-  let isElastic = false;
-  let timeout;
-
-  window.addEventListener("scroll", () => {
-    const scrollPosition = window.scrollY + window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight;
-
-    if (scrollPosition >= documentHeight - 50) {
-      clearTimeout(timeout);
-      if (!lastImage.classList.contains("elastic")) {
-        lastImage.classList.remove("hidden");
-        lastImage.classList.add("elastic");
-        isElastic = true;
-      }
-      timeout = setTimeout(() => {
-        if (isElastic) {
-          lastImage.classList.remove("elastic");
-          lastImage.classList.add("hidden");
-          isElastic = false;
-        }
-      }, 1000);
-    } else {
-      lastImage.classList.remove("elastic");
-      lastImage.classList.add("hidden");
-      isElastic = false;
-    }
-  });
-}
-window.addEventListener("load", handleLastImageScroll);
-
-// ===============================================
-// 14. ELASTIC IMAGE
+// 13. ELASTIC IMAGE (LARGE AT 100%)
 // ===============================================
 function handleElasticImage() {
   const elasticImage = document.getElementById("elastic-image-container");
@@ -418,7 +383,7 @@ function handleElasticImage() {
 window.addEventListener("load", handleElasticImage);
 
 // ===============================================
-// 15. POPUP IMAGE – FIXED: Only at 95%+
+// 14. POPUP IMAGE (SMALL AT 95%)
 // ===============================================
 function handlePopupImage() {
   const popupImage = document.getElementById("popup-image");
@@ -461,20 +426,7 @@ function handlePopupImage() {
 window.addEventListener("load", handlePopupImage);
 
 // ===============================================
-// 16. SCROLL TO TOP ON REFRESH
-// ===============================================
-window.addEventListener("beforeunload", () => window.scrollTo(0, 0));
-window.addEventListener("load", () => {
-  window.scrollTo(0, 0);
-  if (window.innerWidth <= 1200 && window.innerWidth > 600) {
-    const navLinks = document.querySelector("#desktop-nav .nav-links");
-    navLinks.style.display = "flex";
-  }
-});
-
-
-// ===============================================
-// 17. SCROLL TO TOP ON REFRESH
+// 15. SCROLL TO TOP ON REFRESH
 // ===============================================
 window.addEventListener("beforeunload", () => window.scrollTo(0, 0));
 window.addEventListener("load", () => {
@@ -591,14 +543,14 @@ window.addEventListener("load", () => {
     if (soundEnabled) {
       // SOUND ON: play if visible
       if (shouldPlay && video.paused) {
-        video.play().catch(() => {});
+        video.play().catch(() => { });
       } else if (!shouldPlay && !video.paused) {
         video.pause();
       }
     } else {
       // SOUND OFF: muted autoplay only if visible
       if (shouldPlay && video.muted && video.paused) {
-        video.play().catch(() => {});
+        video.play().catch(() => { });
       } else if (!shouldPlay && !video.paused) {
         video.pause();
       }
@@ -639,7 +591,7 @@ window.addEventListener("load", () => {
       video.play().catch(() => {
         setTimeout(() => {
           if (isVisible && !soundEnabled && video.paused) {
-            video.play().catch(() => {});
+            video.play().catch(() => { });
           }
         }, 300);
       });
@@ -665,7 +617,7 @@ window.addEventListener("load", () => {
   // iOS RESUME FIX
   const tick = () => {
     if (isVisible && soundEnabled && !document.hidden && video.paused) {
-      video.play().catch(() => {});
+      video.play().catch(() => { });
     }
     requestAnimationFrame(tick);
   };
@@ -675,21 +627,21 @@ window.addEventListener("load", () => {
 
 
 
-  function downloadResume() {
-    // Path to your PDF (inside assets folder)
-    const resumeUrl = './assets/Siva%20Resume.pdf';  // %20 = space
+function downloadResume() {
+  // Path to your PDF (inside assets folder)
+  const resumeUrl = './assets/Siva%20Resume.pdf';  // %20 = space
 
-    // Create invisible <a> tag
-    const link = document.createElement('a');
-    link.href = resumeUrl;
-    link.download = 'Siva_Balaa_Resume.pdf';  // Name shown when downloaded
-    link.style.display = 'none';
+  // Create invisible <a> tag
+  const link = document.createElement('a');
+  link.href = resumeUrl;
+  link.download = 'Siva_Balaa_Resume.pdf';  // Name shown when downloaded
+  link.style.display = 'none';
 
-    // Trigger download
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
+  // Trigger download
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
 
 
