@@ -147,6 +147,9 @@ let savedScrollPosition = 0;
 // ===============================================
 // 7. OPEN OVERLAY – FREEZE PAGE
 // ===============================================
+// CACHE OBJECT
+const videoCache = {};
+
 function openNewOverlay(title, description, videoSrc, backgroundImage, event) {
   if (event) {
     event.preventDefault();
@@ -178,14 +181,31 @@ function openNewOverlay(title, description, videoSrc, backgroundImage, event) {
 
       const videoElement = document.getElementById("new-overlay-video");
       const sourceElement = document.getElementById("new-video-source");
+
       if (videoSrc) {
-        sourceElement.src = videoSrc;
+        // CHECK CACHE
+        if (videoCache[videoSrc]) {
+          sourceElement.src = videoCache[videoSrc];
+        } else {
+          // PLAY & CACHE
+          sourceElement.src = videoSrc;
+          fetch(videoSrc)
+            .then(response => response.blob())
+            .then(blob => {
+              videoCache[videoSrc] = URL.createObjectURL(blob);
+            })
+            .catch(err => console.error("Video cache failed:", err));
+        }
+
         videoElement.style.display = "block";
         videoElement.load();
         videoElement.play();
       } else {
         videoElement.style.display = "none";
       }
+
+      // Reset scroll position of the description
+      document.getElementById("new-overlay-description").scrollTop = 0;
     }, 700);
   }, 100);
 }
@@ -526,30 +546,53 @@ window.addEventListener("load", () => {
 
 
 /* VIDEO: MUTE ON START → TAP TO ENABLE SOUND → PLAY ONLY IF 30%+ VISIBLE */
+/* VIDEO: MUTE ON START → TAP TO ENABLE SOUND → PLAY ONLY IF 30%+ VISIBLE */
 (() => {
   const video = document.getElementById('intro-video');
+  const soundBtn = document.getElementById('sound-btn');
+  const soundIconOff = document.getElementById('sound-icon-off');
+  const soundIconOn = document.getElementById('sound-icon-on');
+  const soundText = document.getElementById('sound-text');
+
   if (!video) return;
 
   const container = document.querySelector('.StartingAnimationContainer');
   if (!container) return;
 
-  let soundEnabled = false;
+  let soundEnabled = false; // Tracks if initial interaction occurred
   let isVisible = false;
+
+  // FADE OUT TEXT
+  setTimeout(() => {
+    if (soundText) soundText.classList.add('hidden');
+  }, 3000);
+
+  // UPDATE UI
+  const updateUI = () => {
+    if (video.muted) {
+      if (soundIconOff) soundIconOff.style.display = 'none';
+      if (soundIconOn) soundIconOn.style.display = 'block';
+    } else {
+      if (soundIconOff) soundIconOff.style.display = 'block';
+      if (soundIconOn) soundIconOn.style.display = 'none';
+    }
+  };
 
   // CENTRAL PLAY CONTROL
   const updatePlayback = () => {
     const shouldPlay = isVisible && !document.hidden;
 
     if (soundEnabled) {
-      // SOUND ON: play if visible
+      // INTERACTED: Just play (mute state handled by video element)
       if (shouldPlay && video.paused) {
         video.play().catch(() => { });
       } else if (!shouldPlay && !video.paused) {
         video.pause();
       }
     } else {
-      // SOUND OFF: muted autoplay only if visible
-      if (shouldPlay && video.muted && video.paused) {
+      // NOT INTERACTED: Force muted autoplay
+      if (shouldPlay && video.paused) {
+        video.muted = true;
         video.play().catch(() => { });
       } else if (!shouldPlay && !video.paused) {
         video.pause();
@@ -557,19 +600,39 @@ window.addEventListener("load", () => {
     }
   };
 
-  // UNMUTE + ENABLE SOUND ON FIRST TAP
+  // ENABLE SOUND (Global or Button)
   const enableSound = () => {
     if (soundEnabled) return;
     soundEnabled = true;
     video.muted = false;
     video.volume = 0.6;
+    updateUI();
 
+    // Remove global listeners
     document.removeEventListener('click', enableSound);
     document.removeEventListener('touchstart', enableSound);
 
-    updatePlayback(); // play if visible
+    updatePlayback();
   };
 
+  // BUTTON CLICK HANDLER
+  if (soundBtn) {
+    soundBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent global listener
+      e.preventDefault();
+
+      if (!soundEnabled) {
+        // First click on button -> Enable sound
+        enableSound();
+      } else {
+        // Subsequent clicks -> Toggle mute
+        video.muted = !video.muted;
+        updateUI();
+      }
+    });
+  }
+
+  // GLOBAL LISTENERS (One time only)
   document.addEventListener('click', enableSound, { once: true });
   document.addEventListener('touchstart', enableSound, { once: true });
 
@@ -584,21 +647,14 @@ window.addEventListener("load", () => {
 
   observer.observe(container);
 
-  // MUTED AUTOPLAY – ONLY IF VISIBLE + SOUND NOT ENABLED
+  // START AFTER VIDEO READY
   const tryMutedAutoplay = () => {
     if (isVisible && !soundEnabled && video.paused) {
       video.muted = true;
-      video.play().catch(() => {
-        setTimeout(() => {
-          if (isVisible && !soundEnabled && video.paused) {
-            video.play().catch(() => { });
-          }
-        }, 300);
-      });
+      video.play().catch(() => { });
     }
   };
 
-  // START AFTER VIDEO READY
   if (video.readyState >= 1) {
     tryMutedAutoplay();
   } else {
