@@ -2280,10 +2280,11 @@ body.no-scroll {
 }
 
 .future-text {
-  width: 55%;
-  height: 378px;
+  width: 65%;
+  height: auto;
+  min-height: 378px;
   background: rgba(15, 15, 35, 0.98);
-  padding: 28px;
+  padding: 32px 40px;
   border-radius: 0 16px 16px 0;
   box-shadow: 10px 0 30px rgba(0, 170, 255, 0.6);
   display: flex;
@@ -2292,9 +2293,9 @@ body.no-scroll {
   align-items: center;
   color: #ffffff;
   /* ← WHITE TEXT LIKE PDF */
-  font-size: 0.98rem;
-  line-height: 1.68;
-  overflow: hidden;
+  font-size: 1rem;
+  line-height: 1.7;
+  overflow: visible;
   word-wrap: break-word;
   flex: 0 0 auto;
   border: 2px solid rgba(0, 170, 255, 0.3);
