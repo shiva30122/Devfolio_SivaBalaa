@@ -415,7 +415,7 @@ function triggerOnLoadAnimations() {
 window.addEventListener("load", triggerOnLoadAnimations);
 
 // ===============================================
-// 11. SMOOTH SECTION SCROLL
+// 11. SMOOTH SECTION SCROLL (FIXED FOR FIRST CLICK)
 // ===============================================
 function showSection(sectionId) {
   const targetSection = document.getElementById(sectionId);
@@ -426,9 +426,10 @@ function showSection(sectionId) {
 
     // Check if mobile menu is open
     const mobileMenuOpen = document.querySelector(".menu-links.open") !== null;
-    const delay = (sectionId === "contact" && mobileMenuOpen) ? 600 : 100;
+
 
     if (sectionId === "contact") {
+      const delay = mobileMenuOpen ? 600 : 150;
       // Audio: Win + Scroll Lock (ON CLICK ONLY)
       winAudio.currentTime = 0;
       winAudio.play().then(() => { isWinAudioPlaying = true; }).catch(e => console.log("Win audio play failed:", e));
@@ -454,11 +455,46 @@ function showSection(sectionId) {
         }
       }, delay);
     } else {
+      // MUCH MORE AGGRESSIVE SCROLL FIX
+      const initialDelay = 500; // Increased from 150ms - give page more time to settle
+
       setTimeout(() => {
-        // Calculate position with extra offset to show section title
-        const sectionTop = targetSection.getBoundingClientRect().top + window.scrollY - navHeight - 20;
-        window.scrollTo({ top: sectionTop, behavior: "smooth", duration: 1200 });
-      }, 100);
+        // Force a reflow to ensure all content has rendered
+        void document.body.offsetHeight;
+
+        const calculateAndScroll = () => {
+          // Calculate target position
+          const rect = targetSection.getBoundingClientRect();
+          const sectionTop = rect.top + window.scrollY - navHeight + 60; // Added 2 <br> spacing
+
+          // Smooth scroll to calculated position
+          window.scrollTo({ top: sectionTop, behavior: "smooth" });
+
+          // FIRST RECALCULATION - after smooth scroll starts (400ms)
+          setTimeout(() => {
+            const rect1 = targetSection.getBoundingClientRect();
+            const correctedTop1 = rect1.top + window.scrollY - navHeight + 60; // Added 2 <br> spacing
+
+            // Adjust if off by more than 30px
+            if (Math.abs(window.scrollY - correctedTop1) > 30) {
+              window.scrollTo({ top: correctedTop1, behavior: "smooth" });
+            }
+          }, 400);
+
+          // SECOND RECALCULATION - after scroll completes (1200ms total)
+          setTimeout(() => {
+            const rect2 = targetSection.getBoundingClientRect();
+            const finalTop = rect2.top + window.scrollY - navHeight + 60; // Added 2 <br> spacing
+
+            // Final adjustment if still significantly off
+            if (Math.abs(window.scrollY - finalTop) > 30) {
+              window.scrollTo({ top: finalTop, behavior: "smooth" });
+            }
+          }, 1200);
+        };
+
+        calculateAndScroll();
+      }, initialDelay);
     }
   }
 }
@@ -1128,38 +1164,65 @@ document.addEventListener("DOMContentLoaded", () => {
       // existingHearts.forEach(h => h.remove());
     }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.intersectionRatio >= 0.3) {
-          if (!isPlaying) {
-            // STOP WIN AUDIO IF PLAYING
-            if (isWinAudioPlaying) {
-              winAudio.pause();
-              winAudio.currentTime = 0;
-              isWinAudioPlaying = false;
-            }
+    // Function to start animations
+    function startAnimations() {
+      if (!isPlaying) {
+        // STOP WIN AUDIO IF PLAYING
+        if (typeof isWinAudioPlaying !== 'undefined' && isWinAudioPlaying && typeof winAudio !== 'undefined') {
+          winAudio.pause();
+          winAudio.currentTime = 0;
+          isWinAudioPlaying = false;
+        }
 
-            // START VISUALS IMMEDIATELY (Decoupled from audio success)
+        const playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            isPlaying = true;
+            // START SVG ANIMATION & HEART RAIN
+            if (visualsContainer) visualsContainer.classList.add("heartbeat-active");
+            startHeartRain();
+          }).catch(error => {
+            console.log("Future Vision Audio play prevented (interaction needed?):", error);
+            // Even if audio fails, still show animations
             isPlaying = true;
             if (visualsContainer) visualsContainer.classList.add("heartbeat-active");
             startHeartRain();
+          });
+        }
+      }
+    }
 
-            // ATTEMPT TO PLAY AUDIO
-            const playPromise = audio.play();
-            if (playPromise !== undefined) {
-              playPromise.catch(error => {
-                console.log("Future Vision Audio play prevented (interaction needed?):", error);
-              });
-            }
-          }
+    // Function to stop animations
+    function stopAnimations() {
+      if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+        // STOP SVG ANIMATION & HEART RAIN
+        if (visualsContainer) visualsContainer.classList.remove("heartbeat-active");
+        stopHeartRain();
+      }
+    }
+
+    // Check if section is visible on load (for hash navigation)
+    function checkInitialVisibility() {
+      const rect = futureSection.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+      const sectionHeight = rect.height;
+      const visibilityRatio = visibleHeight / sectionHeight;
+
+      if (visibilityRatio >= 0.3) {
+        startAnimations();
+      }
+    }
+
+    // IntersectionObserver for scroll-based triggering
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.intersectionRatio >= 0.3) {
+          startAnimations();
         } else {
-          if (isPlaying) {
-            audio.pause();
-            isPlaying = false;
-            // STOP SVG ANIMATION & HEART RAIN
-            if (visualsContainer) visualsContainer.classList.remove("heartbeat-active");
-            stopHeartRain();
-          }
+          stopAnimations();
         }
       });
     }, {
@@ -1167,6 +1230,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     observer.observe(futureSection);
+
+    // Check initial visibility after a short delay to ensure page is settled
+    setTimeout(() => {
+      checkInitialVisibility();
+    }, 500);
   }
 });
 
