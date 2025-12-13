@@ -374,6 +374,12 @@ section {
   width: 100%;
   max-width: 100%;
   padding: 32rem;
+  opacity: 0;
+  transition: opacity 1.5s ease-out;
+}
+
+#profile.profile-fade-in-active {
+  opacity: 1;
 }
 
 .profile-pic-container {
@@ -532,6 +538,23 @@ img[src="./assets/experience.png"] {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  /* Anchor for phase badge */
+}
+
+.phase-badge {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  background: #dbdbdb;
+  color: #000000;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 30px;
+  /* Increased radius */
+  font-size: 1.4rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 2;
 }
 
 .text-container {
@@ -651,7 +674,8 @@ article {
   width: 100%;
   max-width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.95);
+  /* Darker background */
   display: none;
   justify-content: center;
   align-items: center;
@@ -660,59 +684,100 @@ article {
 
 .overlay-content {
   background: white;
-  border-radius: 18px;
-  width: 90%;
-  height: 90%;
+  border-radius: 0;
+  /* Full screen, no radius needed potentially, but keeping it simple */
+  width: 100%;
+  /* Full Width */
+  height: 100%;
+  /* Full Height */
   position: relative;
   display: flex;
   flex-direction: column;
+  padding: 2rem;
+  /* Add some padding */
+  overflow: hidden;
+  /* Manage scroll inside */
 }
 
+/* HIGHLY VISIBLE CLOSE BUTTON */
 .close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: auto;
-  height: auto;
-  padding: 5px 10px;
-  font-size: 1.2rem;
-  border: none;
-  background: none;
-  color: black;
+  position: fixed;
+  /* Always visible */
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border: 2px solid white;
+  background: black;
+  color: white;
+  border-radius: 50%;
   cursor: pointer;
-  z-index: 1001;
-  /* Ensure it's clickable */
+  z-index: 1002;
+  /* Topmost */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.close-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+  background: #333;
 }
 
 .overlay-inner {
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 95%;
+  /* Requested 95% width */
+  max-width: 100%;
+  /* Full screen width */
+  margin: 0 auto;
+  position: relative;
+  /* Anchor for floating controls */
 }
 
+/* Adjust title to not overlap with close button too much if on mobile */
 .overlay-title {
   width: 100%;
-  height: 3%;
+  height: auto;
+  min-height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
+  margin-bottom: 1rem;
 }
 
 #new-overlay-title {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin: 0;
-  position: relative;
-  top: -30px;
-  /* Moves it up */
+  position: static;
+  /* Reset positioning */
+  padding-right: 60px;
+  /* Space for close button */
 }
 
 .video-container {
   width: 100%;
-  height: 45%;
+  height: auto;
+  max-height: 40vh;
+  /* Limit video height to give text more room */
+  flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #000;
+  /* Letterbox */
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  /* Slight radius */
+  overflow: hidden;
 }
 
 #new-overlay-video {
@@ -723,28 +788,14 @@ article {
 
 .scrollable-description {
   width: 100%;
-  height: 42%;
+  flex: 1;
+  /* Take remaining space */
   overflow-y: auto;
-  padding: 10px;
+  padding: 1rem;
   scrollbar-width: thin;
   scrollbar-color: #888 #f1f1f1;
-}
-
-.scrollable-description::-webkit-scrollbar {
-  width: 8px;
-}
-
-.scrollable-description::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-.scrollable-description::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
-}
-
-.scrollable-description::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
 /* CONTACT SECTION */
@@ -1794,10 +1845,35 @@ body.no-scroll {
 }
 
 /* ONLY OVERLAY DESCRIPTION SCROLLS */
+/* ONLY OVERLAY DESCRIPTION SCROLLS */
 .scrollable-description {
   overflow-y: auto !important;
-  max-height: 42vh;
+  height: 100%;
+  /* Fill remaining space */
+  max-height: none !important;
+  /* Remove limit */
+  padding-bottom: 100px;
+  /* Space for floating buttons */
   -webkit-overflow-scrolling: touch;
+}
+
+/* FLOATING PHASE CONTROLS */
+#phase-controls {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  /* Top Index */
+  background: rgba(255, 255, 255, 0.85);
+  /* Semi-transparent pill background */
+  padding: 10px 25px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  width: auto;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 /* -------------------------------------------------
@@ -2102,30 +2178,43 @@ body.no-scroll {
   text-shadow: 0 0 10px rgba(25, 118, 210, 0.5);
 }
 
-/* BLURRED + PULSE + WHITE GLOW */
+/* BLURRED + PULSE + PURE WHITE GLOW ONLY */
 .blurred.pulse {
-  color: transparent !important;
+  color: #ffffff !important;
   text-shadow:
-    0 0 14px rgba(255, 255, 255, 1),
-    0 0 24px rgba(255, 255, 255, 0.9),
-    0 0 36px rgba(255, 255, 255, 0.7);
-  filter: blur(6px);
-  opacity: 0.75;
-  animation: pulseGlow 1.6s infinite;
+    0 0 10px #fff,
+    0 0 20px #fff,
+    0 0 30px #fff,
+    0 0 40px #fff !important;
+  filter: blur(4px) brightness(1.5);
+  opacity: 0.85;
+  animation: pulseGlowWhite 1.6s infinite;
   font-weight: 600;
+  background: transparent !important;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.3);
 }
 
-@keyframes pulseGlow {
+@keyframes pulseGlowWhite {
 
   0%,
   100% {
     opacity: 0.75;
-    text-shadow: 0 0 14px rgba(255, 255, 255, 1);
+    filter: blur(4px) brightness(1.3);
+    text-shadow:
+      0 0 10px #fff,
+      0 0 20px #fff,
+      0 0 30px #fff;
   }
 
   50% {
-    opacity: 0.95;
-    text-shadow: 0 0 22px rgba(255, 255, 255, 1), 0 0 40px rgba(255, 255, 255, 0.9);
+    opacity: 1;
+    filter: blur(5px) brightness(1.8);
+    text-shadow:
+      0 0 15px #fff,
+      0 0 30px #fff,
+      0 0 45px #fff,
+      0 0 60px #fff;
   }
 }
 
@@ -2255,50 +2344,119 @@ body.no-scroll {
   min-height: 378px;
 }
 
-.future-img {
+/* === UPDATED ROMANTIC THEME (PINK/RED/MAGENTA) === */
+.future-visuals {
   width: 30%;
   height: auto;
-  max-height: 100%;
-  object-fit: contain;
-  background: #111;
-  border-radius: 16px 0 0 16px;
-  box-shadow: -10px 0 30px rgba(0, 170, 255, 0.6);
-  flex: 0 0 auto;
-  border: 2px solid rgba(0, 170, 255, 0.3);
+  min-height: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  background: #110505;
+  /* Dark reddish black */
+  border-radius: 16px 0 0 16px;
+  box-shadow: -10px 0 30px rgba(255, 20, 147, 0.5);
+  /* Deep Pink Glow */
+  border: 2px solid rgba(255, 105, 180, 0.4);
+  /* Hot Pink Border */
   padding: 10px;
+  flex: 0 0 auto;
 }
 
-.future-img img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
+.future-img {
+  width: 100%;
   height: auto;
   object-fit: contain;
+  margin-bottom: 10px;
+}
+
+/* HEARTBEAT SVG STYLES - Red/Pink Theme */
+.heartbeat-container {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.heartbeat-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.heartbeat-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  opacity: 0.3;
+  transition: opacity 0.5s;
+  stroke: #ff1493;
+  /* Deep Pink Stroke */
+}
+
+.heart-shape {
+  transform-origin: 390px 85px;
+  fill: #330000;
+  transition: fill 0.5s;
+}
+
+/* ACTIVE STATE */
+.heartbeat-active .heartbeat-path {
+  animation: drawECG 2s linear infinite;
+  opacity: 1;
+}
+
+.heartbeat-active .heart-shape {
+  animation: pulseHeart 0.8s ease-in-out infinite;
+  fill: #ff0000;
+  /* Red Heart */
+}
+
+@keyframes drawECG {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pulseHeart {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 .future-text {
   width: 65%;
   height: auto;
   min-height: 378px;
-  background: rgba(15, 15, 35, 0.98);
+  background: rgba(35, 15, 20, 0.95);
+  /* Warm Dark Background */
   padding: 32px 40px;
   border-radius: 0 16px 16px 0;
-  box-shadow: 10px 0 30px rgba(0, 170, 255, 0.6);
+  box-shadow: 10px 0 30px rgba(255, 20, 147, 0.5);
+  /* Deep Pink Glow */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: #ffffff;
-  /* ← WHITE TEXT LIKE PDF */
   font-size: 1rem;
   line-height: 1.7;
   overflow: visible;
   word-wrap: break-word;
   flex: 0 0 auto;
-  border: 2px solid rgba(0, 170, 255, 0.3);
+  border: 2px solid rgba(255, 105, 180, 0.4);
+  /* Hot Pink Border */
   box-sizing: border-box;
   text-align: center;
 }
@@ -2309,8 +2467,8 @@ body.no-scroll {
   text-align: center;
   hyphens: auto;
   max-width: 100%;
-  color: #ffffff;
-  /* ← WHITE */
+  color: #fff0f5;
+  /* Lavender Blush Text */
 }
 
 .future-text p:last-child {
@@ -2318,27 +2476,56 @@ body.no-scroll {
 }
 
 .future-text .highlight {
-  color: #00ffff;
+  color: #ff69b4;
+  /* Hot Pink Text */
   font-weight: 700;
-  text-shadow: 0 0 12px #00ffff, 0 0 25px #00ffff;
-  background: rgba(0, 255, 255, 0.1);
+  text-shadow: 0 0 12px #ff1493, 0 0 25px #ff69b4;
+  background: rgba(255, 20, 147, 0.1);
   padding: 3px 7px;
   border-radius: 5px;
   display: inline;
   line-height: 1.8;
 }
 
-/* === DEFAULT TITLE STYLE – LIKE OTHER SECTIONS === */
+/* === FLOATING HEARTS ANIMATION === */
+.romantic-heart {
+  position: absolute;
+  bottom: 0;
+  color: #ff1493;
+  font-size: 1.5rem;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  animation: floatLove 4s linear forwards;
+  filter: drop-shadow(0 0 5px rgba(255, 0, 100, 0.5));
+}
+
+@keyframes floatLove {
+  0% {
+    transform: translateY(0) scale(0.5) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translateY(-80vh) scale(1.2) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* === DEFAULT TITLE STYLE === */
 #future-vision .section__text__p1 {
-  color: rgb(85, 85, 85);
-  /* ← DEFAULT GRAY */
+  color: rgb(255, 0, 38);
+  /* Light Pink */
   font-size: 1.3rem;
   margin-bottom: 0.6rem;
 }
 
 #future-vision .title {
   color: #000000;
-  /* ← DEFAULT BLACK */
   font-size: 2.4rem;
   font-weight: 800;
   text-align: center;
@@ -2357,19 +2544,20 @@ body.no-scroll {
     min-height: auto;
   }
 
-  .future-img,
+  .future-visuals,
   .future-text {
-    width: 100% !important;
+    width: 95% !important;
+    /* Slightly less than 100% for margins */
+    max-width: 500px;
     margin: 0 auto;
     border-radius: 16px !important;
     border: 2px solid rgba(0, 170, 255, 0.4);
     box-shadow: 0 10px 30px rgba(0, 170, 255, 0.5);
   }
 
-  .future-img {
-    height: 260px;
+  .future-visuals {
+    min-height: auto;
     padding: 15px;
-    border-radius: 16px;
   }
 
   .future-img img {
@@ -2394,5 +2582,158 @@ body.no-scroll {
   #future-vision .section__text__p1 {
     font-size: 1.1rem;
     color: rgb(85, 85, 85);
+  }
+
+
+
+
+}
+
+/* ======================== */
+/* LAZY LOADING BLUR EFFECT */
+/* ======================== */
+img {
+  transition: filter 0.5s ease-in-out;
+}
+
+.blur-load {
+  filter: blur(10px);
+  /* clip-path helps prevent blurred edges from bleeding outside */
+  clip-path: inset(0);
+}
+
+.blur-load.loaded {
+  filter: blur(0);
+}
+
+/* ======================== */
+/* TOAST NOTIFICATION       */
+/* ======================== */
+#toast-container {
+  visibility: hidden;
+  min-width: 280px;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  text-align: center;
+  border-radius: 50px;
+  padding: 16px 24px;
+  position: fixed;
+  z-index: 10003;
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
+  border: 2px solid #00ffcc;
+  opacity: 0;
+  transition: opacity 0.5s, bottom 0.5s;
+}
+
+#toast-container.show {
+  visibility: visible;
+  opacity: 1;
+  bottom: 80px;
+  animation: pulseGlowToast 2s infinite;
+}
+
+@keyframes pulseGlowToast {
+  0% {
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(0, 255, 204, 0.9);
+  }
+
+  100% {
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.6);
+  }
+}
+
+/* =============================== */
+/* FUTURE VISION: HEARTBEAT ANIMATION */
+/* =============================== */
+@keyframes heartbeat-vision {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(0, 255, 255, 0);
+  }
+
+  20% {
+    transform: scale(1);
+    /* Reduced */
+  }
+
+  35% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1);
+    /* Reduced */
+  }
+
+  70% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.heartbeat-active {
+  /* Animation Removed as requested */
+}
+
+/* =============================== */
+/* DREAM NAV BUTTON WITH HEARTS */
+/* =============================== */
+.dream-nav-btn {
+  color: #ff1493 !important;
+  /* Deep Pink */
+  text-shadow: 0 0 5px rgba(255, 20, 147, 0.3);
+  font-weight: 600;
+  position: relative;
+  /* Anchor for hearts */
+  overflow: visible !important;
+  /* Allow hearts to fly out */
+}
+
+.dream-nav-btn:hover {
+  text-shadow: 0 0 10px rgba(255, 20, 147, 0.6);
+}
+
+/* NAV BUTTON HEART PARTICLES */
+.nav-heart {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  color: #ff69b4;
+  /* Hot Pink */
+  font-size: 0.8rem;
+  pointer-events: none;
+  z-index: 1002;
+  /* Above nav */
+  opacity: 0;
+  animation: floatNavHeart 1.5s ease-out forwards;
+}
+
+@keyframes floatNavHeart {
+  0% {
+    transform: translate(-50%, 0) scale(0.5);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(-50%, -100px) scale(1.2);
+    /* Fly Upwards */
+    opacity: 0;
   }
 }

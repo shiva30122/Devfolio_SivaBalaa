@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!DOCTYPE html>
-<html lang="en">
 
 <head>
   <!-- Core Meta -->
@@ -10,15 +8,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- SEO & Page Title -->
-  <title>Siva Balaa | Game Developer - Loading Portfolio...</title>
+  <title>Siva Balaa | Unity & Godot Game Developer | Pokémon GO Style Games</title>
   <meta name="description"
     content="Junior Unity Game Developer with 1+ yr exp at RATHERGAMES (California). Built Pokémon GO-style games with C#, Azure, REST APIs. 4+ yrs Godot. Passionate about storytelling in games." />
   <link rel="canonical" href="https://devfolio-sivabalaa.vercel.app/Main.html" />
 
   <!-- Open Graph / Social Sharing (WhatsApp, LinkedIn, Facebook) -->
   <meta property="og:title" content="Siva Balaa - Game Developer Portfolio" />
-  <meta property="og:description"
-    content="Game Programmer | Unreal Engine C++ | Unity C# | Godot  | Android Studio | Microsoft Azure | REST APIs | Android APK ABB " />
+  <meta property="og:description" content="Unity | Godot | C# | Azure | REST APIs | Android | Visual Novels" />
   <meta property="og:image" content="https://devfolio-sivabalaa.vercel.app/assets/Profile.png" />
   <meta property="og:url" content="https://devfolio-sivabalaa.vercel.app/Main.html" />
   <meta property="og:type" content="website" />
@@ -29,40 +26,57 @@
   <meta name="twitter:title" content="Siva Balaa - Game Developer" />
   <meta name="twitter:description" content="Building real-time mobile games with Unity, Azure, and passion." />
   <meta name="twitter:image" content="https://devfolio-sivabalaa.vercel.app/assets/Profile.png" />
+  <meta name="twitter:creator" content="@yourhandle" /> <!-- Optional: add your X handle -->
 
   <!-- Favicon & Apple Touch Icon -->
   <link rel="icon" href="./assets/favicon.png" type="image/png" />
   <link rel="apple-touch-icon" href="./assets/Profile.png" />
 
-  <!-- Preload Critical Assets (Faster Load on Splash) -->
-  <link rel="preload" href="./assets/Profile.png" as="image" />
+  <!-- Preload Critical Assets (Faster Load) -->
   <link rel="preload" href="./assets/Videos/Intro.mp4" as="video" type="video/mp4" />
+  <link rel="preload" href="./assets/Profile.png" as="image" />
 
-  <!-- Stylesheets & Inline CSS -->
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="mediaqueries.css" />
+
   <style>
-    /* === SPLASH SCREEN – MOBILE RESPONSIVE + 100+ PARTICLES === */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    /* === HIDE MAIN CONTENT DURING SPLASH === */
+    body.loading {
+      overflow: hidden;
     }
 
-    body,
-    html {
+    body.loading .main-content {
+      display: none;
+    }
+
+    .main-content {
+      display: block;
+    }
+
+    /* === SPLASH SCREEN – MOBILE RESPONSIVE + 100+ PARTICLES === */
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
       height: 100%;
-      overflow: hidden;
       background: #000;
-      font-family: 'Poppins', sans-serif;
-      color: #fff;
+      z-index: 9999;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
       align-items: center;
+      transition: opacity 0.5s ease-out;
+    }
+
+    #splash-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
     }
 
     /* LOGO – RESPONSIVE + 20% FROM TOP */
-    .logo {
+    #splash-screen .logo {
       position: absolute;
       top: 18vh;
       left: 50%;
@@ -80,7 +94,7 @@
     }
 
     /* MAIN CONTENT – RESPONSIVE */
-    .splash {
+    #splash-screen .splash {
       text-align: center;
       margin-top: clamp(30vh, 40vh, 35vh);
       position: relative;
@@ -90,7 +104,7 @@
     }
 
     /* PROFILE IMAGE – RESPONSIVE */
-    .profile-img {
+    #splash-screen .profile-img {
       width: clamp(100px, 30vw, 156px);
       height: clamp(100px, 30vw, 156px);
       border-radius: 50%;
@@ -102,7 +116,7 @@
     }
 
     /* LOADING BAR – RESPONSIVE */
-    .loader {
+    #splash-screen .loader {
       width: clamp(200px, 70vw, 300px);
       height: clamp(6px, 2vw, 8px);
       background: rgba(255, 255, 255, 0.1);
@@ -112,7 +126,7 @@
       box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
     }
 
-    .progress {
+    #splash-screen .progress {
       height: 100%;
       width: 0%;
       background: linear-gradient(90deg, #ff00ff, #00ffff, #00ff88);
@@ -121,15 +135,16 @@
       box-shadow: 0 0 15px #00ffff;
     }
 
-    .loading-text {
+    #splash-screen .loading-text {
       font-size: clamp(0.9rem, 3.5vw, 1.1rem);
       opacity: 0.9;
       margin-top: 0.6rem;
       animation: fadeText 1.5s ease-in-out infinite alternate;
+      color: #fff;
     }
 
     /* TIP POPUP – RESPONSIVE */
-    .tip-popup {
+    #splash-screen .tip-popup {
       position: fixed;
       bottom: clamp(20px, 8vh, 40px);
       left: 50%;
@@ -149,7 +164,7 @@
       white-space: nowrap;
     }
 
-    .tip-popup::before {
+    #splash-screen .tip-popup::before {
       content: "Tip";
       color: #00ff88;
       font-weight: bold;
@@ -226,7 +241,7 @@
     }
 
     /* === 100+ PARTICLES – COLORFUL + TRAIL === */
-    .particles {
+    #splash-screen .particles {
       position: absolute;
       top: 0;
       left: 0;
@@ -237,7 +252,7 @@
       overflow: hidden;
     }
 
-    .particle {
+    #splash-screen .particle {
       position: absolute;
       border-radius: 50%;
       opacity: 0;
@@ -263,7 +278,7 @@
     }
 
     /* NEW LOADER TEXT ANIMATION */
-    .loader-text {
+    #splash-screen .loader-text {
       width: fit-content;
       font-size: 17px;
       font-family: monospace;
@@ -279,11 +294,11 @@
       margin: 1rem auto;
     }
 
-    .loader-text::before {
+    #splash-screen .loader-text::before {
       content: "Loading";
     }
 
-    .loader-text::after {
+    #splash-screen .loader-text::after {
       content: "";
       position: absolute;
       width: 10px;
@@ -338,58 +353,862 @@
   </style>
 </head>
 
-<body>
+<body class="loading">
+  <!-- SPLASH SCREEN -->
+  <div id="splash-screen">
+    <!-- 100+ PARTICLES -->
+    <div class="particles" id="particles"></div>
 
-  <!-- 100+ PARTICLES -->
-  <div class="particles" id="particles"></div>
+    <!-- LOGO AT TOP -->
+    <div class="logo">Devfolio</div>
 
-  <!-- LOGO AT TOP -->
-  <div class="logo">Devfolio</div>
-
-  <!-- MAIN CONTENT -->
-  <div class="splash">
-    <img src="./assets/Profile.png" alt="Siva Balaa" class="profile-img" />
-    <div class="loader">
-      <div class="progress"></div>
+    <!-- MAIN CONTENT -->
+    <div class="splash">
+      <img src="./assets/Profile.png" alt="Siva Balaa" class="profile-img" />
+      <div class="loader">
+        <div class="progress"></div>
+      </div>
+      <p class="loading-text">Initializing experience...</p>
+      <div class="loader-text"></div>
     </div>
-    <p class="loading-text">Initializing experience...</p>
-    <div class="loader-text"></div>
+
+    <!-- TIP POPUP -->
+    <div class="tip-popup">
+      Click anywhere to enable music!
+    </div>
   </div>
 
-  <!-- TIP POPUP -->
-  <div class="tip-popup">
-    Click anywhere to enable music!
+  <!-- Navigation -->
+  <nav id="desktop-nav" class="animate-on-load">
+    <div class="logo">Devfolio</div>
+    <div class="nav-container">
+      <button class="nav-toggle-btn" onclick="toggleNav()">☰</button>
+      <ul class="nav-links">
+        <li><a href="#about" onclick="showSection('about')">About</a></li>
+        <li><a href="#experience" onclick="showSection('experience')">Skills</a></li>
+        <li><a href="#projects" onclick="showSection('projects')">Projects</a></li>
+        <li><a href="#work-experience" onclick="showSection('work-experience')">Experience</a></li>
+        <li><a href="#future-vision" onclick="showSection('future-vision')" class="dream-nav-btn">Dream</a></li>
+        <li><a href="#setup-static" onclick="showSection('setup-static')">PC</a></li>
+        <li><a href="#contact" onclick="showSection('contact')">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+  <nav id="hamburger-nav">
+    <div class="logo">Devfolio</div>
+    <div class="hamburger-menu">
+      <div class="hamburger-icon" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="menu-links">
+        <li><a href="#about" onclick="toggleMenu(); showSection('about')">About</a></li>
+        <li><a href="#experience" onclick="toggleMenu(); showSection('experience')">Skills</a></li>
+        <li><a href="#projects" onclick="toggleMenu(); showSection('projects')">Projects</a></li>
+        <li><a href="#work-experience" onclick="showSection('work-experience')">Experience</a></li>
+        <li><a href="#future-vision" onclick="toggleMenu(); showSection('future-vision')"
+            class="dream-nav-btn">Dream</a></li>
+        <li><a href="#setup-static" onclick="toggleMenu(); showSection('setup-static')">PC</a></li>
+        <li><a href="#contact" onclick="toggleMenu(); showSection('contact')">Contact</a></li>
+      </div>
+    </div>
+  </nav>
+
+
+
+
+  <!-- ==== INTRO VIDEO + PROFILE (MUTED ON START, SOUND ON TAP) ==== -->
+  <div class="StartingAnimationContainer">
+    <!-- VIDEO: MUTED AUTOPLAY -->
+    <video id="intro-video" class="intro-video" autoplay loop muted playsinline preload="none">
+      <source src="./assets/Videos/Intro.mp4" type="video/mp4">
+    </video>
+
+    <!-- Sound Control -->
+    <div id="sound-control-container">
+      <div id="sound-text" class="fade-out">Enable Sound! &rarr;</div>
+      <button id="sound-btn" class="sound-btn">
+        <svg id="sound-icon-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+          class="w-6 h-6">
+          <path
+            d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06zM18.584 5.106a.75.75 0 011.06 0c3.808 3.807 3.808 9.98 0 13.788a.75.75 0 11-1.06-1.06 8.25 8.25 0 000-11.668.75.75 0 010-1.06z" />
+          <path
+            d="M15.932 7.757a.75.75 0 011.061 0 6 6 0 010 8.486.75.75 0 01-1.06-1.061 4.5 4.5 0 000-6.364.75.75 0 010-1.06z" />
+        </svg>
+        <svg id="sound-icon-on" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+          class="w-6 h-6" style="display: none;">
+          <path
+            d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 001.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06zM17.78 9.22a.75.75 0 10-1.06 1.06L18.44 12l-1.72 1.72a.75.75 0 101.06 1.06l1.72-1.72 1.72 1.72a.75.75 0 101.06-1.06L20.56 12l1.72-1.72a.75.75 0 10-1.06-1.06l-1.72 1.72-1.72-1.72z" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- PROFILE CONTENT -->
+    <section id="profile" class="scroll-animate scroll-reveal">
+      <div class="profile-pic-container">
+        <img src="./assets/Profile.png" alt="Profile picture" />
+      </div>
+      <div class="section__text">
+        <p class="section__text__p1">Hello, I'm</p>
+        <h1 class="title">Siva Balaa</h1>
+
+        <div class="word-container">
+          <div class="typewriter-container">
+            <span class="typewriter" id="typewriter"></span>
+          </div>
+          <div class="aurora">
+            <div class="aurora__item"></div>
+            <div class="aurora__item"></div>
+            <div class="aurora__item"></div>
+            <div class="aurora__item"></div>
+          </div>
+        </div>
+
+        <div class="btn-container">
+          <button class="btn btn-color-1" onclick="downloadResume()">
+            Download Resume
+          </button>
+          <button class="btn btn-color-1" onclick="location.href='Main.html#contact'">
+            Contact<br>Info
+          </button>
+        </div>
+
+        <div id="socials-container">
+          <img src="./assets/linkedin.png" alt="LinkedIn profile" class="icon blur-load" loading="lazy"
+            onclick="location.href='https://www.linkedin.com/in/siva-balaa-a770b020b'" />
+          <img src="./assets/github.png" alt="GitHub profile" class="icon blur-load" loading="lazy"
+            onclick="location.href='https://github.com/shiva30122'" />
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon"
+            onclick="window.open('https://wa.me/919444546017', '_blank')">
+            <path
+              d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon"
+            onclick="window.open('https://www.instagram.com/shar_m_i', '_blank')">
+            <path
+              d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.5 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.9 0-184.9zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="icon"
+            onclick="window.open('https://www.youtube.com/@SharMi_Plays_X_Dev', '_blank')">
+            <path
+              d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 42.155 48.284 48.477 42.591 11.486 213.371 11.486 213.371 11.486s170.78 0 213.371-11.486c23.497-6.322 42.003-24.827 48.284-48.477 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z" />
+          </svg>
+        </div>
+      </div>
+    </section>
   </div>
 
-  <!-- PARTICLE GENERATOR + REDIRECT -->
+
+
+
+  <!-- About Section -->
+  <section id="about" class="scroll-reveal">
+    <br>
+    <p class="section__text__p1">Get To Know More</p>
+    <h1 class="title">About Me</h1>
+    <div class="section-container">
+      <div class="about-details-container">
+        <div class="about-containers">
+          <div class="details-container">
+            <img src="./assets/experience.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+            <h3>Experience</h3>
+            <p>Over 4 years of hands-on game development experience (started as a college student) <br /> 1+ year of
+              professional game development experience </p>
+          </div>
+          <div class="details-container">
+            <img src="./assets/education.png" alt="Education icon" class="icon blur-load" loading="lazy" />
+            <h3>Education</h3>
+            <p>BCA. Bachelor of Computer Applications Degree</p>
+          </div>
+        </div>
+        <div class="text-container">
+          <p>
+            I am a passionate <strong>Unity Developer</strong> who believes that great games are built on solid logic,
+            not just tools.
+            <br><br>
+            My career took a defining turn after a technical interview where I realized I had become too reliant on AI.
+            That moment was my wake-up call. I went back to the roots of programming, sharpening my <strong>C#
+              logic</strong> and problem-solving skills to ensure <em>I</em> am the architect of my code. Today, I build
+            complex, scalable systems in Unity with confidence.
+            <br><br>
+            <strong>My approach is balanced:</strong> I use AI <strong>60% of the time</strong> to accelerate code
+            generation and implementation,
+            but I maintain <strong>40% control over the logic flow</strong> to ensure the desired outcome. I reference
+            best practices,
+            design patterns, and proven solutions, then integrate them strategically to build robust, maintainable
+            systems.
+            This way, I leverage AI's efficiency while staying in command of the architecture and critical
+            decision-making.
+            <br><br>
+            I also love bridging the gap between games and apps. I originally prototyped my <strong>VegCal</strong> tool
+            in Godot, but to deliver a premium user experience, I taught myself <strong>Kotlin</strong> and rebuilt it
+            natively in <strong>Android Studio - Shop Calculator</strong>. I used AI to accelerate learning this new
+            language,
+            successfully implementing <strong>Cloud Saving (Drive API)</strong> and <strong>Monetization</strong>.
+            <br><br>
+            Currently, I am pushing my boundaries by exploring <strong>Unreal Engine 5</strong> while seeking new
+            challenges in professional Unity Game Development.
+          </p>
+        </div>
+      </div>
+    </div>
+    <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow blur-load" loading="lazy"
+      onclick="location.href='Main.html#experience'" />
+  </section>
+
+  <!-- Skills Section -->
+  <section id="experience" class="scroll-reveal">
+    <p class="section__text__p1">Explore My</p>
+    <h1 class="title">Skills</h1>
+    <div class="experience-details-container">
+      <div class="about-containers">
+        <div class="details-container">
+          <h2 class="experience-sub-title">Game Development</h2>
+          <div class="article-container">
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>Unreal Engine</h3>
+                <p>Basic</p>
+              </div>
+            </article>
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>Unity Engine</h3>
+                <p>Experienced</p>
+              </div>
+            </article>
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>Godot Engine</h3>
+                <p>Experienced</p>
+              </div>
+            </article>
+
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>2D Development</h3>
+                <p>Experienced</p>
+              </div>
+            </article>
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>Game Design</h3>
+                <p>Experienced</p>
+              </div>
+            </article>
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>Debugging</h3>
+                <p>Experienced</p>
+              </div>
+            </article>
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>3D Development</h3>
+                <p>Intermediate</p>
+              </div>
+            </article>
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>Animation</h3>
+                <p>Intermediate</p>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="details-container">
+          <h2 class="experience-sub-title">Other Than Game Development</h2>
+          <div class="article-container">
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>Android Studio</h3>
+                <p>Intermediate</p>
+              </div>
+            </article>
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>Microsoft Azure</h3>
+                <p>Experienced</p>
+              </div>
+            </article>
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>MongoDB</h3>
+                <p>Experienced</p>
+              </div>
+            </article>
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>Rest API</h3>
+                <p>Experienced</p>
+              </div>
+            </article>
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>Unity Version Control</h3>
+                <p>Experienced</p>
+              </div>
+            </article>
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>Git</h3>
+                <p>Intermediate</p>
+              </div>
+            </article>
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>Android Deployment</h3>
+                <p>Intermediate</p>
+              </div>
+            </article>
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>HTML</h3>
+                <p>Basic</p>
+              </div>
+            </article>
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>CSS</h3>
+                <p>Basic</p>
+              </div>
+            </article>
+            <article>
+              <img src="./assets/checkmark.png" alt="Experience icon" class="icon blur-load" loading="lazy" />
+              <div>
+                <h3>SQLite Database</h3>
+                <p>Basic</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+    <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow" onclick="location.href='Main.html#projects'" />
+  </section>
+
+  <!-- Project Overlay -->
+  <div id="new-overlay" class="overlay" style="display: none;" onclick="closeNewOverlay(event)">
+    <div class="overlay-content" onclick="event.stopPropagation();">
+      <button class="close-btn" onclick="closeNewOverlay()">X</button>
+      <div class="overlay-inner">
+        <div class="overlay-title">
+          <h2 id="new-overlay-title">Project Title</h2>
+          <!-- PHASE INDICATOR (Top) -->
+          <p id="phase-indicator"
+            style="display: none; color: #000000; font-weight: bold; margin-top: 5px; font-size: 2rem;">Phase 1 / 3</p>
+        </div>
+        <div class="video-container">
+          <video id="new-overlay-video" controls loop style="display: none;">
+            <source id="new-video-source" data-src="path/to/your/video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <div id="new-overlay-description" class="scrollable-description">
+          This is where the project description will appear.
+        </div>
+
+        <!-- PHASE BUTTONS (Bottom) -->
+        <div id="phase-controls"
+          style="display: none; justify-content: center; gap: 20px; margin-top: 20px; padding-bottom: 10px;">
+          <button id="prev-phase-btn" class="btn btn-color-2" onclick="changePhase(-1)"> &#8592; Prev Phase </button>
+          <button id="next-phase-btn" class="btn btn-color-2" onclick="changePhase(1)"> Next Phase &#8594; </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Projects Section -->
+  <section id="projects" class="scroll-reveal">
+    <br>
+    <p class="section__text__p1">Browse My Recent</p>
+    <h1 class="title">Projects</h1>
+    <div class="experience-details-container">
+      <div class="about-containers">
+        <div class="details-container color-container">
+          <!-- Phase Badge (Latest) -->
+          <div class="phase-badge">Phase 2</div>
+          <div class="project-img-container">
+            <img src="./assets//Images/Shopcalculator.png" alt="VegCal Project" class="project-img blur-load"
+              loading="lazy" />
+          </div>
+          <h2 class="experience-sub-title project-title">ShopCalculator</h2>
+          <div class="btn-container">
+
+            <button class="btn btn-color-2 project-btn" onclick="openProject('shopCalculator', event)">
+              Project Info
+            </button>
+            <button class="btn btn-color-2 project-btn"
+              onclick="showToast('Coming soon to the Play Store! Watch the demo in Project Info to see it in action!'); openProject('shopCalculator', event)">
+              Install Try !
+            </button>
+          </div>
+        </div>
+        <div class="details-container color-container">
+          <div class="project-img-container">
+            <img src="./assets/Images/fps.png" alt="Project 1" class="project-img blur-load" loading="lazy" />
+          </div>
+          <h2 class="experience-sub-title project-title">FPS Shooter 3D</h2>
+          <div class="btn-container">
+            <button class="btn btn-color-2 project-btn"
+              onclick="window.open('https://github.com/shiva30122/FPS-PUBG-Clone', '_blank')">
+              Github
+            </button>
+            <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('FPS (3D, Unity)', 
+                '<h3>This project is a 3D game development endeavor, creating a fully modular and flexible system inspired by the mechanics of PUBG.</h3><br>' +
+                '<h4>In this FPS project, I’ve designed the architecture to be adaptable and modular:</h4><br><br>' +
+                '<strong>Pickups:</strong> <br> Weapons and items are collected independently from the inventory, with each weapon type (Gun, Pistol, Melee) having its own designated slot. This individual management of pickups enhances flexibility.<br><br>' +
+                '<strong>Inventory Manager:</strong> <br> This system efficiently handles all acquired items, allowing for the addition of identical items to existing stacks and the creation of new slots for different ones. It also accommodates one-time pickups that cannot be dropped, dynamically managing space allocation to ensure all items fit seamlessly.<br><br>' +
+                '<strong>Gun Script:</strong> <br> The functionality of all weapons is centralized, supporting features like Automatic Shooting, Burst Fire, Shotgun Mechanics, and Multi-Point Shooting. This system enables the addition of attachments to any gun; for example, attaching a MultiPad Shoot module to an AR gun allows it to fire multiple bullets simultaneously, resulting in a highly customizable experience.<br><br>' +
+                'I have encountered numerous challenges, including Unity crashes during testing and managing while loops. However, I remained determined to build efficient and flexible code. Transitioning to 3D was particularly challenging, but with perseverance, I mastered essential concepts such as while loops and coroutines. Each obstacle has only fueled my passion for game development.<br><br>' +
+                'A heartfelt thank you to Hemanth Kumar K for inspiring me to embark on this journey in 3D Unity game development!<br><br><br><br>', 
+                'assets/Videos/FPSVideo.mp4', './assets/Images/fps.png')">
+              Project Info
+            </button>
+          </div>
+        </div>
+        <div class="details-container color-container">
+          <div class="project-img-container">
+            <img src="./assets/Images/ancient.png" alt="Project 2" class="project-img blur-load" loading="lazy" />
+          </div>
+          <h2 class="experience-sub-title project-title">2D Puzzle Adventures</h2>
+          <div class="btn-container">
+            <button class="btn btn-color-2 project-btn"
+              onclick="window.open('https://github.com/shiva30122/Unity-2D_Puzzle', '_blank')">
+              Github
+            </button>
+            <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('2D Puzzle Game (Unity)', 
+                '<h3>This 2D puzzle game offers diverse puzzles with increasing difficulty, featuring modular swapping and intuitive drag-and-drop controls for creative problem-solving.</h3>' + 
+                '<br><strong>Following a setback during a technical interview at HFG Entertainments Private Limited,</strong> I refined my game logic skills and gained valuable experience. Particularly during the technical round Interview, posed several questions that I couldn\'t answer !... This experience highlighted my knowledge gaps, but the constructive feedback I received inspired me to refine my game logic skills and complete this puzzle project using modular, flexible, and reusable code that can adapt to any type of Swapping.</h3>' + 
+                '<br><br><h4>Project Highlights:</h4><br><strong>Logical Thinking:</strong> The project emphasizes logical thinking and strategic problem-solving, encouraging players to engage deeply with each puzzle.<br>' + 
+                '<br><strong>Engaging Experience:</strong> Developed with a focus on creating a smooth and engaging experience, each level is carefully designed to provide a balance of challenge and enjoyment, helping players improve their skills as they move forward.<br><br>' + 
+                '<h4>Personal Growth:</h4><br>During my development journey, I initially faced a setback when I didn\'t pass the technical interview with <strong>HFG Entertainments Private Limited</strong>. I realized there were gaps in how I understood and explained the complex logic behind the code I had written. Instead of giving up, I worked hard to improve those areas and proved to myself that I could handle the challenges of game development.<br><br>' + 
+                'This game, in particular, became a representation of my growth. By overcoming the issues that held me back, I became more confident in my abilities and more determined to succeed.<br><br>' + 
+                'With its engaging mechanics and polished design, this 2D puzzle game offers a rewarding experience for players, showing how far I\'ve come since that initial setback.<br><br><br><br><br><br><br>', 
+                'assets/Videos/2D_Puzzle.mp4', './assets/Images/ancient.png')">
+              Project Info
+            </button>
+            <button class="btn btn-color-2 project-btn"
+              onclick="window.open('https://github.com/shiva30122/Unity-2D_Puzzle/tree/main/APK', '_blank')">
+              Download
+            </button>
+          </div>
+        </div>
+        <div class="details-container color-container">
+          <div class="project-img-container">
+            <img src="./assets/Apex.jpeg" alt="Project 3" class="project-img blur-load" loading="lazy" />
+          </div>
+          <h2 class="experience-sub-title project-title">Apex Warriors</h2>
+          <div class="btn-container">
+            <button class="btn btn-color-2 project-btn"
+              onclick="window.open('https://github.com/shiva30122/Apex-Wifi-Based-Game', '_blank')">
+              Github
+            </button>
+            <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('Multiplayer Android Game Apex Warriors (Godot 4)', 
+                '<h3>This project is a multiplayer Android game developed using the Godot Engine as part of a university project. It supports up to 12 players simultaneously over a local Wi-Fi network, delivering a smooth, lag-free experience.</h3><br>' +
+                '<h4>Features:</h4><br><strong>Real-Time Multiplayer:</strong> Seamless connectivity for up to 12 players on the same local network.<br>' +
+                '<br><strong>Local Wi-Fi Integration:</strong> Custom network code for efficient player connections and real-time synchronization.<br><br>' +
+                '<strong>Dynamic Gameplay:</strong> Features that promote interaction and engagement between players in an immersive environment.<br>' +
+                '<br><strong>Optimized User Experience:</strong> Fluid multiplayer setup and intuitive gameplay for all skill levels.<br><br>' +
+                '<h4>Technologies Used:</h4><strong>Godot 4, GD Script, Android Studio, Android SDK, Java JDK</strong><br><br>' +
+                '<h4>Future Improvements:</h4><br><strong>Expanding network support:</strong> For more robust multiplayer options, including internet-based gameplay.<br>' +
+                '<br><strong>Adding advanced in-game features:</strong> Like leaderboards and player stats tracking.<br>' +
+                '<br><strong>Cross-platform compatibility:</strong> Expanding to PC and iOS for broader reach.<br><br><br><br><br>', 
+                'assets/Videos/Apex.mov', './assets/Apex.jpeg')">
+              Project Info
+            </button>
+            <button class="btn btn-color-2 project-btn"
+              onclick="window.open('https://drive.google.com/drive/folders/1-852IS-uwtfmdZVqETNRP29YTiHivzab?usp=sharing', '_blank')">
+              Download
+            </button>
+          </div>
+        </div>
+        <div class="details-container color-container">
+          <div class="project-img-container">
+            <img src="./assets/Images/calculator.png" alt="Project 4" class="project-img blur-load" loading="lazy" />
+          </div>
+          <h2 class="experience-sub-title project-title">VegCal</h2>
+          <div class="btn-container">
+            <button class="btn btn-color-2 project-btn"
+              onclick="window.open('https://github.com/shiva30122/VegCal', '_blank')">
+              Github
+            </button>
+            <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('VegCal - Dynamic Vegetable Calculator', 
+                '<h3>This project is a dynamic vegetable calculator specifically designed for Android shop applications.</h3><br>' +
+                '<h4>Technologies Used:</h4><strong>Godot 4, GD Script, SQLite Database, Android Studio, Android SDK, Java JDK</strong><br><br>' +
+                '<h4>Project Duration:</h4><strong>February 2024 - March 2024</strong><br><br>' +
+                '<h4>Problem Statement:</h4><br><strong>The manual calculation of vegetable quantities and prices in shop applications for Android devices can be inefficient and prone to errors.</strong><br><br>' +
+                '<strong>VegCal features an intuitive user interface that simplifies the pricing and quantity calculation process.</strong><br><br>' +
+                '<h4>Key Features:</h4><ul><br><li><strong>User-Friendly Design:</strong> Tailored for ease of use, making it accessible for shop owners and staff.</li><br>' +
+                '<li><strong>Efficient Backend:</strong> Integration of an SQLite database for effective data management, ensuring seamless performance with real-time updates along with a CFG file as a simple text database for unsupported devices.</li></ul><br><br><br><br><br>', 
+                'assets/Videos/Cal.mov', './assets/Images/calculator.png')">
+              Project Info
+            </button>
+            <button class="btn btn-color-2 project-btn"
+              onclick="location.href='https://github.com/shiva30122/VegCal/tree/main/APK'">
+              Download
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow"
+      onclick="location.href='Main.html#work-experience'" />
+  </section>
+
+
+
+  <!-- WORK EXPERIENCE – 3 JOBS WITH CLICK TO UNLOCK -->
+  <section id="work-experience" class="scroll-reveal">
+    <br>
+    <p class="section__text__p1">Level Up</p>
+    <h1 class="title">Work Experience</h1>
+
+    <!-- JOB 1: UNITY DEVELOPER  copy paste below and chage ID for other jobs and also add that on js file that IDs ok !  -->
+    <div class="job-card-container">
+      <div class="locked-card" id="lockedCard1" data-job="1">
+        <div class="preview-content">
+          <h2 class="glow">UNITY JUNIOR GAME DEVELOPER</h2>
+          <h3 class="company">RATHERGAMES : HANUL | <span class="remote">REMOTE – CALIFORNIA</span></h3>
+          <p class="duration">SEP 2023 – NOV 2025</p>
+          <ul class="preview-list">
+            <li>Develop Pokémon GO-inspired games using REST API calls for real-time data and interactive gameplay.</li>
+            <li>Contribute to game development in a dynamic startup, collaborating with a small team for innovative
+              solutions.</li>
+            <li>Design and implement UI layouts with seamless alignment and user-friendly interfaces.</li>
+            <li>Develop and maintain C# code for gameplay, backend logic, and multiplayer using Mirror (Basic).</li>
+            <li class="blurred pulse">Implement IAP systems for Android with Azure Functions for secure server-side
+              validation.</li>
+            <li class="blurred pulse">Integrate Azure Cosmos DB and Blob Storage for dynamic assets.</li>
+            <li class="blurred pulse">Upload AABs via Google Play Console with CI/CD.</li>
+          </ul>
+          <div class="preview-achievements">
+            <h4>Achievement:</h4>
+            <ul>
+              <li>Optimized game performance by <strong>20%</strong>, improving player experience on Android devices.
+              </li>
+              <li class="blurred pulse">Enhanced REST API integration, enabling real-time features <strong>30%</strong>
+                faster than initial estimates.</li>
+              <li class="blurred pulse">Collaborated seamlessly with a Senior Developer on the same branch and
+                <strong>Main.scene</strong>, effectively managing version control to prevent conflicts.
+              </li>
+            </ul>
+          </div>
+          <p class="hint">Click to reveal full mission log and Explore !..</p>
+        </div>
+      </div>
+
+      <div class="full-card" id="fullCard1" style="display: none;">
+        <div class="card-header">
+          <h2>UNITY JUNIOR GAME DEVELOPER</h2>
+          <h3>RATHERGAMES : HANUL | <span class="remote">REMOTE – CALIFORNIA</span></h3>
+          <p class="duration">SEP 2023 – NOV 2025</p>
+        </div>
+        <div class="card-body">
+          <ul class="responsibilities">
+            <li>Develop Pokémon GO-inspired games using REST API calls for real-time data and interactive gameplay.</li>
+            <li>Contribute to game development in a dynamic startup, collaborating with a small team for innovative
+              solutions.</li>
+            <li>Design and implement UI layouts with seamless alignment and user-friendly interfaces.</li>
+            <li>Develop and maintain C# code for gameplay, backend logic, and multiplayer using Mirror (Basic).</li>
+            <li>Implement IAP systems for Android with Azure Functions for secure server-side validation.</li>
+            <li>Integrate serverless architecture with Azure Functions, managing Azure Cosmos DB, MongoDB, and Azure
+              Blob Storage.</li>
+            <li>Enable texture downloading via Azure Blob Storage with temporary URLs.</li>
+            <li>Prepare and upload AABs via Google Play Console.</li>
+          </ul>
+          <div class="achievements">
+            <h4>Achievement:</h4>
+            <ul>
+              <li>Optimized game performance by <strong>20%</strong>, improving player experience on Android devices.
+              </li>
+              <li>Enhanced REST API integration, enabling real-time features <strong>30%</strong> faster than initial
+                estimates.</li>
+              <li>Collaborated seamlessly with a Senior Developer on the same branch and <strong>Main.scene</strong>,
+                effectively managing version control to prevent conflicts.</li>
+            </ul>
+          </div>
+          <div class="tech-stack">
+            <h4>Key Technologies:</h4>
+            <p>Unity, C#, UI Design, Mirror (Multiplayer), Azure Functions, Azure Cosmos DB, Azure Blob Storage,
+              MongoDB, Cloud Scripting, REST APIs, Android In-App Purchases, Google Play Console</p>
+          </div>
+          <div class="setup">
+            <h4>Technical Setup (Remote Work)</h4>
+            <p>High-performance PC: i7-14700K, RTX 4060Ti 16GB, 32GB RAM, 2TB SSD – optimized for Unity development and
+              testing.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- Arrow -->
+    <!-- <img src="./assets/arrow.png" alt="Next" class="icon arrow" onclick="location.href='Main.html#experience'" /> -->
+  </section>
+
+  <!-- GLOWING FLOATING HINT -->
+  <div id="mouseHint" class="mouse-hint">Click to reveal full mission log !!</div>
+
+
+
+
+  <!-- ======== FUTURE VISION SECTION ======== -->
+  <section id="future-vision" class="scroll-reveal">
+    <br>
+    <p class="section__text__p1">My Dream</p>
+    <h1 class="title">Future Vision</h1>
+
+    <div class="future-vision-container">
+      <!-- LEFT: Image + Heartbeat Animation -->
+      <div class="future-visuals">
+        <img src="assets/Love.png" alt="Is This The Love I Lost?" class="future-img blur-load" loading="lazy">
+
+        <!-- HEARTBEAT ANIMATION -->
+        <div class="heartbeat-container">
+          <svg viewBox="0 0 500 150" preserveAspectRatio="none" class="heartbeat-svg">
+            <path class="heartbeat-path" d="M0,75 H50 L60,75 L70,40 L80,110 L90,75 L100,75 
+                     L110,75 L120,20 L130,130 L140,75 L150,75 
+                     L160,75 L170,40 L180,110 L190,75 L200,75 
+                     L210,75 L220,10 L230,140 L240,75 L250,75
+                     L260,75 L270,40 L280,110 L290,75 L300,75
+                     L310,75 L320,10 L330,140 L340,75 L350,75
+                     L350,75 L380,75" fill="none" stroke="#ff0000" stroke-width="3" />
+
+            <!-- HEART AT THE END -->
+            <path class="heart-shape"
+              d="M410,75 C410,65 400,55 390,65 C380,55 370,65 370,75 C370,95 390,105 390,105 C390,105 410,95 410,75 Z"
+              fill="#ff0000" />
+
+            <!-- TEXT "Love" inside Heart -->
+            <text x="390" y="80" font-family="'Brush Script MT', cursive" font-size="18" fill="white"
+              text-anchor="middle">Love</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- RIGHT: Text – Clean, PDF-Style -->
+      <div class="future-text">
+        <p>
+          After my job experience I want to add something truly special –
+        <p>
+          <span class="highlight">a visual-novel based game titled “ Is This The Love I Lost ? ”</span>
+        </p>
+        </p>
+        <p>
+          This is <span class="highlight"> 100% my true story .</span> A short, simple, yet powerful tale that will make
+          you
+          <em>feel the pain</em> and understand what love really is.
+        </p>
+        <p>
+          “I fell in love at first sight… but for her I proposed to another girl… then I finally knew what love meant…”
+        </p>
+        <p>
+          The concept is built so you can <strong>feel my pain and love</strong> through every choice and every scene.
+        </p>
+        <p class="highlight">
+          Suspense, emotion, and a story that stays with you.
+        </p>
+        <p>
+          Devs – if you see this, let’s talk! I can share the full story in an interview or a call.
+        </p>
+      </div>
+    </div>
+
+    <!-- <img src="./assets/arrow.png" alt="Next" class="icon arrow" onclick="location.href='Main.html#contact'" /> -->
+  </section>
+
+
+
+
+
+  <!-- ...existing code... -->
+  <!-- ======== DEV RIG SECTION (STATIC IMAGE) ======== -->
+  <section id="setup-static" class="scroll-reveal">
+    <br>
+    <p class="section__text__p1">Hardware Arsenal</p>
+    <h1 class="title">Command Center</h1>
+
+    <div class="setup-container">
+      <!-- Static Image Container -->
+      <div class="pc-image-container">
+        <img src="./assets/PC.jpg" alt="My PC Setup" class="pc-setup-img blur-load" loading="lazy" />
+      </div>
+
+      <!-- Specs Overlay / Side Text -->
+      <div class="specs-container">
+        <div class="spec-item">
+          <span class="spec-label">CPU</span>
+          <span class="spec-value">Intel i7-14700K (20 Cores / 28 Threads)</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">GPU</span>
+          <span class="spec-value">NVIDIA RTX 4060Ti 16GB</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">RAM</span>
+          <span class="spec-value">32GB DDR6 @ 6000MHz</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">Storage</span>
+          <span class="spec-value">2 TB NVMe + 1 TB HDD</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="scroll-reveal">
+    <p class="section__text__p1">Get in Touch</p>
+    <h1 class="title">Contact Me</h1>
+    <div class="contact-info-upper-container">
+      <div class="contact-info-wrapper">
+        <div class="contact-info-container">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon contact-icon email-icon">
+            <path
+              d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" />
+          </svg>
+          <p>
+            <a href="mailto:sivabalaa8@gmail.com"><b>Mail</b></a>
+          </p>
+        </div>
+        <div class="contact-info-container">
+          <img src="./assets/call.png" alt="Phone icon" class="icon contact-icon blur-load" loading="lazy" />
+          <p><b><a href="tel:+919444546017">Call</a></b></p>
+        </div>
+        <div class="contact-info-container">
+          <img src="./assets/linkedin.png" alt="LinkedIn icon" class="icon contact-icon blur-load" loading="lazy" />
+          <p><a href="https://www.linkedin.com/in/siva-balaa-a770b020b/" target="_blank">LinkedIn</a></p>
+        </div>
+        <div class="contact-info-container">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon contact-icon"
+            onclick="window.open('https://wa.me/919444546017', '_blank')">
+            <path
+              d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
+          </svg>
+          <p><a href="https://wa.me/919444546017" target="_blank">WhatsApp</a></p>
+        </div>
+        <div class="contact-info-container">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon contact-icon"
+            onclick="window.open('https://www.instagram.com/shar_m_i', '_blank')">
+            <path
+              d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.5 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.9 0-184.9zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+          </svg>
+          <p><a href="https://www.instagram.com/shar_m_i" target="_blank">Instagram</a></p>
+        </div>
+        <div class="contact-info-container">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="icon contact-icon"
+            onclick="window.open('https://www.youtube.com/@SharMi_Plays_X_Dev', '_blank')">
+            <path
+              d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 42.155 48.284 48.477 42.591 11.486 213.371 11.486 213.371 11.486s170.78 0 213.371-11.486c23.497-6.322 42.003-24.827 48.284-48.477 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z" />
+          </svg>
+          <p><a href="https://www.youtube.com/@SharMi_Plays_X_Dev" target="_blank">YouTube</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Attention-Grabbing Message -->
+    <div class="attention-message-container">
+      <div class="attention-message">
+        <div class="message-glow"></div>
+        <h2 class="attention-title">🎯 If You're Here...</h2>
+        <p class="attention-text">
+          That means <span class="highlight-text">I got your attention!</span>
+        </p>
+        <p class="attention-text-big">
+          I'd <span class="love-text">LOVE</span> to work with you! 💼✨
+        </p>
+        <p class="attention-subtext">
+          Let's create something amazing together. Ready when you are! 🚀
+        </p>
+      </div>
+    </div>
+
+    <div class="spacer"></div> <!-- Add this for white space -->
+  </section>
+
+
+  <!-- Image Containers: 95% = popup text, 100% = elastic image -->
+  <div id="elastic-image-container"></div>
+  <div id="popup-image" class="popup-image">
+    <div class="pacman-loader"></div>
+    <span class="hire-text">Hire me !??</span>
+  </div>
+
+
+  <!-- Scripts -->
   <script>
-    // Generate 100+ colorful particles with trail
-    const particlesContainer = document.getElementById('particles');
-    const colors = ['#00ffff', '#ff00ff', '#00ff88', '#ffff00', '#ff6600'];
-    const count = window.innerWidth < 600 ? 50 : 120; // Less on mobile
+    // === SPLASH SCREEN LOGIC ===
+    (function () {
+      // Lock scroll on ROOT element immediately
+      document.documentElement.style.overflow = 'hidden';
+      document.body.classList.add('loading'); // Ensure class is present
+      window.scrollTo(0, 0);
 
-    for (let i = 0; i < count; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
+      // Generate 100+ colorful particles with trail
+      const particlesContainer = document.getElementById('particles');
+      const colors = ['#00ffff', '#ff00ff', '#00ff88', '#ffff00', '#ff6600'];
+      const count = window.innerWidth < 600 ? 50 : 120; // Less on mobile
 
-      const size = Math.random() * 7 + 3;
-      p.style.width = p.style.height = size + 'px';
-      p.style.left = Math.random() * 100 + '%';
-      p.style.bottom = '-20px';
-      p.style.background = colors[Math.floor(Math.random() * colors.length)];
-      p.style.boxShadow = `0 0 ${size * 2}px ${p.style.background}`;
-      p.style.animationDelay = Math.random() * 3 + 's';
-      p.style.animationDuration = (Math.random() * 2 + 2.5) + 's';
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
 
-      particlesContainer.appendChild(p);
-    }
+        const size = Math.random() * 7 + 3;
+        p.style.width = p.style.height = size + 'px';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.bottom = '-20px';
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        p.style.boxShadow = `0 0 ${size * 2}px ${p.style.background}`;
+        p.style.animationDelay = Math.random() * 3 + 's';
+        p.style.animationDuration = (Math.random() * 2 + 2.5) + 's';
 
-    // Auto redirect after 3 seconds
-    setTimeout(() => {
-      window.location.href = 'Main.html';
-    }, 3000);
+        particlesContainer.appendChild(p);
+      }
+
+      // Auto hide splash screen after 3 seconds
+      setTimeout(() => {
+        const splashScreen = document.getElementById('splash-screen');
+        splashScreen.classList.add('fade-out');
+
+        // Remove from DOM after fade completes
+        setTimeout(() => {
+          splashScreen.style.display = 'none';
+          document.body.classList.remove('loading');
+          document.documentElement.style.overflow = ''; // Restore scroll
+          const profile = document.getElementById('profile');
+          if (profile) profile.classList.add('profile-fade-in-active');
+        }, 500);
+      }, 3000);
+    })();
   </script>
-
+  <script src="script.js"></script>
+  <script>
+    (function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9281cdb98dfabf8e',t:'MTc0MzI3Njg1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();
+  </script>
+  <script>
+    (function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9282499ccd658bb9',t:'MTc0MzI4MTkyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();
+  </script>
 </body>
 
 </html>

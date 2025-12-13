@@ -39,9 +39,332 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="mediaqueries.css" />
+
+  <style>
+    /* === SPLASH SCREEN – MOBILE RESPONSIVE + 100+ PARTICLES === */
+    #splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      transition: opacity 0.5s ease-out;
+    }
+
+    #splash-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* LOGO – RESPONSIVE + 20% FROM TOP */
+    #splash-screen .logo {
+      position: absolute;
+      top: 18vh;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: clamp(2rem, 8vw, 3.2rem);
+      font-weight: 800;
+      background: linear-gradient(45deg, #ff00ff, #00ffff, #00ff00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: pulseGlow 2s ease-in-out infinite;
+      letter-spacing: 1px;
+      z-index: 20;
+      text-align: center;
+    }
+
+    /* MAIN CONTENT – RESPONSIVE */
+    #splash-screen .splash {
+      text-align: center;
+      margin-top: clamp(30vh, 40vh, 35vh);
+      position: relative;
+      z-index: 10;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    /* PROFILE IMAGE – RESPONSIVE */
+    #splash-screen .profile-img {
+      width: clamp(100px, 30vw, 156px);
+      height: clamp(100px, 30vw, 156px);
+      border-radius: 50%;
+      border: clamp(4px, 1.5vw, 6px) solid #fff;
+      margin: 1.2rem auto;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+      animation: float 3.5s ease-in-out infinite, glowBorder 2s ease-in-out infinite alternate;
+      object-fit: cover;
+    }
+
+    /* LOADING BAR – RESPONSIVE */
+    #splash-screen .loader {
+      width: clamp(200px, 70vw, 300px);
+      height: clamp(6px, 2vw, 8px);
+      background: rgba(255, 255, 255, 0.1);
+      margin: 1.8rem auto;
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+    }
+
+    #splash-screen .progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff00ff, #00ffff, #00ff88);
+      border-radius: 4px;
+      animation: load 3s ease-in-out forwards;
+      box-shadow: 0 0 15px #00ffff;
+    }
+
+    #splash-screen .loading-text {
+      font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+      opacity: 0.9;
+      margin-top: 0.6rem;
+      animation: fadeText 1.5s ease-in-out infinite alternate;
+      color: #fff;
+    }
+
+    /* TIP POPUP – RESPONSIVE */
+    #splash-screen .tip-popup {
+      position: fixed;
+      bottom: clamp(20px, 8vh, 40px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: #fff;
+      padding: clamp(10px, 3vw, 14px) clamp(20px, 6vw, 28px);
+      border-radius: 50px;
+      font-size: clamp(0.85rem, 3vw, 1rem);
+      font-weight: 500;
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+      display: flex;
+      align-items: center;
+      gap: clamp(6px, 2vw, 10px);
+      z-index: 100;
+      animation: popupIn 0.6s ease-out, popupOut 0.6s 4.4s ease-out forwards;
+      white-space: nowrap;
+    }
+
+    #splash-screen .tip-popup::before {
+      content: "Tip";
+      color: #00ff88;
+      font-weight: bold;
+    }
+
+    /* ANIMATIONS */
+    @keyframes pulseGlow {
+
+      0%,
+      100% {
+        text-shadow: 0 0 10px #ff00ff;
+      }
+
+      50% {
+        text-shadow: 0 0 25px #00ffff, 0 0 35px #00ffff;
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-12px) rotate(1deg);
+      }
+    }
+
+    @keyframes glowBorder {
+      from {
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+      }
+
+      to {
+        box-shadow: 0 0 50px rgba(0, 255, 255, 0.8);
+      }
+    }
+
+    @keyframes load {
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes fadeText {
+      from {
+        opacity: 0.7;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes popupIn {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    @keyframes popupOut {
+      to {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-30px);
+      }
+    }
+
+    /* === 100+ PARTICLES – COLORFUL + TRAIL === */
+    #splash-screen .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    #splash-screen .particle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+      filter: blur(1px);
+      animation: rise 3s ease-out forwards;
+    }
+
+    @keyframes rise {
+      0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.5);
+      }
+
+      30% {
+        opacity: 0.8;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-120vh) scale(1.2);
+      }
+    }
+
+    /* NEW LOADER TEXT ANIMATION */
+    #splash-screen .loader-text {
+      width: fit-content;
+      font-size: 17px;
+      font-family: monospace;
+      line-height: 1.4;
+      font-weight: bold;
+      --c: no-repeat linear-gradient(#fff 0 0);
+      background: var(--c), var(--c), var(--c), var(--c), var(--c), var(--c), var(--c);
+      background-size: calc(1ch + 1px) 100%;
+      border-bottom: 10px solid #0000;
+      position: relative;
+      animation: l8-0 3s infinite linear;
+      clip-path: inset(-20px 0);
+      margin: 1rem auto;
+    }
+
+    #splash-screen .loader-text::before {
+      content: "Loading";
+    }
+
+    #splash-screen .loader-text::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 14px;
+      background: #25adda;
+      left: -10px;
+      bottom: 100%;
+      animation: l8-1 3s infinite linear;
+    }
+
+    @keyframes l8-0 {
+
+      0%,
+      12.5% {
+        background-position: calc(0*100%/6) 0, calc(1*100%/6) 0, calc(2*100%/6) 0, calc(3*100%/6) 0, calc(4*100%/6) 0, calc(5*100%/6) 0, calc(6*100%/6) 0
+      }
+
+      25% {
+        background-position: calc(0*100%/6) 40px, calc(1*100%/6) 0, calc(2*100%/6) 0, calc(3*100%/6) 0, calc(4*100%/6) 0, calc(5*100%/6) 0, calc(6*100%/6) 0
+      }
+
+      37.5% {
+        background-position: calc(0*100%/6) 40px, calc(1*100%/6) 40px, calc(2*100%/6) 0, calc(3*100%/6) 0, calc(4*100%/6) 0, calc(5*100%/6) 0, calc(6*100%/6) 0
+      }
+
+      50% {
+        background-position: calc(0*100%/6) 40px, calc(1*100%/6) 40px, calc(2*100%/6) 40px, calc(3*100%/6) 0, calc(4*100%/6) 0, calc(5*100%/6) 0, calc(6*100%/6) 0
+      }
+
+      62.5% {
+        background-position: calc(0*100%/6) 40px, calc(1*100%/6) 40px, calc(2*100%/6) 40px, calc(3*100%/6) 40px, calc(4*100%/6) 0, calc(5*100%/6) 0, calc(6*100%/6) 0
+      }
+
+      75% {
+        background-position: calc(0*100%/6) 40px, calc(1*100%/6) 40px, calc(2*100%/6) 40px, calc(3*100%/6) 40px, calc(4*100%/6) 40px, calc(5*100%/6) 0, calc(6*100%/6) 0
+      }
+
+      87.4% {
+        background-position: calc(0*100%/6) 40px, calc(1*100%/6) 40px, calc(2*100%/6) 40px, calc(3*100%/6) 40px, calc(4*100%/6) 40px, calc(5*100%/6) 40px, calc(6*100%/6) 0
+      }
+
+      100% {
+        background-position: calc(0*100%/6) 40px, calc(1*100%/6) 40px, calc(2*100%/6) 40px, calc(3*100%/6) 40px, calc(4*100%/6) 40px, calc(5*100%/6) 40px, calc(6*100%/6) 40px
+      }
+    }
+
+    @keyframes l8-1 {
+      100% {
+        left: 115%
+      }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- SPLASH SCREEN -->
+  <div id="splash-screen">
+    <!-- 100+ PARTICLES -->
+    <div class="particles" id="particles"></div>
+
+    <!-- LOGO AT TOP -->
+    <div class="logo">Devfolio</div>
+
+    <!-- MAIN CONTENT -->
+    <div class="splash">
+      <img src="./assets/Profile.png" alt="Siva Balaa" class="profile-img" />
+      <div class="loader">
+        <div class="progress"></div>
+      </div>
+      <p class="loading-text">Initializing experience...</p>
+      <div class="loader-text"></div>
+    </div>
+
+    <!-- TIP POPUP -->
+    <div class="tip-popup">
+      Click anywhere to enable music!
+    </div>
+  </div>
+
   <!-- Navigation -->
   <nav id="desktop-nav" class="animate-on-load">
     <div class="logo">Devfolio</div>
@@ -171,7 +494,8 @@
           <div class="details-container">
             <img src="./assets/experience.png" alt="Experience icon" class="icon" />
             <h3>Experience</h3>
-            <p>Over 4 years of hands-on game development experience (started as a college student) <br /> 1+ year of professional game development experience </p>
+            <p>Over 4 years of hands-on game development experience (started as a college student) <br /> 1+ year of
+              professional game development experience </p>
           </div>
           <div class="details-container">
             <img src="./assets/education.png" alt="Education icon" class="icon" />
@@ -779,7 +1103,44 @@
     <span class="hire-text">Hire me !??</span>
   </div>
 
+
   <!-- Scripts -->
+  <script>
+    // === SPLASH SCREEN LOGIC ===
+    (function () {
+      // Generate 100+ colorful particles with trail
+      const particlesContainer = document.getElementById('particles');
+      const colors = ['#00ffff', '#ff00ff', '#00ff88', '#ffff00', '#ff6600'];
+      const count = window.innerWidth < 600 ? 50 : 120; // Less on mobile
+
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+
+        const size = Math.random() * 7 + 3;
+        p.style.width = p.style.height = size + 'px';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.bottom = '-20px';
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        p.style.boxShadow = `0 0 ${size * 2}px ${p.style.background}`;
+        p.style.animationDelay = Math.random() * 3 + 's';
+        p.style.animationDuration = (Math.random() * 2 + 2.5) + 's';
+
+        particlesContainer.appendChild(p);
+      }
+
+      // Auto hide splash screen after 3 seconds
+      setTimeout(() => {
+        const splashScreen = document.getElementById('splash-screen');
+        splashScreen.classList.add('fade-out');
+
+        // Remove from DOM after fade completes
+        setTimeout(() => {
+          splashScreen.style.display = 'none';
+        }, 500);
+      }, 3000);
+    })();
+  </script>
   <script src="script.js"></script>
   <script>
     (function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9281cdb98dfabf8e',t:'MTc0MzI3Njg1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();

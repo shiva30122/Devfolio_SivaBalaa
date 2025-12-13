@@ -88,8 +88,8 @@
   }
 
   #profile img {
-    max-width: 220px;
-    min-width: 90px;
+    max-width: 120px;
+
   }
 
   .section__text__p1 {
@@ -141,20 +141,27 @@
   }
 
   .overlay-content {
-    width: 90%;
-    height: 90%;
+    width: 95%;
+    height: 95%;
+    padding: 1.5rem;
   }
 
   .overlay-title {
-    height: 3%;
+    height: auto;
+    min-height: 50px;
+    margin-bottom: 20px;
   }
 
+  /* Tablet - Slightly larger video area than mobile */
   .video-container {
-    height: 45%;
+    height: auto;
+    max-height: 45vh;
   }
 
   .scrollable-description {
-    height: 42%;
+    height: 100%;
+    padding-bottom: 110px;
+    /* Space for floating buttons */
   }
 
   .close-btn {
@@ -336,13 +343,7 @@
     padding: 1rem 11%;
   }
 
-  #profile img {
-    max-width: 113.3px;
-    min-width: 113.3px;
-    margin-top: 15vh;
-    /* 15% empty space */
-    margin-bottom: 1rem;
-  }
+
 
   .section__text {
     margin-left: 0;
@@ -407,26 +408,55 @@
   }
 
   .overlay-content {
-    width: 90%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    padding: 0.5rem;
+    /* Maximize content area */
   }
 
   .overlay-title {
-    height: 3%;
+    height: auto;
+    min-height: 40px;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 3.5rem;
+  }
+
+  /* Title Size on Mobile */
+  #new-overlay-title {
+    font-size: 1.3rem;
+    padding-right: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* Phase Indicator Mobile */
+  #phase-indicator {
+    font-size: 1rem !important;
+    margin-top: 0 !important;
+    color: #555 !important;
   }
 
   .video-container {
-    height: 45%;
+    height: auto;
+    max-height: 35vh;
   }
 
   .scrollable-description {
-    height: 42%;
+    height: 100%;
+    padding-bottom: 120px;
+    /* Extra padding for floating buttons */
   }
 
   .close-btn {
-    top: 5px;
-    right: 5px;
-    z-index: 1001;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    z-index: 2002;
     /* Ensure clickability */
   }
 
@@ -565,16 +595,18 @@
   }
 
   .overlay-content {
-    width: 90%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
   }
 
   .overlay-title {
-    height: 3%;
+    height: auto;
   }
 
   .video-container {
-    height: 45%;
+    height: auto;
+    max-height: 30vh;
   }
 
   #new-overlay-video {

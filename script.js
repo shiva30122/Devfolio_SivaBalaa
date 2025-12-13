@@ -143,6 +143,151 @@ type();
 // 6. SAVE SCROLL POSITION (GLOBAL)
 // ===============================================
 let savedScrollPosition = 0;
+let winAudio = new Audio('./assets/Audio/Win.mp3'); // GLOBAL WIN AUDIO
+let isWinAudioPlaying = false;
+
+// ===============================================
+// PROJECT PHASES LOGIC
+// ===============================================
+
+const projects = {
+  shopCalculator: {
+    phases: [
+      // PHASE 1
+      {
+        title: "ShopCalculator - Phase 1 : Prototype ",
+        // You can have unique description for each phase
+        description: `<h3>This project is a dynamic vegetable calculator specifically designed for Android shop applications, redeveloped from scratch to enhance efficiency and user experience.</h3><br>
+<h4>Problem Statement:</h4><br> Manual calculation of vegetable quantities and prices in shop applications for Android devices is inefficient and prone to errors. VegCal addresses these challenges with an optimized solution tailored for mobile devices. The app is still in development and not yet available on the Google Play Store.<br><br>
+<strong>Technologies Used:</strong> <br>  Android Studio , Kotlin , SQLite Database, AdMob , FireBase , Android SDK , Java JDK  <br><br>
+<strong>Key Features:</strong><br>
+- <strong>User-Friendly Design:</strong>   Completely revamped UI in Android Studio for improved accessibility and ease of use, tailored for shop owners and staff, with added minor adjustments for polished experience.<br>
+- <strong>Efficient Backend:</strong>   Integrates an SQLite database for robust data management with real-time updates.<br>
+- <strong>Optimized Performance:</strong>   Base APK optimized to under 5MB, ensuring lightweight and fast performance on Android devices.<br>
+- <strong>Enhanced Functionality:</strong>   Improved logic for seamless pricing and quantity calculations, enhancing accuracy and efficiency.<br>
+- <strong>Monetization and Authentication:</strong>   Implemented Google AdMob for banner ads and Google Authentication for secure user access. Interstitial ads, along with saving and retrieving functionalities, are still under development.<br><br>
+This project reflects my commitment to creating efficient and user-centric solutions for both game and application development, leveraging my skills in Godot, Unity, and Android Studio development !. <br><br> I am eager to continue learning and take on more complex challenges in future projects !!... <br><br>`,
+        // Unique video for this phase
+        videoSrc: 'assets/Videos/Shop Calculator.mp4',
+        backgroundImage: './assets/Images/Shopcalculator.png'
+      },
+      // PHASE 2 - UPDATED CONTENT EXAMPLE
+      {
+        title: "ShopCalculator - Phase 2 Final Product : Ads || Cloud Save || Import || Export || Monetization || Security Implementation",
+        description: `<h3>Phase 2 marks the comprehensive upgrade of ShopCalculator into a production-ready utility, featuring advanced data management, security, and monetization.</h3><br>
+<h4>Production Status:</h4><br>
+The application has successfully completed its core development cycle and is currently in the <strong>Pre-Launch Stage</strong>, readying for upload and release on the <strong>Google Play Store</strong>.<br><br>
+
+<strong>Newly Implemented Features:</strong><br>
+- <strong>Cloud Infrastructure:</strong> Integrated <strong>Cloud Save</strong> functionality to ensure data persistence and prevent loss of critical shop records.<br>
+- <strong>Data Flexibility (Import/Export):</strong> Added robust <strong>Import & Export</strong> capabilities, allowing users to back up data locally or transfer it between devices seamlessly.<br>
+- <strong>Monetization Ecosystem:</strong> Fully implemented <strong>Ads (Banner & Interstitial)</strong> using Google AdMob to establish a sustainable revenue model.<br>
+- <strong>Security Enhancement:</strong> Deployed a complete <strong>Security Implementation</strong> to safeguard user data and ensure application integrity against unauthorized access.<br><br>
+This phase solidifies ShopCalculator as a professional tool, bridging the gap between a prototype and a market-ready Android application.<br><br>
+<h2 style="color: #1900ffff; text-align: center; font-weight: bold; text-shadow: 0 0 10px rgba(0, 81, 255, 0.5);">FINAL COMPLETED: DECEMBER 13, 2025</h2>`,
+        videoSrc: 'assets/Videos/Shop Calculator Phase 2.mp4',
+        backgroundImage: './assets/Images/Shopcalculator.png'
+      },
+      // PHASE 3 - LATEST
+
+    ]
+  }
+  // TO ADD NEW PROJECT:
+  // 1. Add key (e.g., 'newProject': { phases: [...] })
+  // 2. Add phase objects with unique title, description, videoSrc.
+};
+
+let currentProjectKey = null;
+let currentPhaseIndex = 0;
+
+function openProject(projectKey, event) {
+  if (projects[projectKey]) {
+    currentProjectKey = projectKey;
+    const projectData = projects[projectKey];
+    // Default to latest phase (last one)
+    currentPhaseIndex = projectData.phases.length - 1;
+
+    updateProjectUI(true, event);
+  } else {
+    console.error("Project not found:", projectKey);
+  }
+}
+
+function changePhase(delta) {
+  if (!currentProjectKey || !projects[currentProjectKey]) return;
+
+  const phases = projects[currentProjectKey].phases;
+  const newIndex = currentPhaseIndex + delta;
+
+  if (newIndex >= 0 && newIndex < phases.length) {
+    currentPhaseIndex = newIndex;
+    updateProjectUI(false);
+  }
+}
+
+function updateProjectUI(isOpening, event) {
+  const phase = projects[currentProjectKey].phases[currentPhaseIndex];
+  const totalPhases = projects[currentProjectKey].phases.length;
+
+  if (isOpening) {
+    openNewOverlay(phase.title, phase.description, phase.videoSrc, phase.backgroundImage, event, true);
+  } else {
+    // Update Content without full reload
+    document.getElementById("new-overlay-title").innerText = phase.title;
+    document.getElementById("new-overlay-description").innerHTML = phase.description;
+    document.getElementById("new-overlay-description").scrollTop = 0;
+
+    // Update Video
+    const videoElement = document.getElementById("new-overlay-video");
+    const sourceElement = document.getElementById("new-video-source");
+
+    if (phase.videoSrc) {
+      // CHECK CACHE
+      if (videoCache[phase.videoSrc]) {
+        sourceElement.src = videoCache[phase.videoSrc];
+      } else {
+        // PLAY & CACHE
+        sourceElement.src = phase.videoSrc;
+        fetch(phase.videoSrc)
+          .then(response => response.blob())
+          .then(blob => {
+            videoCache[phase.videoSrc] = URL.createObjectURL(blob);
+          })
+          .catch(err => console.error("Video cache failed:", err));
+      }
+
+      videoElement.style.display = "block";
+      videoElement.load();
+      videoElement.play();
+    } else {
+      videoElement.style.display = "none";
+      videoElement.pause();
+    }
+
+    // Update buttons state
+    updateNavButtons(totalPhases);
+  }
+}
+
+function updateNavButtons(totalPhases) {
+  const controlsContainer = document.getElementById("phase-controls");
+  const indicator = document.getElementById("phase-indicator");
+  const prevBtn = document.getElementById("prev-phase-btn");
+  const nextBtn = document.getElementById("next-phase-btn");
+
+  if (indicator && controlsContainer) {
+    indicator.innerText = `Phase ${currentPhaseIndex + 1} / ${totalPhases}`;
+
+    // Disable/Enable buttons
+    prevBtn.disabled = currentPhaseIndex === 0;
+    prevBtn.style.cursor = currentPhaseIndex === 0 ? "default" : "pointer";
+    prevBtn.style.opacity = currentPhaseIndex === 0 ? "0.5" : "1";
+
+    nextBtn.disabled = currentPhaseIndex === totalPhases - 1;
+    nextBtn.style.cursor = currentPhaseIndex === totalPhases - 1 ? "default" : "pointer";
+    nextBtn.style.opacity = currentPhaseIndex === totalPhases - 1 ? "0.5" : "1";
+  }
+}
 
 // ===============================================
 // 7. OPEN OVERLAY – FREEZE PAGE
@@ -150,7 +295,7 @@ let savedScrollPosition = 0;
 // CACHE OBJECT
 const videoCache = {};
 
-function openNewOverlay(title, description, videoSrc, backgroundImage, event) {
+function openNewOverlay(title, description, videoSrc, backgroundImage, event, showNav = false) {
   if (event) {
     event.preventDefault();
     event.stopPropagation();
@@ -178,6 +323,20 @@ function openNewOverlay(title, description, videoSrc, backgroundImage, event) {
       overlay.style.display = "flex";
       document.getElementById("new-overlay-title").innerText = title;
       document.getElementById("new-overlay-description").innerHTML = description;
+
+      // Handle Phase Nav Visibility (Split Elements)
+      const controlsContainer = document.getElementById("phase-controls");
+      const indicator = document.getElementById("phase-indicator");
+
+      if (controlsContainer && indicator) {
+        controlsContainer.style.display = showNav ? "flex" : "none";
+        indicator.style.display = showNav ? "block" : "none";
+
+        if (showNav && typeof currentProjectKey !== 'undefined' && currentProjectKey) {
+          const total = projects[currentProjectKey].phases.length;
+          updateNavButtons(total);
+        }
+      }
 
       const videoElement = document.getElementById("new-overlay-video");
       const sourceElement = document.getElementById("new-video-source");
@@ -265,19 +424,39 @@ function showSection(sectionId) {
     const hamburgerNav = document.getElementById("hamburger-nav");
     const navHeight = desktopNav.offsetHeight || hamburgerNav.offsetHeight || 0;
 
+    // Check if mobile menu is open
+    const mobileMenuOpen = document.querySelector(".menu-links.open") !== null;
+    const delay = (sectionId === "contact" && mobileMenuOpen) ? 600 : 100;
+
     if (sectionId === "contact") {
+      // Audio: Win + Scroll Lock (ON CLICK ONLY)
+      winAudio.currentTime = 0;
+      winAudio.play().then(() => { isWinAudioPlaying = true; }).catch(e => console.log("Win audio play failed:", e));
+
+      document.body.classList.add("no-scroll");
+      document.documentElement.classList.add("no-scroll"); // Fix for some browsers
+
       setTimeout(() => {
-        const scrollTarget = document.documentElement.scrollHeight * 1.1;
-        window.scrollTo({ top: scrollTarget, behavior: "smooth", duration: 1200 });
-        setTimeout(() => {
-          if (Math.abs(window.scrollY - scrollTarget) > 10) {
-            window.scrollTo({ top: scrollTarget, behavior: "smooth" });
-          }
-        }, 1300);
-      }, 100);
+        document.body.classList.remove("no-scroll");
+        document.documentElement.classList.remove("no-scroll");
+      }, 4000);
+
+      setTimeout(() => {
+        const isMobile = window.innerWidth <= 768;
+
+        if (isMobile) {
+          // Mobile: Force scroll to absolute bottom
+          window.scrollTo({ top: 999999, behavior: "smooth" });
+        } else {
+          // Desktop: Scroll to exact bottom
+          const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+          window.scrollTo({ top: maxScroll, behavior: "smooth" });
+        }
+      }, delay);
     } else {
       setTimeout(() => {
-        const sectionTop = targetSection.getBoundingClientRect().top + window.scrollY - navHeight;
+        // Calculate position with extra offset to show section title
+        const sectionTop = targetSection.getBoundingClientRect().top + window.scrollY - navHeight - 20;
         window.scrollTo({ top: sectionTop, behavior: "smooth", duration: 1200 });
       }, 100);
     }
@@ -457,6 +636,57 @@ window.addEventListener("load", () => {
   }
 });
 
+// ===============================================
+// 16. AUTO-SCROLL TO BOTTOM WHEN CONTACT 30% VISIBLE + AUDIO
+// ===============================================
+let hasAutoScrolled = false;
+
+function checkContactVisibility() {
+  const contactSection = document.getElementById("contact");
+  if (!contactSection) return;
+
+  const rect = contactSection.getBoundingClientRect();
+  const windowHeight = window.innerHeight;
+
+  // Calculate how much of the contact section is visible
+  const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+  const sectionHeight = rect.height;
+  const visibilityPercentage = (visibleHeight / sectionHeight) * 100;
+
+  // 1. PLAY WIN SOUND IF >= 30% VISIBLE
+  if (visibilityPercentage >= 30) {
+    if (!isWinAudioPlaying) {
+      winAudio.play().then(() => { isWinAudioPlaying = true; }).catch(e => console.log("Win audio play failed (scroll):", e));
+    }
+
+    // Auto-scroll logic (keep existing)
+    if (!hasAutoScrolled) {
+      hasAutoScrolled = true;
+      // logic for auto scroll if needed, or maybe user just wants sound?
+      // keeping original behavior for auto-scroll just in case:
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile) {
+        window.scrollTo({ top: 999999, behavior: "smooth" });
+      } else {
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        window.scrollTo({ top: maxScroll, behavior: "smooth" });
+      }
+    }
+  }
+  // 2. STOP WIN SOUND IF < 30% VISIBLE
+  else {
+    if (isWinAudioPlaying) {
+      winAudio.pause();
+      winAudio.currentTime = 0;
+      isWinAudioPlaying = false;
+    }
+  }
+}
+
+window.addEventListener("scroll", checkContactVisibility);
+window.addEventListener("resize", checkContactVisibility);
+
+
 
 
 
@@ -533,13 +763,35 @@ window.addEventListener("load", () => {
     video.muted = !video.muted;
   });
 
-  // 6. Start after page load (NO DELAY)
+  // 6. Start after page load (DELAYED to prioritize images)
+  const initVideo = () => {
+    // Wait a bit to let images fetch first
+    setTimeout(startVideoLoad, 2500);
+  };
+
   if (document.readyState === 'complete') {
-    startVideoLoad();
+    initVideo();
   } else {
-    window.addEventListener('load', startVideoLoad);
+    window.addEventListener('load', initVideo);
   }
 })();
+
+// ===============================================
+// 16. HANDLE BLUR LOAD IMAGES
+// ===============================================
+document.addEventListener("DOMContentLoaded", () => {
+  const blurredImages = document.querySelectorAll(".blur-load");
+  blurredImages.forEach(img => {
+    function loaded() {
+      img.classList.add("loaded");
+    }
+    if (img.complete) {
+      loaded();
+    } else {
+      img.addEventListener("load", loaded);
+    }
+  });
+});
 
 
 
@@ -565,7 +817,7 @@ window.addEventListener("load", () => {
   // FADE OUT TEXT
   setTimeout(() => {
     if (soundText) soundText.classList.add('hidden');
-  }, 3000);
+  }, 7000);
 
   // UPDATE UI
   const updateUI = () => {
@@ -759,3 +1011,211 @@ performance.getEntriesByType("navigation")[0].type === "reload" && (location.hre
 // ===============================================
 // FUTURE VISION – SCROLL REVEAL + GLOW HINT
 // ===============================================
+
+// ===============================================
+// 17. TOAST NOTIFICATION
+// ===============================================
+function showToast(message) {
+  let toast = document.getElementById("toast-container");
+
+  // Create toast if not exists
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "toast-container";
+    document.body.appendChild(toast);
+  }
+
+  toast.innerText = message;
+  toast.className = "show";
+
+  setTimeout(function () {
+    toast.className = toast.className.replace("show", "");
+  }, 4000);
+}
+
+// ===============================================
+// 18. AUTO-DOWNLOAD VIDEO CACHE SYSTEM (Background)
+// ===============================================
+const VIDEO_ASSETS = [
+  'assets/Videos/Shop Calculator.mp4',
+  'assets/Videos/Shop Calculator Phase 2.mp4',
+  'assets/Videos/FPSVideo.mp4',
+  'assets/Videos/2D_Puzzle.mp4'
+];
+
+async function preloadVideos() {
+  console.log("Starting background video download...");
+
+  for (const src of VIDEO_ASSETS) {
+    if (videoCache[src]) continue; // Already cached
+
+    try {
+      const response = await fetch(src);
+      const blob = await response.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      videoCache[src] = objectUrl;
+      console.log(`Cached: ${src}`);
+    } catch (err) {
+      console.error(`Failed to cache ${src}:`, err);
+    }
+  }
+  console.log("All videos cached successfully!");
+}
+
+// Start preloading after critical content (images) has likely loaded
+window.addEventListener('load', () => {
+  // Wait 4 seconds to let initial high-res images and UI settle
+  setTimeout(() => {
+    // optional: check if requestIdleCallback is supported for even smoother perf
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(preloadVideos, { timeout: 20000 });
+    } else {
+      preloadVideos();
+    }
+  }, 4000);
+});
+
+// ===============================================
+// 19. FUTURE VISION AUDIO (PLAY AT 30% VISIBILITY)
+// ===============================================
+document.addEventListener("DOMContentLoaded", () => {
+  const futureSection = document.getElementById("future-vision");
+
+  if (futureSection) {
+    // Ensure relative positioning for absolute hearts
+    futureSection.style.position = 'relative';
+
+    const audio = new Audio("assets/Audio/Love.mp3");
+    audio.loop = true;
+    audio.volume = 0.5;
+    let isPlaying = false;
+    let heartInterval = null;
+
+    // TARGET THE CONTAINER (Wrapper of Image + Heartbeat)
+    const visualsContainer = futureSection.querySelector('.future-visuals');
+
+    // FLOATING HEART GENERATOR
+    function spawnHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('romantic-heart');
+      heart.innerHTML = '❤';
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.fontSize = (Math.random() * 1.5 + 1) + 'rem'; // 1rem to 2.5rem
+      heart.style.animationDuration = (Math.random() * 2 + 3) + 's'; // 3s to 5s
+
+      futureSection.appendChild(heart);
+
+      // Cleanup
+      setTimeout(() => {
+        heart.remove();
+      }, 5000);
+    }
+
+    function startHeartRain() {
+      if (!heartInterval) {
+        spawnHeart(); // Immediate one
+        heartInterval = setInterval(spawnHeart, 450); // Increased frequency (more hearts)
+      }
+    }
+
+    function stopHeartRain() {
+      if (heartInterval) {
+        clearInterval(heartInterval);
+        heartInterval = null;
+      }
+      // Optional: Clear existing hearts immediately?
+      // const existingHearts = futureSection.querySelectorAll('.romantic-heart');
+      // existingHearts.forEach(h => h.remove());
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.intersectionRatio >= 0.3) {
+          if (!isPlaying) {
+            // STOP WIN AUDIO IF PLAYING
+            if (isWinAudioPlaying) {
+              winAudio.pause();
+              winAudio.currentTime = 0;
+              isWinAudioPlaying = false;
+            }
+
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+              playPromise.then(() => {
+                isPlaying = true;
+                // START SVG ANIMATION & HEART RAIN
+                if (visualsContainer) visualsContainer.classList.add("heartbeat-active");
+                startHeartRain();
+              }).catch(error => {
+                console.log("Future Vision Audio play prevented (interaction needed?):", error);
+              });
+            }
+          }
+        } else {
+          if (isPlaying) {
+            audio.pause();
+            isPlaying = false;
+            // STOP SVG ANIMATION & HEART RAIN
+            if (visualsContainer) visualsContainer.classList.remove("heartbeat-active");
+            stopHeartRain();
+          }
+        }
+      });
+    }, {
+      threshold: [0.25, 0.3, 0.35]
+    });
+
+    observer.observe(futureSection);
+  }
+});
+
+// ===============================================
+// 20. DREAM NAV BUTTON HEART PARTICLES
+// ===============================================
+document.addEventListener("DOMContentLoaded", () => {
+  const dreamNavBtns = document.querySelectorAll('.dream-nav-btn');
+
+  dreamNavBtns.forEach(btn => {
+    function spawnNavHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('nav-heart');
+      heart.innerHTML = '❤';
+
+      // Random horizontal offset
+      const randomOffset = (Math.random() - 0.5) * 40; // -20px to +20px
+      heart.style.left = `calc(50% + ${randomOffset}px)`;
+
+      btn.appendChild(heart);
+
+      // Cleanup after animation
+      setTimeout(() => {
+        heart.remove();
+      }, 1500);
+    }
+
+    // Spawn hearts continuously (not just on hover)
+    spawnNavHeart(); // Immediate heart
+    setInterval(spawnNavHeart, 400); // Heart every 400ms - ALWAYS ACTIVE
+
+    // Extra hearts on hover for more intensity
+    let hoverInterval = null;
+    btn.addEventListener('mouseenter', () => {
+      hoverInterval = setInterval(spawnNavHeart, 200); // More frequent on hover
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      if (hoverInterval) {
+        clearInterval(hoverInterval);
+        hoverInterval = null;
+      }
+    });
+  });
+});
+
+// ===============================================
+// 21. CLOSE AUDIO ON PAGE RELOAD
+// ===============================================
+window.addEventListener("beforeunload", () => {
+  const closeAudio = new Audio('./assets/Audio/Close.mp3');
+  closeAudio.play().catch(e => console.log("Close audio play failed:", e));
+});
