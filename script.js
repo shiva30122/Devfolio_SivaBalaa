@@ -176,7 +176,7 @@ This project reflects my commitment to creating efficient and user-centric solut
         title: "ShopCalculator - Phase 2 Final Product : Ads || Cloud Save || Import || Export || Monetization || Security Implementation",
         description: `<h3>Phase 2 marks the comprehensive upgrade of ShopCalculator into a production-ready utility, featuring advanced data management, security, and monetization.</h3><br>
 <h4>Production Status:</h4><br>
-The application has successfully completed its core development cycle and is currently in the <strong>Pre-Launch Stage</strong>, readying for upload and release on the <strong>Google Play Store</strong>.<br><br>
+The application has successfully completed its core development cycle and is currently in the <strong>Pre-Launch Stage</strong>, <br> readying for upload and release on the <strong>Google Play Store Under SharMi Inc ShopCalculator</strong>.<br><br>
 
 <strong>Newly Implemented Features:</strong><br>
 - <strong>Cloud Infrastructure:</strong> Integrated <strong>Cloud Save</strong> functionality to ensure data persistence and prevent loss of critical shop records.<br>
