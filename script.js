@@ -1139,14 +1139,15 @@ document.addEventListener("DOMContentLoaded", () => {
               isWinAudioPlaying = false;
             }
 
+            // START VISUALS IMMEDIATELY (Decoupled from audio success)
+            isPlaying = true;
+            if (visualsContainer) visualsContainer.classList.add("heartbeat-active");
+            startHeartRain();
+
+            // ATTEMPT TO PLAY AUDIO
             const playPromise = audio.play();
             if (playPromise !== undefined) {
-              playPromise.then(() => {
-                isPlaying = true;
-                // START SVG ANIMATION & HEART RAIN
-                if (visualsContainer) visualsContainer.classList.add("heartbeat-active");
-                startHeartRain();
-              }).catch(error => {
+              playPromise.catch(error => {
                 console.log("Future Vision Audio play prevented (interaction needed?):", error);
               });
             }
