@@ -731,86 +731,217 @@ window.addEventListener("resize", checkContactVisibility);
 
 
 
-// === FIXED: LAZY + CACHE + PLAY ASAP + POSTER ON TOP (index -1) ===
-// Paste at end of <body> or in your JS file
+// ===============================================
+// ADVANCED LOADING SYSTEM
+// ===============================================
 
-(function () {
-  const video = document.getElementById('intro-video');
-  if (!video) return;
+const LoadingSystem = {
+  maxLoadTime: 10000, // 10 seconds default
+  minLoadTime: 3000,  // 3 seconds minimum (for aesthetic play)
+  isCached: localStorage.getItem('site_cached_v1') === 'true',
+  startTime: Date.now(),
+  assets: {
+    images: [],
+    videos: []
+  },
+  progress: {
+    images: 0,
+    videos: 0
+  },
+  loadedCount: {
+    images: 0,
+    videos: 0
+  },
 
-  const src = './assets/Videos/Intro.mov';
-  const posterUrl = './assets/Videos/intro-poster.jpg'; // <120 KB
+  init: function () {
+    this.setupUI();
 
-  // 1. Insert poster (FAST LOAD, ON TOP)
-  const poster = document.createElement('img');
-  poster.src = posterUrl;
-  poster.className = 'intro-video';
-  poster.style.cssText = `
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    z-index: -1; /* BACK LAYER */
-  `;
-  video.parentElement.style.position = 'relative';
-  video.parentElement.insertBefore(poster, video);
-
-  // 2. Hide video initially (will appear later)
-  video.style.display = 'none';
-  video.style.cssText = `
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    z-index: 0;
-  `;
-  video.preload = 'none';
-  video.removeAttribute('autoplay');
-
-  // 3. Start download IMMEDIATELY after page load
-  function startVideoLoad() {
-    const source = video.querySelector('source');
-    if (!source.src) {
-      source.src = src;
-      video.load(); // Start download NOW
+    // Check if already cached
+    if (this.isCached) {
+      this.maxLoadTime = 3000;
+      console.log("Site cached. Run 3s mode.");
+    } else {
+      console.log("First visit. Run 10s/content mode.");
     }
 
-    // 4. PLAY AS SOON AS ENOUGH DATA — then show video
-    const tryPlay = () => {
-      video.play().then(() => {
-        // Video started → hide poster, show video
-        poster.style.opacity = '0';
-        setTimeout(() => poster.remove(), 300); // smooth fade
-        video.style.display = 'block';
-      }).catch(() => {
-        // Not ready → try again soon
-        setTimeout(tryPlay, 100);
+    // UPDATE PROGRESS BAR DURATION
+    const progressEl = document.querySelector('#splash-screen .progress');
+    if (progressEl) {
+      // Reset animation to handle dynamic duration
+      progressEl.style.animation = 'none';
+      progressEl.offsetHeight; /* trigger reflow */
+      progressEl.style.animation = `load ${this.maxLoadTime}ms ease-in-out forwards`;
+    }
+
+    // Identify assets
+    this.assets.images = Array.from(document.images);
+
+    // Add CSS Background images manually
+    const bgImg = new Image();
+    bgImg.src = './assets/nav-background.jpg';
+    this.assets.images.push(bgImg);
+
+    // ONLY BLOCK FOR INTRO VIDEO
+    const introVideo = document.getElementById('intro-video');
+    this.assets.videos = introVideo ? [introVideo] : [];
+
+    // Start loading process
+    this.startLoading();
+
+    // Forced exit fallback
+    setTimeout(() => {
+      this.finishLoading();
+    }, this.maxLoadTime);
+  },
+
+  setupUI: function () {
+    // Reset text to static message (no seconds)
+    const textEl = document.getElementById('dynamic-loading-text');
+    if (textEl) {
+      textEl.innerText = "Downloading content please wait...";
+    }
+  },
+
+  startLoading: async function () {
+    // 2. Load Images
+    await this.loadImages();
+
+    // 3. Load Intro Video Only (up to 20%)
+    await this.loadVideos();
+
+    // 4. Cache Complete
+    localStorage.setItem('site_cached_v1', 'true');
+
+    // Finish early if everything is done before max time
+    const elapsed = Date.now() - this.startTime;
+
+    // If we loaded VERY fast (e.g. < 2s), still wait for minLoadTime (3s) for smoothness
+    const remaining = this.minLoadTime - elapsed;
+    if (remaining > 0) {
+      setTimeout(() => this.finishLoading(), remaining);
+    } else {
+      this.finishLoading();
+    }
+  },
+
+  loadImages: function () {
+    const promises = this.assets.images.map(img => {
+      return new Promise((resolve) => {
+        if (img.complete) {
+          resolve();
+        } else {
+          img.onload = resolve;
+          img.onerror = resolve; // Continue even if error
+        }
       });
-    };
+    });
+    return Promise.all(promises);
+  },
 
-    // Listen for first playable moment
-    video.addEventListener('loadeddata', tryPlay, { once: true });
-    video.addEventListener('canplay', tryPlay, { once: true });
-    tryPlay(); // Try right away
+  loadVideos: function () {
+    const promises = this.assets.videos.map(video => {
+      return new Promise((resolve) => {
+        // If it's the poster or hidden video construct
+        if (!video) { resolve(); return; }
+
+        if (video.readyState >= 1) {
+          if (video.buffered.length > 0) {
+            const duration = video.duration || 1;
+            const bufferedEnd = video.buffered.end(video.buffered.length - 1);
+            // 20% Rule
+            if ((bufferedEnd / duration) > 0.2) {
+              resolve();
+              return;
+            }
+          }
+        }
+
+        const onProgress = () => {
+          if (video.duration) {
+            if (video.buffered.length > 0) {
+              const bufferedEnd = video.buffered.end(video.buffered.length - 1);
+              if ((bufferedEnd / video.duration) >= 0.2) {
+                cleanup();
+                resolve();
+              }
+            }
+          }
+        };
+
+        const onCanPlay = () => {
+          // We can check buffer here too
+          if (video.duration && video.buffered.length > 0) {
+            const end = video.buffered.end(video.buffered.length - 1);
+            if ((end / video.duration) > 0.2) {
+              cleanup();
+              resolve();
+            }
+          }
+        };
+
+        const onError = () => {
+          cleanup();
+          resolve();
+        };
+
+        const cleanup = () => {
+          video.removeEventListener('progress', onProgress);
+          video.removeEventListener('canplay', onCanPlay);
+          video.removeEventListener('error', onError);
+        }
+
+        video.addEventListener('progress', onProgress);
+        video.addEventListener('canplay', onCanPlay);
+        video.addEventListener('error', onError);
+
+        // Trigger load
+        if (video.preload === 'none') {
+          video.preload = 'auto';
+          video.load();
+        }
+      });
+    });
+    return Promise.all(promises);
+  },
+
+  finishLoading: function () {
+    if (document.body.classList.contains('loading')) {
+
+      // FORCE PROGRESS BAR TO 100% if finished early
+      const progressEl = document.querySelector('#splash-screen .progress');
+      if (progressEl) {
+        progressEl.style.animation = 'none';
+        progressEl.style.width = '100%';
+        // Small delay to let user see full bar
+        setTimeout(() => {
+          this.hideSplash();
+        }, 500);
+      } else {
+        this.hideSplash();
+      }
+    }
+  },
+
+  hideSplash: function () {
+    document.body.classList.remove('loading');
+    const splash = document.getElementById('splash-screen');
+    if (splash) {
+      splash.classList.add('fade-out');
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 500);
+    }
+    triggerOnLoadAnimations();
   }
+};
 
-  // 5. Sound on tap
-  video.addEventListener('click', () => {
-    video.muted = !video.muted;
-  });
+// Initialize system on DOMContentLoaded (HTML parsed, JS running)
+document.addEventListener('DOMContentLoaded', () => {
+  LoadingSystem.init();
+});
 
-  // 6. Start after page load (DELAYED to prioritize images)
-  const initVideo = () => {
-    // Wait a bit to let images fetch first
-    setTimeout(startVideoLoad, 2500);
-  };
-
-  if (document.readyState === 'complete') {
-    initVideo();
-  } else {
-    window.addEventListener('load', initVideo);
-  }
-})();
+// 6. Start after page load (DELAYED to prioritize images)
+// Loading system handles video initialization now.
 
 // ===============================================
 // 16. HANDLE BLUR LOAD IMAGES
