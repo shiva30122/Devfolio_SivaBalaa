@@ -1104,7 +1104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function downloadResume() {
   // Path to your PDF (inside assets folder)
-  const resumeUrl = './assets/Siva%20Resume.pdf';  // %20 = space
+  const resumeUrl = './assets/Siva%20ResumeNew.pdf';  // %20 = space
 
   // Create invisible <a> tag
   const link = document.createElement('a');
