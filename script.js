@@ -1102,13 +1102,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
+// ===============================================
+// RESUME CONFIGURATION
+// ===============================================
+const RESUME_PATH = './SivaResumeNew.pdf';
+const DOWNLOAD_RESUME_NAME = 'Siva_Balaa_Resume.pdf';
+
 function downloadResume() {
-  // Path to your PDF (inside assets folder)
-  const resumeUrl = './assets/SivaResumeNew.pdf';  // %20 = space
   // Create invisible <a> tag
   const link = document.createElement('a');
-  link.href = resumeUrl;
-  link.download = 'Siva_Balaa_Resume.pdf';  // Name shown when downloaded
+  link.href = RESUME_PATH;
+  link.download = DOWNLOAD_RESUME_NAME;
   link.style.display = 'none';
 
   // Trigger download
