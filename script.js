@@ -363,6 +363,23 @@ function openNewOverlay(title, description, videoSrc, backgroundImage, event, sh
         videoElement.style.display = "none";
       }
 
+      // Update URL Hash for Deep Linking (without triggering hashchange scroll)
+      const projectIds = {
+        'shopCalculator': 'project-shop-calculator',
+        'ShopCalculator - Phase 1 : Prototype ': 'project-shop-calculator',
+        'ShopCalculator - Phase 2 Final Product : Ads || Cloud Save || Import || Export || Monetization || Security Implementation': 'project-shop-calculator',
+        'FPS (3D, Unity)': 'project-fps-shooter',
+        '2D Puzzle Game (Unity)': 'project-2d-puzzle',
+        'Multiplayer Android Game Apex Warriors (Godot 4)': 'project-apex-warriors',
+        'VegCal - Dynamic Vegetable Calculator': 'project-vegcal'
+      };
+
+      // Fallback: search for ID if possible or use title-based key
+      let currentId = projectIds[title] || "";
+      if (currentId) {
+        history.replaceState(null, null, "#" + currentId);
+      }
+
       // Reset scroll position of the description
       document.getElementById("new-overlay-description").scrollTop = 0;
     }, 700);
@@ -386,6 +403,9 @@ function closeNewOverlay(event) {
   videoElement.pause();
   videoElement.currentTime = 0;
   document.getElementById("new-overlay").style.display = "none";
+
+  // Reset URL to Projects section
+  history.replaceState(null, null, "#projects");
 }
 
 // ===============================================
@@ -1418,7 +1438,192 @@ document.addEventListener("DOMContentLoaded", () => {
 // ===============================================
 // 21. CLOSE AUDIO ON PAGE RELOAD
 // ===============================================
+// ===============================================
+// 21. CLOSE AUDIO ON PAGE RELOAD
+// ===============================================
 window.addEventListener("beforeunload", () => {
   const closeAudio = new Audio('./assets/Audio/Close.mp3');
   closeAudio.play().catch(e => console.log("Close audio play failed:", e));
 });
+
+// ===============================================
+// 22. DEEP LINKING & AUTO-SCROLL SYSTEM
+// ===============================================
+/**
+ * Handles deep linking for sections and projects.
+ * Supports: 
+ * - Section navigation: #work-experience, #projects, #contact, etc.
+ * - Project navigation: #project-fps-shooter, #project-shop-calculator, #project-2d-puzzle
+ * Example: index.html#project-fps-shooter will scroll to the project and open its info.
+ */
+function handleDeepLink() {
+  const hash = window.location.hash;
+  if (!hash) return;
+
+  // 1. FORCE START AT TOP: Show profile first
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+
+  // 2. WAIT FOR SPLASH + PROFILE: 
+  // Splash takes 3.5s total. We wait (3.5s splash + 2s profile) = 5.5s for fresh loads.
+  const waitTime = document.body.classList.contains('loading') ? 5500 : 2000;
+
+  setTimeout(() => {
+    // 3. TARGETING LOGIC
+    if (hash.startsWith('#project-')) {
+      const projectId = hash.substring(1);
+      const projectElement = document.getElementById(projectId);
+
+      if (projectElement) {
+        // Scroll to the project card
+        projectElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        // 4. TRIGGER PROJECT: Open with natural animation
+        setTimeout(() => {
+          const infoBtn = Array.from(projectElement.querySelectorAll('.project-btn'))
+            .find(btn => btn.innerText.includes('Info'));
+          if (infoBtn) {
+            infoBtn.click();
+          }
+        }, 1000); // Allow scroll to settle
+      }
+    }
+    else {
+      // Standard Section Scroll
+      const sectionId = hash.substring(1);
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }, waitTime);
+}
+
+// ===============================================
+// 23. PC IMAGE VIEWER (ZOOM + BACK BUTTON)
+// ===============================================
+function initPCImageViewer() {
+  const pcImg = document.querySelector('.pc-setup-img');
+  if (!pcImg) return;
+
+  // Create overlay if it doesn't exist
+  let overlay = document.querySelector('.viewer-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'viewer-overlay';
+    overlay.innerHTML = `
+      <button class="viewer-back-btn">&times;</button>
+      <div class="viewer-img-container">
+        <img class="viewer-img" src="${pcImg.src}" alt="PC Setup Full">
+      </div>
+    `;
+    document.body.appendChild(overlay);
+  }
+
+  const backBtn = overlay.querySelector('.viewer-back-btn');
+  const viewerImg = overlay.querySelector('.viewer-img');
+
+  pcImg.style.cursor = 'pointer';
+  pcImg.addEventListener('click', () => {
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden'; // Stop background scrolling
+  });
+
+  const closeViewer = () => {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = ''; // Restore background scrolling
+  };
+
+  backBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeViewer();
+  });
+
+  // Zoom logic removed as requested
+  viewerImg.addEventListener('click', (e) => {
+    e.stopPropagation();
+    // No zoom action
+  });
+
+  overlay.addEventListener('click', closeViewer);
+}
+
+// Ensure it runs after DOM is ready
+document.addEventListener('DOMContentLoaded', initPCImageViewer);
+
+// Execute on load
+window.addEventListener('load', handleDeepLink);
+
+// Fix for internal navigation (when link is clicked while already on page)
+window.addEventListener('hashchange', () => {
+  handleDeepLink();
+});
+
+// Example Links for Redirects:
+// -----------------------------
+// 1. Section only:
+//    http://127.0.0.1:5500/index.html#work-experience
+//    http://127.0.0.1:5500/index.html#projects
+//
+// 2. Specific Projects (Scrolls + Opens Info):
+//    http://127.0.0.1:5500/index.html#project-shop-calculator
+//    http://127.0.0.1:5500/index.html#project-fps-shooter
+//    http://127.0.0.1:5500/index.html#project-2d-puzzle
+
+// ===============================================
+// 23. DYNAMIC PAGE TITLE SYSTEM
+// ===============================================
+/**
+ * Changes document title based on the section currently in view.
+ */
+function initDynamicTitles() {
+  const titleMap = {
+    'profile': 'Siva Balaa | Portfolio',
+    'about': 'Siva Balaa | About Me',
+    'experience': 'Siva Balaa | My Skills',
+    'projects': 'Siva Balaa | Project Log',
+    'work-experience': 'Siva Balaa | Work History',
+    'future-vision': 'Siva Balaa | Future Vision',
+    'setup-static': 'Siva Balaa | PC Setup',
+    'contact': 'Siva Balaa | Let\'s Connect'
+  };
+
+  const sections = document.querySelectorAll('section[id]');
+
+  const titleObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+        const id = entry.target.getAttribute('id');
+        if (titleMap[id]) {
+          document.title = titleMap[id];
+
+          // DYNAMIC URL UPDATE: Update hash without jumping
+          if (!isOverlayOpen) {
+            history.replaceState(null, null, "#" + id);
+          }
+        }
+      }
+    });
+  }, {
+    threshold: [0.5]
+  });
+
+  sections.forEach(section => titleObserver.observe(section));
+
+  // Also handle the top-most part (StartingAnimationContainer)
+  const introObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      document.title = titleMap['profile'];
+    }
+  }, { threshold: 0.1 });
+
+  const introContainer = document.querySelector('.StartingAnimationContainer');
+  if (introContainer) introObserver.observe(introContainer);
+}
+
+// Initialize when load completes
+window.addEventListener('load', initDynamicTitles);
