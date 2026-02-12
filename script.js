@@ -76,6 +76,19 @@ document.querySelectorAll("#desktop-nav .nav-links a").forEach(link => {
 
     setTimeout(() => {
       link.classList.remove("clicked");
+      const href = link.getAttribute("href");
+      const targetId = href.startsWith("#") ? href.substring(1) : null;
+
+      const performNav = () => {
+        if (targetId) {
+          isNavigatingByClick = true;
+          showSection(targetId);
+          history.pushState(null, null, href);
+        } else {
+          window.location.href = href;
+        }
+      };
+
       if (navLinks.classList.contains("open")) {
         navLinks.classList.remove("open");
         navLinks.classList.add("closing");
@@ -89,10 +102,10 @@ document.querySelectorAll("#desktop-nav .nav-links a").forEach(link => {
           if (window.innerWidth <= 600) {
             navLinks.style.display = "none";
           }
-          window.location.href = link.getAttribute("href");
+          performNav();
         }, 500);
       } else {
-        window.location.href = link.getAttribute("href");
+        performNav();
       }
     }, 800);
   });
@@ -143,8 +156,29 @@ type();
 // 6. SAVE SCROLL POSITION (GLOBAL)
 // ===============================================
 let savedScrollPosition = 0;
+let isOverlayOpen = false; // Declared for global tracking
+let isNavigatingByClick = false; // Track if we are in a smooth scroll from nav
 let winAudio = new Audio('./assets/Audio/Win.mp3'); // GLOBAL WIN AUDIO
 let isWinAudioPlaying = false;
+
+// Track pending scroll timeouts to clear them on interruption
+let scrollTimeouts = [];
+function clearScrollTimeouts() {
+  scrollTimeouts.forEach(t => clearTimeout(t));
+  scrollTimeouts = [];
+}
+
+// INTERRUPT AUTO-SCROLL ON USER TOUCH/SCROLL
+['wheel', 'touchstart', 'mousedown', 'keydown'].forEach(evt => {
+  window.addEventListener(evt, () => {
+    if (isNavigatingByClick) {
+      isNavigatingByClick = false;
+      clearScrollTimeouts();
+      // Force-stop smooth scroll by snapping to current position
+      window.scrollTo({ top: window.scrollY, behavior: 'auto' });
+    }
+  }, { passive: true });
+});
 
 // ===============================================
 // PROJECT PHASES LOGIC
@@ -440,6 +474,8 @@ window.addEventListener("load", triggerOnLoadAnimations);
 function showSection(sectionId) {
   const targetSection = document.getElementById(sectionId);
   if (targetSection) {
+    isNavigatingByClick = true; // Prevent title logic from fighting the scroll
+
     const desktopNav = document.getElementById("desktop-nav");
     const hamburgerNav = document.getElementById("hamburger-nav");
     const navHeight = desktopNav.offsetHeight || hamburgerNav.offsetHeight || 0;
@@ -457,12 +493,13 @@ function showSection(sectionId) {
       document.body.classList.add("no-scroll");
       document.documentElement.classList.add("no-scroll"); // Fix for some browsers
 
-      setTimeout(() => {
+      scrollTimeouts.push(setTimeout(() => {
         document.body.classList.remove("no-scroll");
         document.documentElement.classList.remove("no-scroll");
-      }, 4000);
+      }, 4000));
 
-      setTimeout(() => {
+      scrollTimeouts.push(setTimeout(() => {
+        if (!isNavigatingByClick) return;
         const isMobile = window.innerWidth <= 768;
 
         if (isMobile) {
@@ -473,16 +510,19 @@ function showSection(sectionId) {
           const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
           window.scrollTo({ top: maxScroll, behavior: "smooth" });
         }
-      }, delay);
+      }, delay));
     } else {
-      // MUCH MORE AGGRESSIVE SCROLL FIX
-      const initialDelay = 500; // Increased from 150ms - give page more time to settle
+      // CLEAR any existing scroll corrections before starting a new one
+      clearScrollTimeouts();
+      const initialDelay = 500;
 
-      setTimeout(() => {
+      scrollTimeouts.push(setTimeout(() => {
+        if (!isNavigatingByClick) return;
         // Force a reflow to ensure all content has rendered
         void document.body.offsetHeight;
 
         const calculateAndScroll = () => {
+          if (!isNavigatingByClick) return;
           // Calculate target position
           const rect = targetSection.getBoundingClientRect();
           const sectionTop = rect.top + window.scrollY - navHeight + 60; // Added 2 <br> spacing
@@ -491,7 +531,8 @@ function showSection(sectionId) {
           window.scrollTo({ top: sectionTop, behavior: "smooth" });
 
           // FIRST RECALCULATION - after smooth scroll starts (400ms)
-          setTimeout(() => {
+          scrollTimeouts.push(setTimeout(() => {
+            if (!isNavigatingByClick) return;
             const rect1 = targetSection.getBoundingClientRect();
             const correctedTop1 = rect1.top + window.scrollY - navHeight + 60; // Added 2 <br> spacing
 
@@ -499,10 +540,11 @@ function showSection(sectionId) {
             if (Math.abs(window.scrollY - correctedTop1) > 30) {
               window.scrollTo({ top: correctedTop1, behavior: "smooth" });
             }
-          }, 400);
+          }, 400));
 
           // SECOND RECALCULATION - after scroll completes (1200ms total)
-          setTimeout(() => {
+          scrollTimeouts.push(setTimeout(() => {
+            if (!isNavigatingByClick) return;
             const rect2 = targetSection.getBoundingClientRect();
             const finalTop = rect2.top + window.scrollY - navHeight + 60; // Added 2 <br> spacing
 
@@ -510,11 +552,14 @@ function showSection(sectionId) {
             if (Math.abs(window.scrollY - finalTop) > 30) {
               window.scrollTo({ top: finalTop, behavior: "smooth" });
             }
-          }, 1200);
+
+            // DONE
+            isNavigatingByClick = false;
+          }, 1200));
         };
 
         calculateAndScroll();
-      }, initialDelay);
+      }, initialDelay));
     }
   }
 }
@@ -1468,7 +1513,8 @@ function handleDeepLink() {
 
   // 2. WAIT FOR SPLASH + PROFILE: 
   // Splash takes 3.5s total. We wait (3.5s splash + 2s profile) = 5.5s for fresh loads.
-  const waitTime = document.body.classList.contains('loading') ? 5500 : 2000;
+  // RELOAD/BACK NAVIGATION: Faster response (500ms)
+  const waitTime = document.body.classList.contains('loading') ? 5500 : 500;
 
   setTimeout(() => {
     // 3. TARGETING LOGIC
@@ -1596,7 +1642,9 @@ function initDynamicTitles() {
 
   const titleObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+      // Threshold lowered to 0.3 for faster response on large sections
+      // Check !isNavigatingByClick to avoid hash flickering during smooth scroll
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.3 && !isNavigatingByClick) {
         const id = entry.target.getAttribute('id');
         if (titleMap[id]) {
           document.title = titleMap[id];
@@ -1609,7 +1657,7 @@ function initDynamicTitles() {
       }
     });
   }, {
-    threshold: [0.5]
+    threshold: [0.3] // Lower threshold means earlier detection
   });
 
   sections.forEach(section => titleObserver.observe(section));
@@ -1627,3 +1675,25 @@ function initDynamicTitles() {
 
 // Initialize when load completes
 window.addEventListener('load', initDynamicTitles);
+
+// ===============================================
+// 24. PDF ACTION (OPEN + DOWNLOAD)
+// ===============================================
+function handlePdfAction(pdfUrl, filename) {
+  // Use the standard URL constructor to resolve path correctly (Protocol + Host + Path)
+  const fullUrl = new URL(pdfUrl, window.location.href).href;
+
+  // 1. Open in new tab (Display to user)
+  window.open(fullUrl, '_blank');
+
+  // 2. Trigger Download with a delay
+  setTimeout(() => {
+    const link = document.createElement('a');
+    link.href = fullUrl;
+    link.download = filename || pdfUrl.split('/').pop();
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }, 500);
+}
