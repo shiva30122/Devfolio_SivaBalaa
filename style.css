@@ -563,7 +563,7 @@ img[src="./assets/experience.png"] {
 .phase-badge {
   position: absolute;
   top: 5px;
-  right: 15px;
+  left: 15px;
   background: #dbdbdb;
   color: #000000;
   font-weight: 700;
