@@ -387,6 +387,7 @@
       <button class="nav-toggle-btn" onclick="toggleNav()">☰</button>
       <ul class="nav-links">
         <li><a href="#about" onclick="showSection('about')">About</a></li>
+        <li><a href="#work-style" onclick="showSection('work-style')">Work Style</a></li>
         <li><a href="#experience" onclick="showSection('experience')">Skills</a></li>
         <li><a href="#projects" onclick="showSection('projects')">Projects</a></li>
         <li><a href="#work-experience" onclick="showSection('work-experience')">Experience</a></li>
@@ -406,6 +407,7 @@
       </div>
       <div class="menu-links">
         <li><a href="#about" onclick="toggleMenu(); showSection('about')">About</a></li>
+        <li><a href="#work-style" onclick="toggleMenu(); showSection('work-style')">Work Style</a></li>
         <li><a href="#experience" onclick="toggleMenu(); showSection('experience')">Skills</a></li>
         <li><a href="#projects" onclick="toggleMenu(); showSection('projects')">Projects</a></li>
         <li><a href="#work-experience" onclick="showSection('work-experience')">Experience</a></li>
@@ -557,6 +559,80 @@
             <br><br>
             Currently, I am pushing my boundaries by exploring <strong>Unreal Engine 5</strong> while seeking new
             challenges in professional Unity Game Development.
+          </p>
+        </div>
+      </div>
+    </div>
+    <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow blur-load" loading="lazy"
+      onclick="showSection('work-style')" />
+  </section>
+
+  <!-- Work Style Section -->
+  <section id="work-style" class="scroll-reveal">
+    <p class="section__text__p1">My Approach</p>
+    <h1 class="title">Work Style</h1>
+    <div class="section-container">
+      <div class="about-details-container">
+        <div class="about-containers">
+          <div class="details-container">
+            <img src="./assets/Workstyle/AI.png" alt="AI workflow visual" class="icon blur-load" loading="lazy" />
+            <h3>AI Workflow</h3>
+            <p>Agents, CLI tools, and structured prompts drive speed without losing control.</p>
+          </div>
+          <div class="details-container">
+            <img src="./assets/Workstyle/Code.png" alt="Code workflow visual" class="icon blur-load" loading="lazy" />
+            <h3>Code Flow</h3>
+            <p>I define the logic first, then let AI help me fill in the implementation gaps.</p>
+          </div>
+          <div class="details-container">
+            <img src="./assets/Workstyle/Termail.png" alt="Terminal workflow visual" class="icon blur-load" loading="lazy" />
+            <h3>Terminal Control</h3>
+            <p>I use CLI-driven workflows to stay fast, precise, and cost-aware.</p>
+          </div>
+        </div>
+        <div class="text-container">
+          <p>
+            I use AI as a force multiplier, not as the owner of my codebase. My workflow starts with architecture: I
+            define the system, decide the function structure, control the logic flow, and then use AI to fill in the
+            gaps, speed up implementation, and handle repetitive work. I do not let AI make random decisions for me. I
+            keep the codebase under my control so the structure stays clean, predictable, and scalable. Before I write
+            or ask AI to write code, I already know what the function should do, what its input and output are, and how
+            it fits into the full system. That is how I avoid dead code, loose conditions, unnecessary complexity, and
+            confusing logic paths.
+            <br><br>
+            I prefer working with AI through agents and CLI-based workflows rather than relying too much on visual
+            tools, because that gives me more control and less overhead. I use structured prompts, rules, and clear
+            boundaries so the AI understands how to work with me instead of against me. When a task is complex, I do
+            not jump straight into implementation. I first break it into stages, simulate the behavior, and verify
+            that the input and output match what I expect. If something is not working or I do not fully understand the
+            behavior, I keep researching until I know the full system and how it works. I learn from my mistakes, and I
+            do not move forward until the logic makes sense.
+            <br><br>
+            If I do not know something, I refer to documentation, videos, examples, and practical references until the
+            missing piece is clear. That applies especially to Unity game mechanics, Unity components, renderer
+            behavior, or any system I need to integrate correctly. I do not treat experimentation as wasted time. I
+            treat it as part of understanding the system before committing to the final implementation. For example, if
+            I need to work with a Trail Renderer or any unfamiliar Unity feature, I will test how it behaves, observe
+            the result, and only then proceed with the actual work. That is how I make sure I am building the right
+            thing instead of guessing.
+            <br><br>
+            I also use version control properly, because rollback safety is part of disciplined development. If
+            something goes wrong, I can isolate the issue, compare versions, and revert safely. That gives me freedom
+            to experiment without losing control. For simple tasks, I often write the code myself because that is
+            faster and cleaner. For larger systems, I use AI to accelerate the work while I stay responsible for the
+            architecture, performance, and long-term maintainability. In practice, that means I am not depending on AI
+            blindly. I am directing it. AI helps me move faster, but the design, the decisions, and the final structure
+            are still mine.
+            <br><br>
+            On the cost side, I keep my AI usage efficient. Most of the time I use API-based workflows in the range of
+            about 10 to 20 dollars per month, and I rarely rely on subscriptions unless I really need them. I prefer
+            the cheaper, more controllable path when it gives me the same result. That makes my workflow practical,
+            scalable, and cost-aware without losing quality. I build systems with AI, but I remain the one designing
+            the system, setting the rules, and deciding how the mechanics or software behavior should work.
+          </p>
+          <p>
+            <strong>Summary:</strong> I use AI to accelerate development, but I own the architecture, learn before I
+            build, validate the behavior, and keep the codebase under control.
           </p>
         </div>
       </div>
