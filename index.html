@@ -387,6 +387,7 @@
       <button class="nav-toggle-btn" onclick="toggleNav()">☰</button>
       <ul class="nav-links">
         <li><a href="#about" onclick="showSection('about')">About</a></li>
+        <li><a href="#work-style" onclick="showSection('work-style')">Work Style</a></li>
         <li><a href="#experience" onclick="showSection('experience')">Skills</a></li>
         <li><a href="#projects" onclick="showSection('projects')">Projects</a></li>
         <li><a href="#work-experience" onclick="showSection('work-experience')">Experience</a></li>
@@ -406,6 +407,7 @@
       </div>
       <div class="menu-links">
         <li><a href="#about" onclick="toggleMenu(); showSection('about')">About</a></li>
+        <li><a href="#work-style" onclick="toggleMenu(); showSection('work-style')">Work Style</a></li>
         <li><a href="#experience" onclick="toggleMenu(); showSection('experience')">Skills</a></li>
         <li><a href="#projects" onclick="toggleMenu(); showSection('projects')">Projects</a></li>
         <li><a href="#work-experience" onclick="showSection('work-experience')">Experience</a></li>
@@ -531,7 +533,59 @@
           </div>
         </div>
         <div class="text-container">
-          <h3>Work Style</h3>
+          <p>
+            I am a passionate <strong>Unity Developer</strong> who believes that great games are built on solid logic,
+            not just tools.
+            <br><br>
+            My career took a defining turn after a technical interview where I realized I had become too reliant on AI.
+            That moment was my wake-up call. I went back to the roots of programming, sharpening my <strong>C#
+              logic</strong> and problem-solving skills to ensure <em>I</em> am the architect of my code. Today, I build
+            complex, scalable systems in Unity with confidence.
+            <br><br>
+            <strong>My approach is balanced:</strong> I use AI <strong>60% of the time</strong> to accelerate code
+            generation and implementation,
+            but I maintain <strong>40% control over the logic flow</strong> to ensure the desired outcome. I reference
+            best practices,
+            design patterns, and proven solutions, then integrate them strategically to build robust, maintainable
+            systems.
+            This way, I leverage AI's efficiency while staying in command of the architecture and critical
+            decision-making.
+            <br><br>
+            I also love bridging the gap between games and apps. I originally prototyped my <strong>VegCal</strong> tool
+            in Godot, but to deliver a premium user experience, I taught myself <strong>Kotlin</strong> and rebuilt it
+            natively in <strong>Android Studio - Shop Calculator</strong>. I used AI to accelerate learning this new
+            language,
+            successfully implementing <strong>Cloud Saving (Drive API)</strong> and <strong>Monetization</strong>.
+            <br><br>
+            Currently, I am pushing my boundaries by exploring <strong>Unreal Engine 5</strong> while seeking new
+            challenges in professional Unity Game Development.
+          </p>
+        </div>
+      </div>
+    </div>
+    <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow blur-load" loading="lazy"
+      onclick="showSection('work-style')" />
+  </section>
+
+  <!-- Work Style Section -->
+  <section id="work-style" class="scroll-reveal">
+    <p class="section__text__p1">My Approach</p>
+    <h1 class="title">Work Style</h1>
+    <div class="section-container">
+      <div class="about-details-container">
+        <div class="about-containers">
+          <div class="details-container">
+            <img src="./assets/experience.png" alt="AI workflow icon" class="icon blur-load" loading="lazy" />
+            <h3>AI Workflow</h3>
+            <p>Agents, CLI tools, and structured prompts drive speed without losing control.</p>
+          </div>
+          <div class="details-container">
+            <img src="./assets/education.png" alt="Learning icon" class="icon blur-load" loading="lazy" />
+            <h3>Learning Loop</h3>
+            <p>I research docs, videos, and examples until the system is fully understood.</p>
+          </div>
+        </div>
+        <div class="text-container">
           <p>
             I use AI as a force multiplier, not as the owner of my codebase. My workflow starts with architecture: I
             define the system, decide the function structure, control the logic flow, and then use AI to fill in the
