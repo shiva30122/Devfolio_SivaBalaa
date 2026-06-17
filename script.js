@@ -159,6 +159,7 @@ let savedScrollPosition = 0;
 let isOverlayOpen = false; // Declared for global tracking
 let isNavigatingByClick = false; // Track if we are in a smooth scroll from nav
 let winAudio = new Audio('./assets/Audio/Win.mp3'); // GLOBAL WIN AUDIO
+winAudio.volume = 0.05;
 let isWinAudioPlaying = false;
 
 // Track pending scroll timeouts to clear them on interruption
@@ -1089,7 +1090,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (soundEnabled) return;
     soundEnabled = true;
     video.muted = false;
-    video.volume = 0.6;
+    video.volume = 0.05;
     updateUI();
 
     // Remove global listeners
@@ -1322,7 +1323,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const audio = new Audio("assets/Audio/Love.mp3");
     audio.loop = true;
-    audio.volume = 0.5;
+    audio.volume = 0.05;
     let isPlaying = false;
     let heartInterval = null;
 
@@ -1488,6 +1489,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // ===============================================
 window.addEventListener("beforeunload", () => {
   const closeAudio = new Audio('./assets/Audio/Close.mp3');
+  closeAudio.volume = 0.05;
   closeAudio.play().catch(e => console.log("Close audio play failed:", e));
 });
 
