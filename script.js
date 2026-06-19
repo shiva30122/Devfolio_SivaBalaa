@@ -394,6 +394,7 @@ function openNewOverlay(title, description, videoSrc, backgroundImage, event, sh
 
         videoElement.style.display = "block";
         videoElement.load();
+        videoElement.volume = 0.1;
         videoElement.play();
       } else {
         videoElement.style.display = "none";
