@@ -293,6 +293,7 @@ function updateProjectUI(isOpening, event) {
 
       videoElement.style.display = "block";
       videoElement.load();
+      videoElement.volume = 0.1;
       videoElement.play();
     } else {
       videoElement.style.display = "none";
