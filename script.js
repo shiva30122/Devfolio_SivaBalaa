@@ -777,6 +777,21 @@ function checkContactVisibility() {
   const sectionHeight = rect.height;
   const visibilityPercentage = (visibleHeight / sectionHeight) * 100;
 
+  // PLAY WIN SOUND WHEN TRULY AT BOTTOM (within 50px)
+  const scrollPos = window.scrollY + window.innerHeight;
+  const docHeight = document.documentElement.scrollHeight;
+  if (docHeight - scrollPos < 50) {
+    if (!isWinAudioPlaying) {
+      winAudio.play().then(() => { isWinAudioPlaying = true; }).catch(() => {});
+    }
+  } else {
+    if (isWinAudioPlaying) {
+      winAudio.pause();
+      winAudio.currentTime = 0;
+      isWinAudioPlaying = false;
+    }
+  }
+
   // AUTO-SCROLL TO BOTTOM WHEN CONTACT 30% VISIBLE
   if (visibilityPercentage >= 30) {
     if (!hasAutoScrolled) {
