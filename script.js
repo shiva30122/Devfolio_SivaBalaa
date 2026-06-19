@@ -1819,7 +1819,7 @@ function updateCounters() {
     gameDevEl.innerHTML = formatDuration(calcDuration(new Date(2022, 0, 1)));
   }
   if (proExpEl) {
-    proExpEl.innerHTML = formatDuration(calcDuration(new Date(2023, 8, 1)));
+    proExpEl.innerHTML = formatDuration(calcDuration(new Date(2024, 8, 1)));
   }
   if (codeVEl) {
     codeVEl.innerHTML = formatDuration(calcDuration(new Date(2026, 0, 1)));
