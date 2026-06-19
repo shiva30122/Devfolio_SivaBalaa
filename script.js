@@ -777,17 +777,10 @@ function checkContactVisibility() {
   const sectionHeight = rect.height;
   const visibilityPercentage = (visibleHeight / sectionHeight) * 100;
 
-  // 1. PLAY WIN SOUND IF >= 30% VISIBLE
+  // AUTO-SCROLL TO BOTTOM WHEN CONTACT 30% VISIBLE
   if (visibilityPercentage >= 30) {
-    if (!isWinAudioPlaying) {
-      winAudio.play().then(() => { isWinAudioPlaying = true; }).catch(e => console.log("Win audio play failed (scroll):", e));
-    }
-
-    // Auto-scroll logic (keep existing)
     if (!hasAutoScrolled) {
       hasAutoScrolled = true;
-      // logic for auto scroll if needed, or maybe user just wants sound?
-      // keeping original behavior for auto-scroll just in case:
       const isMobile = window.innerWidth <= 768;
       if (isMobile) {
         window.scrollTo({ top: 999999, behavior: "smooth" });
@@ -795,14 +788,6 @@ function checkContactVisibility() {
         const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
         window.scrollTo({ top: maxScroll, behavior: "smooth" });
       }
-    }
-  }
-  // 2. STOP WIN SOUND IF < 30% VISIBLE
-  else {
-    if (isWinAudioPlaying) {
-      winAudio.pause();
-      winAudio.currentTime = 0;
-      isWinAudioPlaying = false;
     }
   }
 }
