@@ -401,23 +401,23 @@ function openNewOverlay(title, description, videoSrc, backgroundImage, event, sh
 
       if (videoSrc && videoSrc.includes("youtube.com")) {
         // YOUTUBE VIDEO – use iframe
+        videoContainer.style.display = "flex";
         videoElement.style.display = "none";
         if (!ytIframe) {
           ytIframe = document.createElement("iframe");
           ytIframe.id = "yt-overlay-iframe";
           ytIframe.style.cssText = "width:100%;height:100%;border:none;border-radius:12px;";
-          ytIframe.allow = "autoplay; encrypted-media; fullscreen";
+          ytIframe.allow = "autoplay; encrypted-media; fullscreen; picture-in-picture";
           ytIframe.allowFullscreen = true;
           videoContainer.appendChild(ytIframe);
         }
-        // Convert live URL to embed URL
         let embedSrc = videoSrc.replace("youtube.com/live/", "youtube.com/embed/");
-        ytIframe.src = embedSrc + "?autoplay=1";
+        ytIframe.src = embedSrc + "?autoplay=1&mute=1";
         ytIframe.style.display = "block";
       } else if (videoSrc) {
         // REGULAR VIDEO
+        videoContainer.style.display = "flex";
         if (ytIframe) ytIframe.style.display = "none";
-        // CHECK CACHE
         if (videoCache[videoSrc]) {
           sourceElement.src = videoCache[videoSrc];
         } else {
@@ -434,6 +434,8 @@ function openNewOverlay(title, description, videoSrc, backgroundImage, event, sh
         videoElement.volume = 0.1;
         videoElement.play();
       } else {
+        // NO VIDEO – hide container entirely
+        videoContainer.style.display = "none";
         videoElement.style.display = "none";
         if (ytIframe) ytIframe.style.display = "none";
       }
