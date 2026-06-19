@@ -839,46 +839,132 @@
     </div>
     <div class="experience-details-container">
       <div class="about-containers">
+        <!-- TAP AND MATCH FOOD -->
         <div class="details-container color-container">
           <div class="project-img-container">
-            <img src="./assets/Profile.png" alt="Code_V Project 4" class="project-img blur-load" loading="lazy" />
+            <img src="./assets/Profile.png" alt="Tap and Match Food" class="project-img blur-load" loading="lazy" />
           </div>
-          <h2 class="experience-sub-title project-title">Game Project 4</h2>
+          <h2 class="experience-sub-title project-title">Tap and Match Food</h2>
           <div class="btn-container">
-            <button class="btn btn-color-2 project-btn" onclick="showToast('Project details coming soon!')">
+            <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('Tap and Match Food', 
+                '<h3>Tap and Match Food – Sorting Puzzle Game</h3><br>' +
+                'Developed <strong>from scratch</strong>. Completed the core playable version in approximately <strong>2 weeks</strong>, with continued improvements across UI/UX, rewards, monetization, balancing, and polish.<br><br>' +
+                'A <strong>tap-and-match / sorting puzzle game</strong> where players organize and transfer food items strategically to complete levels.<br><br>' +
+                '<strong>Core Gameplay:</strong><br>' +
+                '• Players sort food items using a <strong>conveyor-based movement system</strong>.<br>' +
+                '• Food items can only be transferred into baskets under valid matching conditions.<br>' +
+                '• Basket movement and transfer rules create puzzle constraints.<br>' +
+                '• Empty spaces and basket capacity affect available moves.<br>' +
+                '• Players lose if conveyors become full and no valid transfers remain.<br>' +
+                '• Players win once all food items are successfully sorted.<br><br>' +
+                '<strong>Contributions:</strong><br>' +
+                '• Designed and developed the entire gameplay prototype from scratch.<br>' +
+                '• Built the complete sorting and matching gameplay loop.<br>' +
+                '• Implemented conveyor mechanics, basket transfer systems, and move validation.<br>' +
+                '• Developed progression and reward systems including UI/UX flows, Bonus Pass, rewards, and IAP foundations.<br>' +
+                '• Performed multiple gameplay iterations and refactoring passes.<br>' +
+                '• Fixed animation and interaction issues across gameplay systems.<br>' +
+                '• Worked on complex animation handling: object placement sync, spacing adjustments, animation race-condition fixes, transition improvements.<br><br>' +
+                '<strong>Implemented Power-ups:</strong><br>' +
+                '1. <strong>Conveyor Expand</strong> – increases conveyor capacity.<br>' +
+                '2. <strong>AutoSort</strong> – automatically sorts nearby food in a 3x3 area.<br>' +
+                '3. <strong>Basket Smasher</strong> – clears a selected basket and creates usable space.<br>' +
+                '4. <strong>Protection (One-Time Block)</strong> – activated before entering a level, prevents one accidental failure.<br><br>' +
+                '<strong>Status:</strong> Core gameplay fully functional. Multiple redesigns refined quality. Minor animation polish remaining. Additional work on balancing and content continues. Hoping this becomes my <strong>first fully released project</strong> within the company.', 
+                '', './assets/Profile.png')">
               Project Info
             </button>
           </div>
         </div>
+        <!-- PROJECT MALWARE -->
         <div class="details-container color-container">
           <div class="project-img-container">
-            <img src="./assets/Profile.png" alt="Code_V Project 3" class="project-img blur-load" loading="lazy" />
+            <img src="./assets/Profile.png" alt="Project Malware" class="project-img blur-load" loading="lazy" />
           </div>
-          <h2 class="experience-sub-title project-title">Game Project 3</h2>
+          <h2 class="experience-sub-title project-title">Project Malware</h2>
           <div class="btn-container">
-            <button class="btn btn-color-2 project-btn" onclick="showToast('Project details coming soon!')">
+            <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('Project Malware', 
+                '<h3>Project Malware – Digital Combat / DOTS ECS</h3><br>' +
+                'Designed around a digital combat concept where the player progresses through a system and destroys the <strong>core of a PC environment</strong> by breaking through layers such as firewalls and security systems.<br><br>' +
+                'The project went through multiple redesign phases. Enemy systems initially followed a standard AI approach, later migrated toward <strong>Unity DOTS / ECS</strong> for scalability.<br><br>' +
+                '<strong>Contributions:</strong><br>' +
+                '• Contributed to core gameplay architecture and system redesign during DOTS / ECS transition.<br>' +
+                '• Implemented <strong>4 unique enemy variants</strong>: Boomer (explosive), Shield (defensive), Split (divides into units), Laser (ranged).<br>' +
+                '• Designed enemy behavior systems for distinct combat interactions.<br>' +
+                '• Implemented optimized <strong>3D world-space enemy health display</strong> (avoided UI Canvas for performance).<br>' +
+                '• Built logic to dynamically scale and update 3D health indicators through ECS-driven systems.<br>' +
+                '• Worked on improving performance and scalability for larger enemy counts.<br><br>' +
+                '<strong>Challenges:</strong> Significant dev time spent on restructuring architecture. Multiple redesigns increased complexity.<br><br>' +
+                '<strong>Status:</strong> Discontinued — company shifted strategy toward faster production cycles with simpler casual games and higher content output.', 
+                '', './assets/Profile.png')">
               Project Info
             </button>
           </div>
         </div>
+        <!-- DEFYGEOMETRY 3D -->
         <div class="details-container color-container">
           <div class="project-img-container">
-            <img src="./assets/Profile.png" alt="Code_V Project 2" class="project-img blur-load" loading="lazy" />
+            <img src="./assets/Profile.png" alt="DefyGeometry 3D" class="project-img blur-load" loading="lazy" />
           </div>
-          <h2 class="experience-sub-title project-title">Game Project 2</h2>
+          <h2 class="experience-sub-title project-title">DefyGeometry (3D)</h2>
           <div class="btn-container">
-            <button class="btn btn-color-2 project-btn" onclick="showToast('Project details coming soon!')">
+            <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('DefyGeometry (3D)', 
+                '<h3>DefyGeometry – 3D Prototype / R&D</h3><br>' +
+                'Started as an exploration to convert DefyGeometry from <strong>2D into 3D</strong>. Worked independently on prototyping and gameplay implementation for around <strong>1 month</strong>.<br><br>' +
+                'Most implementation, gameplay systems, and technical decisions were created and owned by me. Company mainly reviewed progress during meetings.<br><br>' +
+                '<strong>Contributions:</strong><br>' +
+                '• Recreated and expanded the core gameplay loop from 2D into 3D.<br>' +
+                '• Built project architecture using <strong>Unity DOTS / ECS, Graph systems, and Entity-based workflows</strong>.<br>' +
+                '• Sourced and integrated 3D assets independently.<br>' +
+                '• Developed <strong>3D space movement controls</strong> with single joystick control.<br>' +
+                '• Implemented <strong>gear and progression mechanics</strong> (speed increases with progression).<br>' +
+                '• Created <strong>stealth mode</strong> where enemies temporarily lose player tracking.<br>' +
+                '• Built firing system with dual-button controls and fast missile combat.<br>' +
+                '• Developed automatic aiming and target-lock shooting mechanics.<br>' +
+                '• Created <strong>AI combat behaviors</strong>: enemy shooting, projectile interactions, rock obstacle damage, combat responses.<br>' +
+                '• Tested various rocket VFX and combat effects.<br><br>' +
+                '<strong>Unfinished:</strong> Enemy teleportation needed improvement. Some spread/positioning bugs remained. Polish and balancing planned.<br><br>' +
+                '<strong>Status:</strong> Reassigned before completion. Gave significant experience in <strong>3D gameplay architecture, ECS optimization, AI systems, and rapid prototyping</strong>.', 
+                '', './assets/Profile.png')">
               Project Info
             </button>
           </div>
         </div>
+        <!-- DEFYGEOMETRY 2D -->
         <div class="details-container color-container">
           <div class="project-img-container">
-            <img src="./assets/Profile.png" alt="Code_V Project 1" class="project-img blur-load" loading="lazy" />
+            <img src="./assets/Profile.png" alt="DefyGeometry 2D" class="project-img blur-load" loading="lazy" />
           </div>
-          <h2 class="experience-sub-title project-title">Game Project 1</h2>
+          <h2 class="experience-sub-title project-title">DefyGeometry (2D)</h2>
           <div class="btn-container">
-            <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('Game Project 1', 
+            <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('DefyGeometry (2D)', 
+                '<h3>DefyGeometry – 2D Enemy AI / ECS Optimization</h3><br>' +
+                'Worked on an existing 2D game built from provided assets and playable levels.<br><br>' +
+                '<strong>Contributions:</strong><br>' +
+                '• Designed and implemented an improved <strong>enemy chasing AI algorithm</strong>.<br>' +
+                '• Solved enemy spawning and object pooling issues for better performance.<br>' +
+                '• Implemented enemy spawn/teleport behavior for dynamic positioning.<br>' +
+                '• Integrated and optimized using <strong>Unity DOTS / ECS architecture</strong> for mobile performance.<br>' +
+                '• Optimized large-scale enemy simulation:<br>' +
+                '&nbsp;&nbsp;- <strong>500 enemies</strong> maintained stable 40+ FPS.<br>' +
+                '&nbsp;&nbsp;- <strong>1,000 enemies</strong> functional with minor FPS drops.<br>' +
+                '&nbsp;&nbsp;- Tested up to <strong>5,000 enemies</strong> with gradual performance drop.<br>' +
+                '&nbsp;&nbsp;- Maintained around <strong>60 FPS</strong> on modern mobile chipsets under practical conditions.<br>' +
+                '• Improved overall gameplay responsiveness and scalability for mobile.<br><br>' +
+                '<strong>Status:</strong> Development direction changed from 2D to 3D, project discontinued. Reassigned to another project.', 
+                '', './assets/Profile.png')">
+              Project Info
+            </button>
+          </div>
+        </div>
+        <!-- LOGIC BLOCK -->
+        <div class="details-container color-container">
+          <div class="project-img-container">
+            <img src="./assets/Profile.png" alt="Logic Block" class="project-img blur-load" loading="lazy" />
+          </div>
+          <h2 class="experience-sub-title project-title">Logic Block</h2>
+          <div class="btn-container">
+            <button class="btn btn-color-2 project-btn" onclick="openNewOverlay('Logic Block', 
                 '<h3>Logic Block / Tetris-like Game</h3><br>' +
                 'Worked on an existing game project with a level-based progression system and level unlocking mechanics.<br><br>' +
                 '<strong>Contributions:</strong><br><br>' +
