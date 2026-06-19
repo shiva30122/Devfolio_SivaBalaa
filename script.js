@@ -399,23 +399,28 @@ function openNewOverlay(title, description, videoSrc, backgroundImage, event, sh
       const videoContainer = document.querySelector(".video-container");
       let ytIframe = document.getElementById("yt-overlay-iframe");
 
+      const loader = document.getElementById("yt-loader");
+
       if (videoSrc && videoSrc.includes("youtube.com")) {
         // YOUTUBE VIDEO – use iframe
         videoContainer.style.display = "block";
         videoElement.style.display = "none";
+        if (loader) loader.style.display = "flex";
         if (!ytIframe) {
           ytIframe = document.createElement("iframe");
           ytIframe.id = "yt-overlay-iframe";
+          ytIframe.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;border:none;";
+          ytIframe.setAttribute("allowfullscreen", "");
+          ytIframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
           videoContainer.appendChild(ytIframe);
         }
-        ytIframe.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;border:none;";
-        // Standard YouTube embed attributes
-        ytIframe.setAttribute("allowfullscreen", "");
-        ytIframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
-        // Force www.youtube.com for embed
         let embedSrc = videoSrc.replace("youtube.com/live/", "www.youtube.com/embed/");
         ytIframe.src = embedSrc + "?autoplay=1&mute=1&rel=0";
         ytIframe.style.display = "block";
+        // Hide loader once iframe loads
+        ytIframe.onload = function() { if (loader) loader.style.display = "none"; };
+        // Fallback: hide loader after 5s even if onload doesn't fire
+        setTimeout(function() { if (loader && loader.style.display !== "none") loader.style.display = "none"; }, 5000);
       } else if (videoSrc) {
         // REGULAR VIDEO
         videoContainer.style.display = "flex";
@@ -439,6 +444,7 @@ function openNewOverlay(title, description, videoSrc, backgroundImage, event, sh
         // NO VIDEO – hide container entirely
         videoContainer.style.display = "none";
         videoElement.style.display = "none";
+        if (loader) loader.style.display = "none";
         if (ytIframe) ytIframe.style.display = "none";
       }
 
@@ -483,6 +489,8 @@ function closeNewOverlay(event) {
   videoElement.currentTime = 0;
   const ytIframe = document.getElementById("yt-overlay-iframe");
   if (ytIframe) ytIframe.src = "";
+  const loader = document.getElementById("yt-loader");
+  if (loader) loader.style.display = "flex";
   document.getElementById("new-overlay").style.display = "none";
 
   // Reset URL to Projects section
@@ -1723,6 +1731,19 @@ function initDynamicTitles() {
 
 // Initialize when load completes
 window.addEventListener('load', initDynamicTitles);
+
+// ===============================================
+// PRELOAD YT IFRAME on page load (instant playback)
+// ===============================================
+window.addEventListener('load', function() {
+  // Create hidden preload iframe for YT caching
+  var preload = document.createElement('link');
+  preload.rel = 'preload';
+  preload.as = 'document';
+  preload.href = 'https://www.youtube.com/embed/VPrzViKcMQU?autoplay=1&mute=1';
+  preload.onload = function() { setTimeout(function() { preload.remove(); }, 1000); };
+  document.head.appendChild(preload);
+});
 
 // ===============================================
 // 24. PDF ACTION (OPEN + DOWNLOAD)
