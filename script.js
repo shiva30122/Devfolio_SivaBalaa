@@ -162,6 +162,26 @@ let winAudio = new Audio('./assets/Audio/Win.mp3'); // GLOBAL WIN AUDIO
 winAudio.volume = 0.05;
 let isWinAudioPlaying = false;
 
+// ===============================================
+// PROJECT SOUND CONFIG – each project has own volume
+// ===============================================
+const projectSounds = {
+  professional: { file: './assets/Audio/Win.mp3', volume: 0.15 },
+  shopCalculator: { file: './assets/Audio/Win.mp3', volume: 0.1 },
+  fpsShooter: { file: './assets/Audio/Win.mp3', volume: 0.1 },
+  puzzle2d: { file: './assets/Audio/Win.mp3', volume: 0.1 },
+  apexWarriors: { file: './assets/Audio/Win.mp3', volume: 0.1 },
+  vegCal: { file: './assets/Audio/Win.mp3', volume: 0.1 }
+};
+
+function playProjectSound(key) {
+  const cfg = projectSounds[key];
+  if (!cfg) return;
+  const snd = new Audio(cfg.file);
+  snd.volume = cfg.volume;
+  snd.play().catch(() => {});
+}
+
 // Track pending scroll timeouts to clear them on interruption
 let scrollTimeouts = [];
 function clearScrollTimeouts() {
