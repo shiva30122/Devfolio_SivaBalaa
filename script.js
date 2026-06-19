@@ -401,17 +401,17 @@ function openNewOverlay(title, description, videoSrc, backgroundImage, event, sh
 
       if (videoSrc && videoSrc.includes("youtube.com")) {
         // YOUTUBE VIDEO – use iframe
-        videoContainer.style.display = "flex";
+        videoContainer.style.display = "block";
         videoElement.style.display = "none";
         if (!ytIframe) {
           ytIframe = document.createElement("iframe");
           ytIframe.id = "yt-overlay-iframe";
-          ytIframe.style.cssText = "width:100%;height:100%;border:none;";
-          ytIframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen");
-          ytIframe.setAttribute("allowfullscreen", "");
-          ytIframe.setAttribute("frameborder", "0");
           videoContainer.appendChild(ytIframe);
         }
+        ytIframe.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;border:none;";
+        ytIframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen");
+        ytIframe.setAttribute("allowfullscreen", "true");
+        ytIframe.setAttribute("frameborder", "0");
         let embedSrc = videoSrc.replace("youtube.com/live/", "youtube.com/embed/");
         ytIframe.src = embedSrc + "?autoplay=1&mute=1";
         ytIframe.style.display = "block";

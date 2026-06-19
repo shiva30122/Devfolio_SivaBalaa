@@ -792,12 +792,16 @@ article {
   margin-bottom: 1rem;
   border-radius: 12px;
   overflow: hidden;
+  position: relative;
 }
 
 #yt-overlay-iframe {
   width: 100%;
   height: 100%;
   border: none;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 #new-overlay-video {
