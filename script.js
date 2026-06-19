@@ -1747,16 +1747,20 @@ function calcDuration(startDate) {
   return { years, months, days, hours, minutes, seconds };
 }
 
+function padNum(n) {
+  return '<span style="display:inline-block;min-width:2ch;text-align:right;font-variant-numeric:tabular-nums;">' + n + '</span>';
+}
+
 function formatDuration(d) {
   const parts = [];
-  if (d.years > 0) parts.push(d.years + ' year' + (d.years !== 1 ? 's' : ''));
-  if (d.months > 0) parts.push(d.months + ' month' + (d.months !== 1 ? 's' : ''));
-  if (d.days > 0) parts.push(d.days + ' day' + (d.days !== 1 ? 's' : ''));
+  if (d.years > 0) parts.push(padNum(d.years) + ' year' + (d.years !== 1 ? 's' : ''));
+  if (d.months > 0) parts.push(padNum(d.months) + ' month' + (d.months !== 1 ? 's' : ''));
+  if (d.days > 0) parts.push(padNum(d.days) + ' day' + (d.days !== 1 ? 's' : ''));
   if (d.hours > 0 || d.minutes > 0 || d.seconds > 0) {
     const h = d.hours.toString().padStart(2, '0');
     const m = d.minutes.toString().padStart(2, '0');
     const s = d.seconds.toString().padStart(2, '0');
-    parts.push(`${h}:${m}:${s}`);
+    parts.push('<span style="display:inline-block;min-width:8ch;text-align:center;font-family:monospace;font-variant-numeric:tabular-nums;">' + h + ':' + m + ':' + s + '</span>');
   }
   return parts.join(', ');
 }
@@ -1767,13 +1771,13 @@ function updateCounters() {
   const codeVEl = document.getElementById('codev-counter');
 
   if (gameDevEl) {
-    gameDevEl.textContent = formatDuration(calcDuration(new Date(2022, 0, 1)));
+    gameDevEl.innerHTML = formatDuration(calcDuration(new Date(2022, 0, 1)));
   }
   if (proExpEl) {
-    proExpEl.textContent = formatDuration(calcDuration(new Date(2023, 8, 1)));
+    proExpEl.innerHTML = formatDuration(calcDuration(new Date(2023, 8, 1)));
   }
   if (codeVEl) {
-    codeVEl.textContent = formatDuration(calcDuration(new Date(2026, 0, 1)));
+    codeVEl.innerHTML = formatDuration(calcDuration(new Date(2026, 0, 1)));
   }
 }
 
