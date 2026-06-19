@@ -409,11 +409,12 @@ function openNewOverlay(title, description, videoSrc, backgroundImage, event, sh
           videoContainer.appendChild(ytIframe);
         }
         ytIframe.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;border:none;";
-        ytIframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen");
-        ytIframe.setAttribute("allowfullscreen", "true");
-        ytIframe.setAttribute("frameborder", "0");
-        let embedSrc = videoSrc.replace("youtube.com/live/", "youtube.com/embed/");
-        ytIframe.src = embedSrc + "?autoplay=1&mute=1";
+        // Standard YouTube embed attributes
+        ytIframe.setAttribute("allowfullscreen", "");
+        ytIframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
+        // Force www.youtube.com for embed
+        let embedSrc = videoSrc.replace("youtube.com/live/", "www.youtube.com/embed/");
+        ytIframe.src = embedSrc + "?autoplay=1&mute=1&rel=0";
         ytIframe.style.display = "block";
       } else if (videoSrc) {
         // REGULAR VIDEO
