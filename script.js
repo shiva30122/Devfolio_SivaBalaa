@@ -396,13 +396,31 @@ function openNewOverlay(title, description, videoSrc, backgroundImage, event, sh
 
       const videoElement = document.getElementById("new-overlay-video");
       const sourceElement = document.getElementById("new-video-source");
+      const videoContainer = document.querySelector(".video-container");
+      let ytIframe = document.getElementById("yt-overlay-iframe");
 
-      if (videoSrc) {
+      if (videoSrc && videoSrc.includes("youtube.com")) {
+        // YOUTUBE VIDEO – use iframe
+        videoElement.style.display = "none";
+        if (!ytIframe) {
+          ytIframe = document.createElement("iframe");
+          ytIframe.id = "yt-overlay-iframe";
+          ytIframe.style.cssText = "width:100%;height:100%;border:none;border-radius:12px;";
+          ytIframe.allow = "autoplay; encrypted-media; fullscreen";
+          ytIframe.allowFullscreen = true;
+          videoContainer.appendChild(ytIframe);
+        }
+        // Convert live URL to embed URL
+        let embedSrc = videoSrc.replace("youtube.com/live/", "youtube.com/embed/");
+        ytIframe.src = embedSrc + "?autoplay=1";
+        ytIframe.style.display = "block";
+      } else if (videoSrc) {
+        // REGULAR VIDEO
+        if (ytIframe) ytIframe.style.display = "none";
         // CHECK CACHE
         if (videoCache[videoSrc]) {
           sourceElement.src = videoCache[videoSrc];
         } else {
-          // PLAY & CACHE
           sourceElement.src = videoSrc;
           fetch(videoSrc)
             .then(response => response.blob())
@@ -411,13 +429,13 @@ function openNewOverlay(title, description, videoSrc, backgroundImage, event, sh
             })
             .catch(err => console.error("Video cache failed:", err));
         }
-
         videoElement.style.display = "block";
         videoElement.load();
         videoElement.volume = 0.1;
         videoElement.play();
       } else {
         videoElement.style.display = "none";
+        if (ytIframe) ytIframe.style.display = "none";
       }
 
       // Update URL Hash for Deep Linking (without triggering hashchange scroll)
@@ -459,6 +477,8 @@ function closeNewOverlay(event) {
   const videoElement = document.getElementById("new-overlay-video");
   videoElement.pause();
   videoElement.currentTime = 0;
+  const ytIframe = document.getElementById("yt-overlay-iframe");
+  if (ytIframe) ytIframe.src = "";
   document.getElementById("new-overlay").style.display = "none";
 
   // Reset URL to Projects section

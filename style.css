@@ -783,19 +783,22 @@ article {
 
 .video-container {
   width: 100%;
-  height: auto;
-  max-height: 40vh;
-  /* Limit video height to give text more room */
+  height: 40vh;
   flex-shrink: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   background: #000;
-  /* Letterbox */
   margin-bottom: 1rem;
   border-radius: 12px;
-  /* Slight radius */
   overflow: hidden;
+}
+
+#yt-overlay-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 12px;
 }
 
 #new-overlay-video {
