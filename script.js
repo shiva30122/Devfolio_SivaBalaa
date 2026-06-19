@@ -406,9 +406,10 @@ function openNewOverlay(title, description, videoSrc, backgroundImage, event, sh
         if (!ytIframe) {
           ytIframe = document.createElement("iframe");
           ytIframe.id = "yt-overlay-iframe";
-          ytIframe.style.cssText = "width:100%;height:100%;border:none;border-radius:12px;";
-          ytIframe.allow = "autoplay; encrypted-media; fullscreen; picture-in-picture";
-          ytIframe.allowFullscreen = true;
+          ytIframe.style.cssText = "width:100%;height:100%;border:none;";
+          ytIframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen");
+          ytIframe.setAttribute("allowfullscreen", "");
+          ytIframe.setAttribute("frameborder", "0");
           videoContainer.appendChild(ytIframe);
         }
         let embedSrc = videoSrc.replace("youtube.com/live/", "youtube.com/embed/");
