@@ -472,8 +472,28 @@ function openNewOverlay(title, description, videoSrc, backgroundImage, event, sh
 }
 
 // ===============================================
-// 8. CLOSE OVERLAY – UNFREEZE (NO JUMP BACK)
+// SUMMARY OVERLAY – simple fade open, no expand-image
 // ===============================================
+function openSummaryOverlay(title, description) {
+  savedScrollPosition = window.scrollY;
+  isOverlayOpen = true;
+  document.documentElement.classList.add("no-scroll");
+  document.body.classList.add("no-scroll");
+
+  const overlay = document.getElementById("new-overlay");
+  overlay.style.opacity = "0";
+  overlay.style.transition = "opacity 0.3s ease";
+  overlay.style.display = "flex";
+  void overlay.offsetHeight;
+  overlay.style.opacity = "1";
+
+  document.getElementById("new-overlay-title").innerText = title;
+  document.getElementById("new-overlay-description").innerHTML = description;
+  document.getElementById("new-overlay-video").style.display = "none";
+  document.querySelector(".video-container").style.display = "none";
+  document.getElementById("new-overlay-description").scrollTop = 0;
+}
+
 function closeNewOverlay(event) {
   if (event) event.stopPropagation();
 
