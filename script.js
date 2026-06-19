@@ -1721,3 +1721,63 @@ function handlePdfAction(pdfUrl, filename) {
     document.body.removeChild(link);
   }, 500);
 }
+
+// ===============================================
+// LIVE COUNTERS – REAL-TIME EXPERIENCE DURATION
+// ===============================================
+function calcDuration(startDate) {
+  const now = new Date();
+  let years = now.getFullYear() - startDate.getFullYear();
+  let months = now.getMonth() - startDate.getMonth();
+  let days = now.getDate() - startDate.getDate();
+  let hours = now.getHours() - startDate.getHours();
+  let minutes = now.getMinutes() - startDate.getMinutes();
+  let seconds = now.getSeconds() - startDate.getSeconds();
+
+  if (seconds < 0) { seconds += 60; minutes--; }
+  if (minutes < 0) { minutes += 60; hours--; }
+  if (hours < 0) { hours += 24; days--; }
+  if (days < 0) {
+    const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+    days += prevMonth;
+    months--;
+  }
+  if (months < 0) { months += 12; years--; }
+
+  return { years, months, days, hours, minutes, seconds };
+}
+
+function formatDuration(d) {
+  const parts = [];
+  if (d.years > 0) parts.push(d.years + ' year' + (d.years !== 1 ? 's' : ''));
+  if (d.months > 0) parts.push(d.months + ' month' + (d.months !== 1 ? 's' : ''));
+  if (d.days > 0) parts.push(d.days + ' day' + (d.days !== 1 ? 's' : ''));
+  if (d.hours > 0 || d.minutes > 0 || d.seconds > 0) {
+    const h = d.hours.toString().padStart(2, '0');
+    const m = d.minutes.toString().padStart(2, '0');
+    const s = d.seconds.toString().padStart(2, '0');
+    parts.push(`${h}:${m}:${s}`);
+  }
+  return parts.join(', ');
+}
+
+function updateCounters() {
+  const gameDevEl = document.getElementById('game-dev-counter');
+  const proExpEl = document.getElementById('pro-exp-counter');
+  const codeVEl = document.getElementById('codev-counter');
+
+  if (gameDevEl) {
+    gameDevEl.textContent = formatDuration(calcDuration(new Date(2022, 0, 1)));
+  }
+  if (proExpEl) {
+    proExpEl.textContent = formatDuration(calcDuration(new Date(2023, 8, 1)));
+  }
+  if (codeVEl) {
+    codeVEl.textContent = formatDuration(calcDuration(new Date(2026, 0, 1)));
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateCounters();
+  setInterval(updateCounters, 1000);
+});
