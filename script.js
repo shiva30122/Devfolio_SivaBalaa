@@ -401,7 +401,7 @@ function openNewOverlay(title, description, videoSrc, backgroundImage, event, sh
 
       const loader = document.getElementById("yt-loader");
 
-      if (videoSrc && videoSrc.includes("youtube.com")) {
+      if (videoSrc && (videoSrc.includes("youtube.com") || videoSrc.includes("youtu.be"))) {
         // YOUTUBE VIDEO – use iframe
         videoContainer.style.display = "block";
         videoElement.style.display = "none";
@@ -414,7 +414,7 @@ function openNewOverlay(title, description, videoSrc, backgroundImage, event, sh
           ytIframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
           videoContainer.appendChild(ytIframe);
         }
-        let embedSrc = videoSrc.replace("youtube.com/live/", "www.youtube.com/embed/");
+        let embedSrc = videoSrc.replace("youtube.com/live/", "www.youtube.com/embed/").replace("youtu.be/", "www.youtube.com/embed/");
         ytIframe.src = embedSrc + "?autoplay=1&mute=1&rel=0";
         ytIframe.style.display = "block";
         // Hide loader once iframe loads
@@ -1756,13 +1756,6 @@ window.addEventListener('load', initDynamicTitles);
 // PRELOAD YT IFRAME on page load (instant playback)
 // ===============================================
 window.addEventListener('load', function() {
-  // Create hidden preload iframe for YT caching
-  var preload = document.createElement('link');
-  preload.rel = 'preload';
-  preload.as = 'document';
-  preload.href = 'https://www.youtube.com/embed/VPrzViKcMQU?autoplay=1&mute=1';
-  preload.onload = function() { setTimeout(function() { preload.remove(); }, 1000); };
-  document.head.appendChild(preload);
 });
 
 // ===============================================
