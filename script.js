@@ -1245,7 +1245,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // ===============================================
 // RESUME CONFIGURATION
 // ===============================================
-const RESUME_PATH = './SivaResumeNew.pdf';
+const RESUME_PATH = './SivaResumeNew.pdf?v=1';
 const DOWNLOAD_RESUME_NAME = 'Siva_Balaa_Resume.pdf';
 
 function downloadResume() {
